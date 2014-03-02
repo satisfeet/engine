@@ -1,5 +1,11 @@
 {
 
-	"name": "finance"
+	"name": "finance",
+
+  "database": {
+    "host": "localhost",
+    "user": "root",
+    "database": "test"
+  }
 
 }
