@@ -1,5 +1,5 @@
 CREATE TABLE `customers` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id`        int(5) unsigned NOT NULL AUTO_INCREMENT,
   `company`   char(255) DEFAULT NULL,
   `surname`   char(255) NOT NULL,
   `forename`  char(255) NOT NULL,
