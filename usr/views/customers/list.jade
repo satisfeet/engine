@@ -1,6 +1,6 @@
-extends ../layout
+extends layout
 
-block content
+block content-inner
   table.table.table-striped
     thead
       tr
@@ -11,17 +11,17 @@ block content
         th Email
         th Street
         th Street Nr
-        th Place
         th Zip
+        th Place
     tbody
       for customer in customers
         tr
           td= customer.id
-          td= customer.company || 'Private'
+          td!= customer.company || '<em>no company</em>'
           td= customer.surname
           td= customer.forename
           td= customer.email
           td= customer.street
           td= customer.street_nr
-          td= customer.place
           td= customer.zip
+          td= customer.place

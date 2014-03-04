@@ -1,0 +1,36 @@
+extends layout
+
+block content-inner
+  form(method='post', role='form')
+    fieldset
+      legend Create new customer
+      div.row
+        div.form-group.col-xs-8
+          label.control-label(for='company') Company
+          input.form-control#company(name='company', required=false)
+      div.row
+        div.form-group.col-xs-6
+          label.control-label(for='forename') Forename
+          input.form-control#forename(name='forename', required=true)
+        div.form-group.col-xs-6
+          label.control-label(for='surname') Surname
+          input.form-control#surname(name='surname', required=true)
+      div.row
+        div.form-group.col-xs-12
+          label.control-label(for='email') Email
+          input.form-control#email(name='email', required=true)
+      div.row
+        div.form-group.col-xs-10
+          label.control-label(for='street') Street
+          input.form-control#street(name='street', required=true)
+        div.form-group.col-xs-2
+          label.control-label(for='street_nr') Street Nr
+          input.form-control#street_nr(name='street_nr', required=true)
+      div.row
+        div.form-group.col-xs-6
+          label.control-label(for='zip') Zip
+          input.form-control#zip(name='zip', required=true)
+        div.form-group.col-xs-6
+          label.control-label(for='place') Place
+          input.form-control#place(name='place', required=true)
+      button.btn.btn-primary Submit
