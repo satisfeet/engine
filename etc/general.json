@@ -2,10 +2,19 @@
 
 	"name": "finance",
 
+  "engine": {
+    "views": {
+      "path": "/usr/views",
+      "engine": "jade"
+    }
+  },
+
+  "static": {
+    "path": "/srv"
+  },
+
   "database": {
-    "host": "localhost",
-    "user": "root",
-    "database": "test"
+    "url": "mysql://root@localhost/finance"
   }
 
 }

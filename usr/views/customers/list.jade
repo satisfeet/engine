@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+  table.table.table-striped
+    thead
+      tr
+        th ID
+        th Company
+        th Surname
+        th Forename
+        th Email
+        th Street
+        th Street Nr
+        th Place
+        th Zip
+    tbody
+      for customer in customers
+        tr
+          td= customer.id
+          td= customer.company || 'Private'
+          td= customer.surname
+          td= customer.forename
+          td= customer.email
+          td= customer.street
+          td= customer.street_nr
+          td= customer.place
+          td= customer.zip
