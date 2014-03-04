@@ -17,6 +17,7 @@
   },
 
   "dependencies": {
+    "jade": "1.3.0",
     "mysql": "2.1.0",
     "lodash": "2.4.1",
     "confus": "0.0.1",
