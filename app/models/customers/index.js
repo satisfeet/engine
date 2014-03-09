@@ -5,7 +5,8 @@ var Customers = require('./collection');
 
 module.exports = function(app) {
 
-  app('/customers', function(context, next) {
+  app('/customers*', function(context, next) {
+    var customer = context.customer = new Customer();
     var customers = context.customers = new Customers();
 
     superagent.get('/customers').accept('json').end(function(err, res) {
