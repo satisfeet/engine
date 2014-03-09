@@ -1,9 +1,17 @@
-var template = require('../../templates/customers');
+var CustomerItem = require('./item');
+var CustomerList = require('./list');
 
 module.exports = function(app) {
 
   app('/customers', function(context, next) {
-    context.element.innerHTML = template();
+    var element = context.element;
+    var collection = context.customers;
+
+    while (element.firstElementChild) {
+      element.firstElementChild.remove();
+    }
+
+    element.appendChild(new CustomerList(collection).element);
   });
 
 };
