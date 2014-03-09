@@ -1,7 +1,7 @@
 SUPERVISOR = node_modules/.bin/supervisor
 
 SUPERVISOR_FLAGS = \
-		--watch etc,lib \
+		--watch etc,lib,node_modules \
 		--extensions js,json
 
 boot:
