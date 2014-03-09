@@ -4,8 +4,19 @@
 
   "engine": {
     "views": {
-      "path": "/usr/views",
-      "engine": "jade"
+      "path": "/usr/templates"
+    },
+    "builder": {
+      "entry": "/app/index.js",
+      "aliases": {
+        "templates": "../usr/templates"
+      },
+      "path": "/srv/javascripts/build.js",
+      "extensions": [
+        ".js",
+        ".json",
+        ".jade"
+      ]
     }
   },
 
