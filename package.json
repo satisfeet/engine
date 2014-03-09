@@ -22,10 +22,13 @@
     "mysql": "2.1.0",
     "lodash": "2.4.1",
     "confus": "0.0.1",
+    "domify": "1.2.2",
     "express": "3.4.8",
+    "exempel": "0.0.3",
     "jadeify": "2.1.1",
     "shortify": "0.0.2",
     "supervisor": "0.5.7",
+    "superagent": "0.17.0",
     "browserify": "3.32.0"
   },
 
