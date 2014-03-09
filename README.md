@@ -1,12 +1,13 @@
-# finance
+# satisfeet-manager
 
-**finance** is a simple accounting programm for businesses.
+**manager** is a inventory management system for
+[satisfeet](http://www.satisfeet.me).
 
 ## Installation
 
 Clone with [git(1)](http://help.github.com):
 
-    $ git clone https://github.com/bodokaiser/nearby
+    $ git clone https://github.com/bodokaiser/satisfeet-manager
 
 Install dependencies with [npm(1)](http://npmjs.org):
 
