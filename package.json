@@ -1,6 +1,6 @@
 {
 
-  "name": "finance",
+  "name": "satisfeet-manager",
 
   "version": "0.0.1",
 
@@ -26,11 +26,11 @@
   },
 
   "repository": {
-    "url": "git://github.com/bodokaiser/finance.git"
+    "url": "git://github.com/bodokaiser/satisfeet-manager.git"
   },
 
   "bugs": {
-    "url": "https://github.com/bodokaiser/finance/issues"
+    "url": "https://github.com/bodokaiser/satisfeet-manager/issues"
   }
 
 }

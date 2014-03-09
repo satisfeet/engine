@@ -1,6 +1,6 @@
 {
 
-	"name": "finance",
+	"name": "satisfeet-manager",
 
   "engine": {
     "views": {
@@ -14,7 +14,7 @@
   },
 
   "database": {
-    "url": "mysql://root@localhost/finance"
+    "url": "mysql://root@localhost/satisfeet"
   }
 
 }
