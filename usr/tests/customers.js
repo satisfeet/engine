@@ -61,7 +61,11 @@ describe('HTTP: customers', function() {
         .expect(200, [], done);
     });
 
-    // TODO: full-text search
+    it('should respond json filtered by query', function(done) {
+      supertest(app).get('/customers').accept('json').query({ query: 'Berl' })
+        .expect('Content-Type', /json/)
+        .expect(200, [customer], done);
+    });
 
   });
 
