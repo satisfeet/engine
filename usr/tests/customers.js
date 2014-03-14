@@ -49,8 +49,19 @@ describe('HTTP: customers', function() {
         .expect(200, [customer], done);
     });
 
+    it('should respond json filtered by email', function(done) {
+      supertest(app).get('/customers').accept('json').query({ email: '.io' })
+        .expect('Content-Type', /json/)
+        .expect(200, [customer], done);
+    });
+
+    it('should respond json filtered by street', function(done) {
+      supertest(app).get('/customers').accept('json').query({ street: '.io' })
+        .expect('Content-Type', /json/)
+        .expect(200, [], done);
+    });
+
     // TODO: full-text search
-    // TODO: filter by parameter
 
   });
 
