@@ -11,7 +11,7 @@
   },
 
   "database": {
-    "url": "mysql://root@localhost/mydb"
+    "url": "mysql://root@localhost/satisfeet-test"
   }
 
 }
