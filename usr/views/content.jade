@@ -1,9 +1,8 @@
 main.container
   div.row
-    div.col-xs-2
-      ul.nav.nav-pills.nav-stacked
+    aside.col-xs-3#sidebar
+      ul.nav.nav-pills.nav-stacked.well.well-sm
         li: a(href='/customers/list') List Customers
         li: a(href='/customers/create') Create Customer
-    div.col-xs-10
-      section#content
-        block content
+    section.col-xs-9#content
+      block content

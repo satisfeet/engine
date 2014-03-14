@@ -4,12 +4,12 @@
 
   "engine": {
     "views": {
-      "path": "/usr/templates"
+      "path": "/usr/views"
     },
     "builder": {
       "entry": "/app/index.js",
       "aliases": {
-        "templates": "../usr/templates"
+        "views": "../usr/views"
       },
       "path": "/srv/javascripts/build.js",
       "extensions": [
@@ -22,10 +22,6 @@
 
   "static": {
     "path": "/srv"
-  },
-
-  "database": {
-    "url": "mysql://root@localhost/satisfeet"
   }
 
 }
