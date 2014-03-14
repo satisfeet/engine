@@ -1,4 +1,4 @@
-var template = require('../templates/main');
+var template = require('../views/main/landing');
 
 module.exports = function(app) {
 

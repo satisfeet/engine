@@ -8,6 +8,10 @@
     "builder": {
       "debug": true
     }
+  },
+
+  "database": {
+    "url": "mysql://root@localhost/mydb"
   }
 
 }

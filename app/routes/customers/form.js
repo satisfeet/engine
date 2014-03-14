@@ -1,6 +1,6 @@
 var domify = require('domify');
 
-var template = require('../../templates/customers/form');
+var template = require('../../views/customers/form');
 
 function Form(model) {
   this.element = domify(template({

@@ -1,6 +1,6 @@
 var domify = require('domify');
 
-var template = require('../../templates/customers/list');
+var template = require('../../views/customers/list');
 
 var Item = require('./item');
 
