@@ -9,7 +9,7 @@ var customer = {
   forename: 'Bodo',
   email: 'i@bodokaiser.io',
   street: 'Geiserichstraße',
-  street_nr: '3',
+  streetNr: '3',
   city: 'Berlin',
   zip: 12105
 };
