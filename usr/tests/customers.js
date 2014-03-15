@@ -50,19 +50,22 @@ describe('HTTP: customers', function() {
     });
 
     it('should respond json filtered by email', function(done) {
-      supertest(app).get('/customers').accept('json').query({ email: '.io' })
+      supertest(app).get('/customers').accept('json')
+        .query({ filter: { email: '.io' } })
         .expect('Content-Type', /json/)
         .expect(200, [customer], done);
     });
 
     it('should respond json filtered by street', function(done) {
-      supertest(app).get('/customers').accept('json').query({ street: '.io' })
+      supertest(app).get('/customers').accept('json')
+        .query({ filter: { street: '.io' } })
         .expect('Content-Type', /json/)
         .expect(200, [], done);
     });
 
-    it('should respond json filtered by query', function(done) {
-      supertest(app).get('/customers').accept('json').query({ query: 'Berl' })
+    it('should respond json searched by query', function(done) {
+      supertest(app).get('/customers').accept('json')
+        .query({ query: 'Berl' })
         .expect('Content-Type', /json/)
         .expect(200, [customer], done);
     });
