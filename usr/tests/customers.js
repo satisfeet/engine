@@ -9,7 +9,7 @@ var customer = {
   forename: 'Bodo',
   email: 'i@bodokaiser.io',
   street: 'Geiserichstraße',
-  streetNr: '3',
+  street_nr: '3',
   city: 'Berlin',
   zip: 12105
 };
@@ -65,7 +65,7 @@ describe('HTTP: customers', function() {
 
     it('should respond json searched by query', function(done) {
       supertest(app).get('/customers').accept('json')
-        .query({ query: 'Berl' })
+        .query({ search: 'Berl' })
         .expect('Content-Type', /json/)
         .expect(200, [customer], done);
     });
