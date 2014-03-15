@@ -71,6 +71,18 @@ describe('HTTP: customers', function() {
 
   describe('GET /customers/:id', function() {
 
+    it('should respond json', function(done) {
+      supertest(app).get('/customers/' + customer.id).accept('json')
+        .expect('Content-Type', /json/)
+        .expect(200, customer, done);
+    });
+
+    it('should respond not found', function(done) {
+      supertest(app).get('/customers/abc').accept('json')
+        .expect('Content-Type', /json/)
+        .expect(404, done);
+    });
+
   });
 
   describe('PUT /customers/:id', function() {
