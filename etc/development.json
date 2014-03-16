@@ -10,8 +10,8 @@
     }
   },
 
-  "database": {
-    "url": "mysql://root@localhost/satisfeet-test"
+  "storage": {
+    "url": "mongodb://localhost/satisfeet"
   }
 
 }
