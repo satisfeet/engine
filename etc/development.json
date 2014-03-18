@@ -11,7 +11,7 @@
   },
 
   "storage": {
-    "url": "mongodb://localhost/satisfeet"
+    "url": "mongodb://localhost/test"
   }
 
 }
