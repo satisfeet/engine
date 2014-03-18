@@ -1,0 +1,155 @@
+[
+  {
+    "name": "Bodo Kaiser",
+    "email": "i@bodokaiser.io",
+    "company": "satisfeet",
+    "address": {
+      "street": "Geiserichstraße 3",
+      "city": "Berlin",
+      "zip": 12105
+    }
+  },
+  {
+    "name": "Wolfgang Kaiser",
+    "email": "wmkaiser2@t-online.de",
+    "address": {
+      "street": "Hohlstraße 8",
+      "city": "Weilburg",
+      "zip": 35781
+    }
+  },
+  {
+    "name": "Maximilian Krautwurm",
+    "email": "max.krautwurm@gmx.de",
+    "address": {
+      "street": "Alboinplatz 1",
+      "city": "Berlin",
+      "zip": 12105
+    }
+  },
+  {
+    "name": "Haci Erdal",
+    "email": "haci-59@hotmail.de",
+    "address": {
+      "street": "Hedemannstraße 21",
+      "city": "Berlin",
+      "zip": 10969
+    }
+  },
+  {
+    "name": "Urte Cassens",
+    "address": {
+      "street": "Wartburgstraße 18",
+      "city": "Berlin",
+      "zip": 10825
+    }
+  },
+  {
+    "name": "Torsten Schlingelhof",
+    "email": "info@schlingelhof.com",
+    "address": {
+      "street": "Homeyerstraße 24",
+      "city": "Berlin",
+      "zip" : 13156
+    }
+  },
+  {
+    "name": "Sabine Kaiser",
+    "email": "longvitykaiser@gmail.com",
+    "address": {
+      "street": "Geiserichstraße 3",
+      "city": "Berlin",
+      "zipcode": 12105
+    }
+  },
+  {
+    "name": "Beatrice Kaiser",
+    "address": {
+      "street": "Geiserichstraße 3",
+      "city": "Berlin",
+      "zip": 12105
+    }
+  },
+  {
+    "name" : "Pascal Schlunek",
+    "email": "st.pauliftw69@web.de",
+    "address": {
+      "street": "Gieshüglerstraße 46",
+      "city": "Gerbrunn",
+      "zip": 97218
+    }
+  },
+  {
+    "name": "Burkhard Schneider",
+    "email": "ba-schneider@t-online.de",
+    "address": {
+      "street": "Hammersteinstraße 5",
+      "city": "Berlin",
+      "zip": 14199
+    }
+  },
+  {
+    "name": "Andreas Schmidt",
+    "email": "andreas.schmidt@private-asset.eu",
+    "address": {
+      "street": "Tchaikowskistraße 13",
+      "city": "Berlin",
+      "zip": 13156
+    }
+  },
+  {
+    "name": "Darius Hajiani",
+    "email": "darius@hangload.com",
+    "address": {
+      "street": "Forstet Straße 3",
+      "city": "Berlin",
+      "zip": 10999
+    }
+  },
+  {
+    "name" : "Till Schiewer",
+    "address": {
+      "city" : "Berlin"
+    }
+  },
+  {
+    "name": "Veselina Petkova",
+    "email": "vp@zweieinsdrei.de",
+    "address": {
+      "city": "Berlin"
+    }
+  },
+  {
+    "name": "Pascal Oser",
+    "email": "strikedraven@yahoo.de",
+    "address": {
+      "street" : "Goethestraße 3a",
+      "city": "Sinzheim",
+      "zip": 76547
+    }
+  },
+  {
+    "name": "Gerald Schmidthaus",
+    "email": "gerald@das-schmidthaus.de",
+    "company": "Schmidthaus",
+    "address": {
+      "street": "Krähwinkeler Weg 38",
+      "city": "Leichlingen",
+      "zip": 42799
+    }
+  },
+  {
+    "name": "Fabian Lang",
+    "address": {
+      "city": "Berlin"
+    }
+  },
+  {
+    "name": "Lydia Henneberger",
+    "address": {
+      "street": "Kirchheimerstraße 46",
+      "city": "Kleinrinderfeld",
+      "zip": 97271
+    }
+  }
+]
