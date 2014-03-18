@@ -1,0 +1,1 @@
+{ "options" : { "create" : "orders" }, "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "satisfeet.orders", "name" : "_id_" } ] }

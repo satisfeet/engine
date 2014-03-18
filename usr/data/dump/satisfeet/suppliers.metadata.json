@@ -1,0 +1,1 @@
+{ "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "satisfeet.suppliers", "name" : "_id_" }, { "v" : 1, "key" : { "name" : 1, "email" : 1, "homepage" : 1 }, "unique" : true, "ns" : "satisfeet.suppliers", "name" : "name_1_email_1_homepage_1" } ] }
