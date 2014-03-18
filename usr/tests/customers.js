@@ -5,13 +5,13 @@ var supertest = require('supertest');
 var app = require('../../lib');
 
 var customer = {
-  surname: 'Kaiser',
-  forename: 'Bodo',
-  email: 'i@bodokaiser.io',
-  street: 'Geiserichstraße',
-  street_nr: '3',
-  city: 'Berlin',
-  zip: 12105
+  name: 'Willy Smith',
+  email: 'willy@example.com',
+  address: {
+    street: 'Geiserichstraße 3',
+    city: 'Berlin',
+    zip: 12105
+  }
 };
 
 describe('HTTP: customers', function() {
@@ -28,10 +28,9 @@ describe('HTTP: customers', function() {
           if (err) throw err;
 
           chai.expect(res.body).to.be.an('object');
-          chai.expect(res.body.id).to.be.a('number');
+          chai.expect(res.body.id).to.be.a('string');
 
           customer.id = res.body.id;
-          customer.company = null;
 
           chai.expect(customer).to.eql(res.body);
 
