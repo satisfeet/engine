@@ -4,14 +4,8 @@
     "port": 3000
   },
 
-  "engine": {
-    "builder": {
-      "debug": true
-    }
-  },
-
-  "database": {
-    "url": "mysql://root@localhost/satisfeet-test"
+  "storage": {
+    "url": "mongodb://localhost/test"
   }
 
 }

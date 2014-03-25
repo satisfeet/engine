@@ -2,7 +2,7 @@ var chai      = require('chai');
 var lodash    = require('lodash');
 var supertest = require('supertest');
 
-var app = require('../../lib');
+var app = require('../lib');
 
 var article = {
   name: 'Die Blauen Socken',
@@ -13,21 +13,12 @@ var article = {
 
 describe('HTTP: articles', function() {
 
-  xdescribe('GET /articles', function() {
+  describe('GET /articles', function() {
 
     it('should respond json', function(done) {
       supertest(app).get('/articles').accept('json')
         .expect('Content-Type', /json/)
-        .expect(200, [customer], done);
-    });
-
-  });
-
-  xdescribe('DELETE /articles/:id', function() {
-
-    it('should respond OK', function(done) {
-      supertest(app).del('/articles/' + customer.id).accept('json')
-        .expect(200, done);
+        .expect(200, [], done);
     });
 
   });
