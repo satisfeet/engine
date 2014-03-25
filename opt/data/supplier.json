@@ -1,15 +1,15 @@
 {
 
-	"name": "Strumpf Dirks GmbH",
+  "name": "Strumpf Dirks GmbH",
 
-	"email": "dd@strumpfdirks.de",
+  "email": "dd@strumpfdirks.de",
 
-	"homepage": "http://www.strumpfdirks.de",
+  "homepage": "http://www.strumpfdirks.de",
 
-	"address": {
-		"street": "Friedhöfer Kamp 1",
-		"city": "Billerbeck",
-		"zip": 48727
-	}
+  "address": {
+    "street": "Friedhöfer Kamp 1",
+    "city": "Billerbeck",
+    "zip": 48727
+  }
 
 }
