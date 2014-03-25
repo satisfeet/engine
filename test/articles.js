@@ -2,7 +2,7 @@ var chai      = require('chai');
 var lodash    = require('lodash');
 var supertest = require('supertest');
 
-var app = require('../../lib');
+var app = require('../lib');
 
 var article = {
   name: 'Die Blauen Socken',

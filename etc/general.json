@@ -1,27 +1,5 @@
 {
 
-	"name": "satisfeet-manager",
-
-  "engine": {
-    "views": {
-      "path": "/usr/views"
-    },
-    "builder": {
-      "entry": "/app/index.js",
-      "aliases": {
-        "views": "../usr/views"
-      },
-      "path": "/srv/javascripts/build.js",
-      "extensions": [
-        ".js",
-        ".json",
-        ".jade"
-      ]
-    }
-  },
-
-  "static": {
-    "path": "/srv"
-  }
+	"name": "satisfeet-manager"
 
 }
