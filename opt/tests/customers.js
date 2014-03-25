@@ -6,7 +6,7 @@ var app = require('../../lib');
 
 var customer = {
   name: 'Willy Smith',
-  email: 'willy@example.com',
+  email: 'willy@example.io',
   address: {
     street: 'Geiserichstraße 3',
     city: 'Berlin',
@@ -57,7 +57,7 @@ describe('HTTP: customers', function() {
 
     it('should respond json filtered by street', function(done) {
       supertest(app).get('/customers').accept('json')
-        .query({ filter: { street: '.io' } })
+        .query({ filter: { address: { street: '.io' } } })
         .expect('Content-Type', /json/)
         .expect(200, [], done);
     });
