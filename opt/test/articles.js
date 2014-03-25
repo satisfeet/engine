@@ -2,14 +2,8 @@ var chai      = require('chai');
 var lodash    = require('lodash');
 var supertest = require('supertest');
 
-var app = require('../lib');
-
-var article = {
-  name: 'Die Blauen Socken',
-  vat: 0.19,
-  price: 2.99,
-  category: 'Socken'
-};
+var app  = require('../../lib');
+var auth = app.settings.account;
 
 describe('HTTP: articles', function() {
 
@@ -17,6 +11,7 @@ describe('HTTP: articles', function() {
 
     it('should respond json', function(done) {
       supertest(app).get('/articles').accept('json')
+				.auth(auth.username, auth.password)
         .expect('Content-Type', /json/)
         .expect(200, [], done);
     });
