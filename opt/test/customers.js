@@ -12,9 +12,9 @@ describe('HTTP: customers', function() {
 
     it('should respond json', function(done) {
       supertest(app).post('/customers')
-				.send(model)
-				.auth(auth.username, auth.password)
-				.accept('application/json')
+        .send(model)
+        .auth(auth.username, auth.password)
+        .accept('application/json')
         .expect('Content-Type', /json/)
         .expect(200, function(err, res) {
           if (err) throw err;
@@ -35,35 +35,35 @@ describe('HTTP: customers', function() {
 
     it('should respond json', function(done) {
       supertest(app).get('/customers')
-				.auth(auth.username, auth.password)
-				.accept('application/json')
+        .auth(auth.username, auth.password)
+        .accept('application/json')
         .expect('Content-Type', /json/)
         .expect(200, [model], done);
     });
 
     it('should respond json filtered by email', function(done) {
       supertest(app).get('/customers')
-				.auth(auth.username, auth.password)
+        .auth(auth.username, auth.password)
         .query({ filter: { email: '.io' } })
-				.accept('application/json')
+        .accept('application/json')
         .expect('Content-Type', /json/)
         .expect(200, [model], done);
     });
 
     it('should respond json filtered by street', function(done) {
-			supertest(app).get('/customers')
-				.auth(auth.username, auth.password)
+      supertest(app).get('/customers')
+        .auth(auth.username, auth.password)
         .query({ filter: { address: { street: '.io' } } })
-				.accept('application/json')
+        .accept('application/json')
         .expect('Content-Type', /json/)
         .expect(200, [], done);
     });
 
     it('should respond json searched by query', function(done) {
       supertest(app).get('/customers')
-				.auth(auth.username, auth.password)
+        .auth(auth.username, auth.password)
         .query({ search: 'Berl' })
-				.accept('application/json')
+        .accept('application/json')
         .expect('Content-Type', /json/)
         .expect(200, [model], done);
     });
@@ -74,16 +74,16 @@ describe('HTTP: customers', function() {
 
     it('should respond json', function(done) {
       supertest(app).get('/customers/' + model.id)
-				.auth(auth.username, auth.password)
-				.accept('application/json')
+        .auth(auth.username, auth.password)
+        .accept('application/json')
         .expect('Content-Type', /json/)
         .expect(200, model, done);
     });
 
     it('should respond not found', function(done) {
       supertest(app).get('/customers/abc')
-				.auth(auth.username, auth.password)
-				.accept('application/json')
+        .auth(auth.username, auth.password)
+        .accept('application/json')
         .expect('Content-Type', /json/)
         .expect(404, done);
     });
@@ -97,16 +97,16 @@ describe('HTTP: customers', function() {
 
       supertest(app).put('/customers/' + model.id)
         .send(model)
-				.auth(auth.username, auth.password)
-				.accept('application/json')
+        .auth(auth.username, auth.password)
+        .accept('application/json')
         .expect('Content-Type', /json/)
         .expect(200, done);
     });
 
     it('should respond not found', function(done) {
       supertest(app).put('/customers/abc')
-				.auth(auth.username, auth.password)
-				.accept('application/json')
+        .auth(auth.username, auth.password)
+        .accept('application/json')
         .expect('Content-Type', /json/)
         .expect(404, done);
     });
@@ -117,8 +117,8 @@ describe('HTTP: customers', function() {
 
     it('should respond OK', function(done) {
       supertest(app).del('/customers/' + model.id)
-				.auth(auth.username, auth.password)
-				.accept('application/json')
+        .auth(auth.username, auth.password)
+        .accept('application/json')
         .expect(200, done);
     });
 
