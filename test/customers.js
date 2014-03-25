@@ -2,16 +2,16 @@ var chai      = require('chai');
 var lodash    = require('lodash');
 var supertest = require('supertest');
 
-var app = require('../../lib');
+var app = require('../lib');
 
 var customer = {
-  surname: 'Kaiser',
-  forename: 'Bodo',
-  email: 'i@bodokaiser.io',
-  street: 'Geiserichstraße',
-  street_nr: '3',
-  city: 'Berlin',
-  zip: 12105
+  name: 'Willy Smith',
+  email: 'willy@example.io',
+  address: {
+    street: 'Geiserichstraße 3',
+    city: 'Berlin',
+    zip: 12105
+  }
 };
 
 describe('HTTP: customers', function() {
@@ -28,10 +28,9 @@ describe('HTTP: customers', function() {
           if (err) throw err;
 
           chai.expect(res.body).to.be.an('object');
-          chai.expect(res.body.id).to.be.a('number');
+          chai.expect(res.body.id).to.be.a('string');
 
           customer.id = res.body.id;
-          customer.company = null;
 
           chai.expect(customer).to.eql(res.body);
 
@@ -58,7 +57,7 @@ describe('HTTP: customers', function() {
 
     it('should respond json filtered by street', function(done) {
       supertest(app).get('/customers').accept('json')
-        .query({ filter: { street: '.io' } })
+        .query({ filter: { address: { street: '.io' } } })
         .expect('Content-Type', /json/)
         .expect(200, [], done);
     });
@@ -103,12 +102,6 @@ describe('HTTP: customers', function() {
       supertest(app).put('/customers/abc').accept('json')
         .expect('Content-Type', /json/)
         .expect(404, done);
-    });
-
-    it('should respond client error', function(done) {
-      supertest(app).put('/customers/' + customer.id).accept('json')
-        .expect('Content-Type', /json/)
-        .expect(400, done);
     });
 
   });
