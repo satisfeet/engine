@@ -104,12 +104,6 @@ describe('HTTP: customers', function() {
         .expect(404, done);
     });
 
-    it('should respond client error', function(done) {
-      supertest(app).put('/customers/' + customer.id).accept('json')
-        .expect('Content-Type', /json/)
-        .expect(400, done);
-    });
-
   });
 
   describe('DELETE /customers/:id', function() {
