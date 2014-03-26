@@ -4,14 +4,14 @@ var supertest = require('supertest');
 
 var app  = require('../../lib');
 var auth = app.settings.account;
-var model = require('../data/supplier');
+var model = require('../data/merchant');
 
-describe('HTTP: suppliers', function() {
+describe('HTTP: merchants', function() {
 
-  describe('POST /suppliers', function() {
+  describe('POST /merchants', function() {
 
     it('should respond json', function(done) {
-      supertest(app).post('/suppliers')
+      supertest(app).post('/merchants')
         .send(model)
         .auth(auth.username, auth.password)
         .accept('application/json')
@@ -29,10 +29,10 @@ describe('HTTP: suppliers', function() {
 
   });
 
-  describe('GET /suppliers', function() {
+  describe('GET /merchants', function() {
 
     it('should respond json', function(done) {
-      supertest(app).get('/suppliers')
+      supertest(app).get('/merchants')
         .auth(auth.username, auth.password)
         .accept('application/json')
         .expect('Content-Type', /json/)
@@ -41,10 +41,10 @@ describe('HTTP: suppliers', function() {
 
   });
 
-  describe('GET /suppliers/:id', function() {
+  describe('GET /merchants/:id', function() {
 
     it('should respond json', function(done) {
-      supertest(app).get('/suppliers/' + model.id)
+      supertest(app).get('/merchants/' + model.id)
         .auth(auth.username, auth.password)
         .accept('application/json')
         .expect('Content-Type', /json/)
@@ -53,12 +53,12 @@ describe('HTTP: suppliers', function() {
 
   });
 
-  describe('PUT /suppliers/:id', function() {
+  describe('PUT /merchants/:id', function() {
 
     it('should respond json', function(done) {
       model.homepage += '/';
 
-      supertest(app).put('/suppliers/' + model.id)
+      supertest(app).put('/merchants/' + model.id)
         .send(model)
         .auth(auth.username, auth.password)
         .accept('application/json')
@@ -68,10 +68,10 @@ describe('HTTP: suppliers', function() {
 
   });
 
-  describe('DELETE /suppliers/:id', function() {
+  describe('DELETE /merchants/:id', function() {
 
     it('should respond json', function(done) {
-      supertest(app).del('/suppliers/' + model.id)
+      supertest(app).del('/merchants/' + model.id)
         .auth(auth.username, auth.password)
         .accept('application/json')
         .expect('Content-Type', /json/)
