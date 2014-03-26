@@ -11,6 +11,10 @@
     "start": "make boot"
   },
 
+  "engine": {
+    "node": "0.10.x"
+  },
+
   "dependencies": {
     "lodash": "2.4.1",
     "express": "3.5.1",
