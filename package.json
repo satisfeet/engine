@@ -1,6 +1,6 @@
 {
 
-  "name": "satisfeet-manager",
+  "name": "satisfeet-engine",
 
   "version": "0.0.1",
 
@@ -25,11 +25,11 @@
   },
 
   "repository": {
-    "url": "git://github.com/bodokaiser/satisfeet-manager.git"
+    "url": "git://github.com/bodokaiser/satisfeet-engine.git"
   },
 
   "bugs": {
-    "url": "https://github.com/bodokaiser/satisfeet-manager/issues"
+    "url": "https://github.com/bodokaiser/satisfeet-engine/issues"
   }
 
 }
