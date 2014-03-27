@@ -1,10 +1,13 @@
-exports.port = process.env.VCAP_APP_PORT;
+exports.server = {
+  ip: process.env.OPENSHIFT_NODEJS_IP,
+  port: process.env.OPENSHIFT_NODEJS_PORT
+};
 
 exports.account = {
-  username: 'bodokaiser',
-  password: 'bodokaiser'
+  username: process.env.NODE_USERNAME,
+  password: process.env.NODE_PASSWORD
 };
 
 exports.storage = {
-  url: JSON.parse(process.env.VCAP_SERVICES)['mongodb-2.2'][0].credentials.url
+  url: process.env.NODE_MONGO_URL
 };
