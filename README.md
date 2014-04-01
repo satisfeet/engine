@@ -11,11 +11,7 @@ Clone with [git(1)](http://help.github.com):
 
 Install dependencies with [npm(1)](http://npmjs.org):
 
-    $ cd satisfeet-engine && npm install
-
-And call `lib/index.js` with [node(1)](http://nodejs.org) or:
-
-    $ npm start
+    $ cd satisfeet-engine && npm install && npm start
 
 ## License
 
