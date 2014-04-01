@@ -7,8 +7,8 @@
   "author": "Bodo Kaiser <i@bodokaiser.io>",
 
   "scripts": {
-    "test": "mocha opt/test",
-    "start": "node lib/index"
+    "test": "mocha opt",
+    "start": "node lib"
   },
 
   "engine": {
