@@ -2,9 +2,18 @@ var chai      = require('chai');
 var lodash    = require('lodash');
 var supertest = require('supertest');
 
-var app   = require('../../lib');
+var app   = require('../lib');
 var auth  = app.settings.account;
-var model = require('../data/customer');
+
+var model = {
+  name: 'Willy Smith',
+  email: 'willy@example.org',
+  address: {
+    street: 'Geiserichstraße 3',
+    city: 'Berlin',
+    zip: 12105
+  }
+};
 
 describe('HTTP: customers', function() {
 

@@ -2,9 +2,19 @@ var chai      = require('chai');
 var lodash    = require('lodash');
 var supertest = require('supertest');
 
-var app  = require('../../lib');
+var app  = require('../lib');
 var auth = app.settings.account;
-var model = require('../data/merchant');
+
+var model = {
+  name: 'Strumpf Dirks GmbH',
+  email: 'dd@strumpfdirks.de',
+  homepage: 'http://www.strumpfdirks.de',
+  address: {
+    street: 'Friedhöfer Kamp 1',
+    city: 'Billerbeck',
+    zip: 48727
+  }
+};
 
 describe('HTTP: merchants', function() {
 

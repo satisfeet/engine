@@ -12,6 +12,6 @@ boot:
 	$(SUPERVISOR) $(SUPERVISOR_FLAGS) lib
 
 test:
-	$(MOCHA) $(MOCHA_FLAGS) opt/test
+	$(MOCHA) $(MOCHA_FLAGS) opt
 
 .PHONY: test
