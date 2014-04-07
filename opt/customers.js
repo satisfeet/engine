@@ -7,7 +7,7 @@ var auth  = app.settings.account;
 
 var model = {
   name: 'Willy Smith',
-  email: 'willy@example.org',
+  email: 'willy@example.io',
   address: {
     street: 'Geiserichstraße 3',
     city: 'Berlin',
