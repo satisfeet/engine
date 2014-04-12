@@ -1,17 +1,7 @@
-# satisfeet-engine
+# engine
 
-**engine** is a inventory management system for
+The inventory management backend service for
 [satisfeet](http://engine.satisfeet.me).
-
-## Installation
-
-Clone with [git(1)](http://help.github.com):
-
-    $ git clone https://github.com/bodokaiser/satisfeet-engine
-
-Install dependencies with [npm(1)](http://npmjs.org):
-
-    $ cd satisfeet-engine && npm install && npm start
 
 ## License
 
