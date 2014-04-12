@@ -20,5 +20,8 @@ ehthumbs.db
 Thumbs.db
 *~
 
+# configs
+production.*
+
 # packages
 node_modules
