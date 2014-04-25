@@ -30,6 +30,20 @@ describe('HTTP: customers', function() {
         });
     });
 
+    it('should respond error', function(done) {
+      supertest(app.listen()).post('/customers').accept('json')
+        .send({ name: 'W22l' })
+        .expect(400, function(err, res) {
+          if (err) throw err;
+
+          chai.expect(res.body).to.eql({
+            error: 'Invalid name.'
+          });
+
+          done();
+        });
+    });
+
   });
 
   describe('GET /customers', function() {
