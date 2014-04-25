@@ -15,6 +15,6 @@ boot:
 	$(SUPERVISOR) $(SUPERVISOR_FLAGS) lib
 
 test:
-	$(MOCHA) $(MOCHA_FLAGS) test
+	NODE_ENV=test $(MOCHA) $(MOCHA_FLAGS) test
 
 .PHONY: test
