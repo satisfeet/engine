@@ -18,11 +18,13 @@ describe('HTTP: customers', function() {
   describe('POST /customers', function() {
 
     it('should respond error', function(done) {
-      supertest(app.listen()).post('/customers')
-        .end(function(err, res) {
-          //if (err) return done(err);
+      supertest(app.listen()).post('/customers').accept('json')
+        .expect(400, function(err, res) {
+          if (err) throw err;
 
-          console.log(res.body);
+          chai.expect(res.body).to.eql({
+            error: 'Invalid body.'
+          });
 
           done();
         });
