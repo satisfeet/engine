@@ -31,11 +31,11 @@
   },
 
   "repository": {
-    "url": "git://github.com/satisfeet/engine.git"
+    "url": "git://github.com/bodokaiser/satisfeet-engine.git"
   },
 
   "bugs": {
-    "url": "https://github.com/satisfeet/engine/issues"
+    "url": "https://github.com/bodokaiser/satisfeet-engine/issues"
   }
 
 }
