@@ -8,7 +8,7 @@ SUPERVISOR_FLAGS = 			\
 	--harmony         		\
 	--watch etc,lib				\
 	--extensions js,json	\
-	--no-restart-on exit
+	--no-restart-on error
 
 boot:
 	$(SUPERVISOR) $(SUPERVISOR_FLAGS) lib
