@@ -18,9 +18,7 @@
   "main": "lib",
 
   "dependencies": {
-    "merge": "~1.1.3",
-    "is-type": "~0.0.1",
-    "monk": "~0.8.1",
+    "co": "~3.0.5",
     "co-monk": "~1.0.0",
     "koa": "~0.5.5",
     "koa-etag": "~1.2.3",
@@ -29,7 +27,10 @@
     "koa-logger": "~1.2.0",
     "koa-compress": "~1.0.6",
     "koa-bodyparser": "1.0.1",
-    "validator": "~3.10.0",
+    "joi": "~4.0.0",
+    "monk": "~0.8.1",
+    "lodash": "~2.4.1",
+    "thunkify": "~2.1.1",
     "supervisor": "~0.6.0"
   },
 
