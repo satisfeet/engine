@@ -1,30 +1,24 @@
 var chai      = require('chai');
 var supertest = require('supertest');
 
-var app = require('../lib');
+var app = require('../lib').listen();
 
 describe('HTTP: customers', function() {
-
-  var model = {
-    name: 'Willy Smith',
-    email: 'willy@example.io',
-    address: {
-      street: 'Geiserichstraße 3',
-      city: 'Berlin',
-      zip: 12105
-    }
-  };
 
   describe('POST /customers', function() {
 
     it('should respond error', function(done) {
-      supertest(app.listen()).post('/customers').accept('json')
+      supertest(app).post('/customers')
+        .accept('json')
         .expect(400, done);
     });
 
     it('should respond error', function(done) {
-      supertest(app.listen()).post('/customers').accept('json')
-        .send({ name: 'W22l' })
+      supertest(app).post('/customers')
+        .send({
+          name: 'W??'
+        })
+        .accept('json')
         .expect(400, done);
     });
 
