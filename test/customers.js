@@ -182,7 +182,7 @@ describe('HTTP: customers', function() {
 
   describe('DELETE /customers/:param', function() {
 
-    xit('should respond success', function(done) {
+    it('should respond success', function(done) {
       supertest(app).del('/customers/' + model._id)
         .accept('json')
         .expect(200, done);
