@@ -18,9 +18,11 @@
   "main": "lib",
 
   "dependencies": {
+    "qs": "~0.6.6",
     "co": "~3.0.5",
     "co-monk": "~1.0.0",
     "koa": "~0.5.5",
+    "koa-qs": "~1.0.0",
     "koa-etag": "~1.2.3",
     "koa-error": "~1.1.1",
     "koa-route": "~1.1.2",

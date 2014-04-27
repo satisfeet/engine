@@ -170,6 +170,105 @@ describe('HTTP: customers', function() {
 
   describe('GET /customers', function() {
 
+    it('should return models', function(done) {
+      supertest(app).get('/customers')
+        .accept('json')
+        .expect([
+          model
+        ])
+        .expect(200, done);
+    });
+
+    it('should return models', function(done) {
+      supertest(app).get('/customers')
+        .query({
+          filter: {
+            name: 'Bodo'
+          }
+        })
+        .accept('json')
+        .expect([
+          model
+        ])
+        .expect(200, done);
+    });
+
+    it('should return models', function(done) {
+      supertest(app).get('/customers')
+        .query({
+          filter: {
+            email: 'bodokaiser.io'
+          }
+        })
+        .accept('json')
+        .expect([
+          model
+        ])
+        .expect(200, done);
+    });
+
+    xit('should return models', function(done) {
+      supertest(app).get('/customers')
+        .query({
+          filter: {
+            address: {
+              city: 'Berlin'
+            }
+          }
+        })
+        .accept('json')
+        .expect([
+          model
+        ])
+        .expect(200, done);
+    });
+
+    it('should return models', function(done) {
+      supertest(app).get('/customers')
+        .query({
+          search: 'Bo'
+        })
+        .accept('json')
+        .expect([
+          model
+        ])
+        .expect(200, done);
+    });
+
+    it('should return empty', function(done) {
+      supertest(app).get('/customers')
+        .query({
+          filter: {
+            name: 'Joe Kaiser'
+          }
+        })
+        .accept('json')
+        .expect([])
+        .expect(200, done);
+    });
+
+    it('should return empty', function(done) {
+      supertest(app).get('/customers')
+        .query({
+          filter: {
+            email: '@gmail'
+          }
+        })
+        .accept('json')
+        .expect([])
+        .expect(200, done);
+    });
+
+    it('should return models', function(done) {
+      supertest(app).get('/customers')
+        .query({
+          search: 'jQuery'
+        })
+        .accept('json')
+        .expect([])
+        .expect(200, done);
+    });
+
   });
 
   describe('GET /customers/:param', function() {
