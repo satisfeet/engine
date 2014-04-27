@@ -9,7 +9,7 @@ describe('HTTP: customers', function() {
 
   describe('POST /customers', function() {
 
-    it('should respond error', function(done) {
+    it('should respond error "invalid"', function(done) {
       supertest(app).post('/customers')
         .accept('json')
         .expect({
@@ -18,7 +18,7 @@ describe('HTTP: customers', function() {
         .expect(400, done);
     });
 
-    it('should respond error', function(done) {
+    it('should respond error "name invalid"', function(done) {
       model.name = 'W??';
 
       supertest(app).post('/customers')
@@ -30,7 +30,7 @@ describe('HTTP: customers', function() {
         .expect(400, done);
     });
 
-    it('should respond error', function(done) {
+    it('should respond error "email required"', function(done) {
       model.name = 'Bodo Kaiser';
 
       supertest(app).post('/customers')
@@ -42,7 +42,7 @@ describe('HTTP: customers', function() {
         .expect(400, done);
     });
 
-    it('should respond error', function(done) {
+    it('should respond error "email invalid"', function(done) {
       model.email = 'bodokaiser@';
 
       supertest(app).post('/customers')
@@ -54,7 +54,7 @@ describe('HTTP: customers', function() {
         .expect(400, done);
     });
 
-    it('should respond error', function(done) {
+    it('should respond error "company length invalid"', function(done) {
       model.email = 'i@bodokaiser.io';
       model.company = 'ABC';
 
@@ -67,7 +67,7 @@ describe('HTTP: customers', function() {
         .expect(400, done);
     });
 
-    it('should respond error', function(done) {
+    it('should respond error "company invalid"', function(done) {
       model.email = 'i@bodokaiser.io';
       model.company = 'Satisfeet_';
 
@@ -80,7 +80,7 @@ describe('HTTP: customers', function() {
         .expect(400, done);
     });
 
-    it('should respond error', function(done) {
+    it('should respond error "street required"', function(done) {
       model.address = {};
       delete model.company;
 
@@ -93,7 +93,7 @@ describe('HTTP: customers', function() {
         .expect(400, done);
     });
 
-    it('should respond error', function(done) {
+    it('should respond error "street length invalid"', function(done) {
       model.address.street = 'Stre';
 
       supertest(app).post('/customers')
@@ -105,7 +105,7 @@ describe('HTTP: customers', function() {
         .expect(400, done);
     });
 
-    it('should respond error', function(done) {
+    it('should respond error "city length invalid"', function(done) {
       model.address.street = 'Geiserichstr. 3';
       model.address.city = 'ab';
 
@@ -118,7 +118,7 @@ describe('HTTP: customers', function() {
         .expect(400, done);
     });
 
-    it('should respond error', function(done) {
+    it('should respond error "zip too small invalid"', function(done) {
       model.address.city = 'Berlin';
       model.address.zip = 12;
 
@@ -131,7 +131,7 @@ describe('HTTP: customers', function() {
         .expect(400, done);
     });
 
-    it('should respond error', function(done) {
+    it('should respond error "zip too big invalid"', function(done) {
       model.address.city = 'Berlin';
       model.address.zip = 100000;
 
@@ -170,7 +170,7 @@ describe('HTTP: customers', function() {
 
   describe('GET /customers', function() {
 
-    it('should return models', function(done) {
+    it('should respond models', function(done) {
       supertest(app).get('/customers')
         .accept('json')
         .expect([
@@ -179,7 +179,7 @@ describe('HTTP: customers', function() {
         .expect(200, done);
     });
 
-    it('should return models', function(done) {
+    it('should respond models "filtered by name"', function(done) {
       supertest(app).get('/customers')
         .query({
           filter: {
@@ -193,7 +193,19 @@ describe('HTTP: customers', function() {
         .expect(200, done);
     });
 
-    it('should return models', function(done) {
+    it('should respond empty models "filtered by name"', function(done) {
+      supertest(app).get('/customers')
+        .query({
+          filter: {
+            name: 'Joe Kaiser'
+          }
+        })
+        .accept('json')
+        .expect([])
+        .expect(200, done);
+    });
+
+    it('should respond models "filtered by email"', function(done) {
       supertest(app).get('/customers')
         .query({
           filter: {
@@ -207,7 +219,19 @@ describe('HTTP: customers', function() {
         .expect(200, done);
     });
 
-    xit('should return models', function(done) {
+    it('should respond empty models "filtered by email"', function(done) {
+      supertest(app).get('/customers')
+        .query({
+          filter: {
+            email: '@gmail'
+          }
+        })
+        .accept('json')
+        .expect([])
+        .expect(200, done);
+    });
+
+    xit('should respond models "filtered by city"', function(done) {
       supertest(app).get('/customers')
         .query({
           filter: {
@@ -223,7 +247,7 @@ describe('HTTP: customers', function() {
         .expect(200, done);
     });
 
-    it('should return models', function(done) {
+    it('should respond models "filtered by search"', function(done) {
       supertest(app).get('/customers')
         .query({
           search: 'Bo'
@@ -235,31 +259,7 @@ describe('HTTP: customers', function() {
         .expect(200, done);
     });
 
-    it('should return empty', function(done) {
-      supertest(app).get('/customers')
-        .query({
-          filter: {
-            name: 'Joe Kaiser'
-          }
-        })
-        .accept('json')
-        .expect([])
-        .expect(200, done);
-    });
-
-    it('should return empty', function(done) {
-      supertest(app).get('/customers')
-        .query({
-          filter: {
-            email: '@gmail'
-          }
-        })
-        .accept('json')
-        .expect([])
-        .expect(200, done);
-    });
-
-    it('should return models', function(done) {
+    it('should respond empty models "filtered by search"', function(done) {
       supertest(app).get('/customers')
         .query({
           search: 'jQuery'
