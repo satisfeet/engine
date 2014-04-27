@@ -9,65 +9,41 @@ describe('HTTP: customers', function() {
 
   describe('POST /customers', function() {
 
-    it('should respond error "invalid"', function(done) {
+    it('should respond "validation" error', function(done) {
       supertest(app).post('/customers')
         .accept('json')
         .expect({
-          error: 'value contains an invalid value'
+          error: 'Validation failed'
         })
         .expect(400, done);
     });
 
-    it('should respond error "name invalid"', function(done) {
-      model.name = 'W??';
+    it('should respond "validation" error', function(done) {
+      model.name = 'Walter??';
 
       supertest(app).post('/customers')
         .send(model)
         .accept('json')
         .expect({
-          error: 'name fails to match the required pattern'
+          error: 'Validation failed'
         })
         .expect(400, done);
     });
 
-    it('should respond error "email required"', function(done) {
+    it('should respond "validation" error', function(done) {
       model.name = 'Bodo Kaiser';
-
-      supertest(app).post('/customers')
-        .send(model)
-        .accept('json')
-        .expect({
-          error: 'email is required'
-        })
-        .expect(400, done);
-    });
-
-    it('should respond error "email invalid"', function(done) {
       model.email = 'bodokaiser@';
 
       supertest(app).post('/customers')
         .send(model)
         .accept('json')
         .expect({
-          error: 'email must be a valid email'
+          error: 'Validation failed'
         })
         .expect(400, done);
     });
 
-    it('should respond error "company length invalid"', function(done) {
-      model.email = 'i@bodokaiser.io';
-      model.company = 'ABC';
-
-      supertest(app).post('/customers')
-        .send(model)
-        .accept('json')
-        .expect({
-          error: 'company length must be at least 4 characters long'
-        })
-        .expect(400, done);
-    });
-
-    it('should respond error "company invalid"', function(done) {
+    it('should respond "validation" error', function(done) {
       model.email = 'i@bodokaiser.io';
       model.company = 'Satisfeet_';
 
@@ -75,37 +51,27 @@ describe('HTTP: customers', function() {
         .send(model)
         .accept('json')
         .expect({
-          error: 'company fails to match the required pattern'
+          error: 'Validation failed'
         })
         .expect(400, done);
     });
 
-    it('should respond error "street required"', function(done) {
-      model.address = {};
-      delete model.company;
+    it('should respond "validation" error', function(done) {
+      model.company = 'Satisfeet';
+      model.address = {
+        street: 'Stre'
+      };
 
       supertest(app).post('/customers')
         .send(model)
         .accept('json')
         .expect({
-          error: 'street is required'
+          error: 'Validation failed'
         })
         .expect(400, done);
     });
 
-    it('should respond error "street length invalid"', function(done) {
-      model.address.street = 'Stre';
-
-      supertest(app).post('/customers')
-        .send(model)
-        .accept('json')
-        .expect({
-          error: 'street length must be at least 5 characters long'
-        })
-        .expect(400, done);
-    });
-
-    it('should respond error "city length invalid"', function(done) {
+    it('should respond "validation" error', function(done) {
       model.address.street = 'Geiserichstr. 3';
       model.address.city = 'ab';
 
@@ -113,12 +79,12 @@ describe('HTTP: customers', function() {
         .send(model)
         .accept('json')
         .expect({
-          error: 'city length must be at least 4 characters long'
+          error: 'Validation failed'
         })
         .expect(400, done);
     });
 
-    it('should respond error "zip too small invalid"', function(done) {
+    it('should respond "validation" error', function(done) {
       model.address.city = 'Berlin';
       model.address.zip = 12;
 
@@ -126,12 +92,12 @@ describe('HTTP: customers', function() {
         .send(model)
         .accept('json')
         .expect({
-          error: 'zip must be larger than or equal to 10000'
+          error: 'Validation failed'
         })
         .expect(400, done);
     });
 
-    it('should respond error "zip too big invalid"', function(done) {
+    it('should respond "validation" error', function(done) {
       model.address.city = 'Berlin';
       model.address.zip = 100000;
 
@@ -139,12 +105,12 @@ describe('HTTP: customers', function() {
         .send(model)
         .accept('json')
         .expect({
-          error: 'zip must be less than or equal to 99999'
+          error: 'Validation failed'
         })
         .expect(400, done);
     });
 
-    it('should respond model', function(done) {
+    it('should respond "model"', function(done) {
       model.address.zip = 12105;
 
       supertest(app).post('/customers')
@@ -154,8 +120,8 @@ describe('HTTP: customers', function() {
           if (err) throw err;
 
           model = res.body;
-
-          chai.expect(model).to.have.property('_id');
+          chai.expect(model).to.not.have.property('error');
+          chai.expect(model).to.have.property('id');
           chai.expect(model).to.have.property('name', 'Bodo Kaiser');
           chai.expect(model).to.have.property('email', 'i@bodokaiser.io');
           chai.expect(model.address).to.have.property('street', 'Geiserichstr. 3');
@@ -170,16 +136,13 @@ describe('HTTP: customers', function() {
 
   describe('GET /customers', function() {
 
-    it('should respond models', function(done) {
+    it('should respond "models"', function(done) {
       supertest(app).get('/customers')
         .accept('json')
-        .expect([
-          model
-        ])
-        .expect(200, done);
+        .expect(200, [model], done);
     });
 
-    it('should respond models "filtered by name"', function(done) {
+    it('should respond "models" filtered by name', function(done) {
       supertest(app).get('/customers')
         .query({
           filter: {
@@ -187,13 +150,10 @@ describe('HTTP: customers', function() {
           }
         })
         .accept('json')
-        .expect([
-          model
-        ])
-        .expect(200, done);
+        .expect(200, [model], done);
     });
 
-    it('should respond empty models "filtered by name"', function(done) {
+    it('should respond "models" filtered by name', function(done) {
       supertest(app).get('/customers')
         .query({
           filter: {
@@ -201,11 +161,10 @@ describe('HTTP: customers', function() {
           }
         })
         .accept('json')
-        .expect([])
-        .expect(200, done);
+        .expect(200, [], done);
     });
 
-    it('should respond models "filtered by email"', function(done) {
+    it('should respond "models" filtered by email', function(done) {
       supertest(app).get('/customers')
         .query({
           filter: {
@@ -213,13 +172,10 @@ describe('HTTP: customers', function() {
           }
         })
         .accept('json')
-        .expect([
-          model
-        ])
-        .expect(200, done);
+        .expect(200, [model], done);
     });
 
-    it('should respond empty models "filtered by email"', function(done) {
+    it('should respond "models" filtered by email', function(done) {
       supertest(app).get('/customers')
         .query({
           filter: {
@@ -227,11 +183,10 @@ describe('HTTP: customers', function() {
           }
         })
         .accept('json')
-        .expect([])
-        .expect(200, done);
+        .expect(200, [], done);
     });
 
-    xit('should respond models "filtered by city"', function(done) {
+    xit('should respond "models" filtered by city', function(done) {
       supertest(app).get('/customers')
         .query({
           filter: {
@@ -241,48 +196,53 @@ describe('HTTP: customers', function() {
           }
         })
         .accept('json')
-        .expect([
-          model
-        ])
-        .expect(200, done);
+        .expect(200, [model], done);
     });
 
-    it('should respond models "filtered by search"', function(done) {
+    it('should respond "models" filtered by search', function(done) {
       supertest(app).get('/customers')
         .query({
           search: 'Bo'
         })
         .accept('json')
-        .expect([
-          model
-        ])
-        .expect(200, done);
+        .expect(200, [model], done);
     });
 
-    it('should respond empty models "filtered by search"', function(done) {
+    it('should respond "models" filtered by search', function(done) {
       supertest(app).get('/customers')
         .query({
           search: 'jQuery'
         })
         .accept('json')
-        .expect([])
-        .expect(200, done);
+        .expect(200, [], done);
     });
 
   });
 
-  describe('GET /customers/:param', function() {
+  describe('GET /customers/:id', function() {
+
+    it('should respond "not found" error', function(done) {
+      supertest(app).get('/customers/123')
+        .accept('json')
+        .expect(404, done);
+    });
+
+    it('should respond "model" by id', function(done) {
+      supertest(app).get('/customers/' + model.id)
+        .accept('json')
+        .expect(200, model, done);
+    });
 
   });
 
-  describe('PUT /customers/:param', function() {
+  describe('PUT /customers/:id', function() {
 
   });
 
-  describe('DELETE /customers/:param', function() {
+  describe('DELETE /customers/:id', function() {
 
-    it('should respond success', function(done) {
-      supertest(app).del('/customers/' + model._id)
+    it('should respond "success"', function(done) {
+      supertest(app).del('/customers/' + model.id)
         .accept('json')
         .expect(200, done);
     });
