@@ -333,6 +333,58 @@ describe('HTTP: customers', function() {
 
   describe('PUT /customers/:id', function() {
 
+    var model;
+
+    before(function(done) {
+      mongoose.models.Customer.create({
+        name: 'Pizza Joe',
+        email: 'info@pizza-joe.de'
+      }, function(err, result) {
+        if (err) throw err;
+
+        model = result.toJSON();
+
+        done();
+      });
+    });
+
+    it('should respond "not found" error', function(done) {
+      supertest(app).put('/customers/123')
+        .accept('json')
+        .expect(404, done);
+    });
+
+    it('should respond "validation" error', function(done) {
+      supertest(app).put('/customers/' + model.id)
+        .send({
+          name: '!Chuba'
+        })
+        .accept('json')
+        .expect({
+          error: 'Validation failed'
+        })
+        .expect(400, done);
+    });
+
+    it('should respond "ok" success', function(done) {
+      model.address = {
+        street: 'Potsdamer Platz 1',
+        city: 'Berlin',
+        zip: 12002
+      };
+
+      supertest(app).put('/customers/' + model.id)
+        .send(model)
+        .accept('json')
+        .expect(200, done);
+    });
+
+    after(function(done) {
+      mongoose.models.Customer.remove({
+        _id: model.id
+      }, done);
+    });
+
   });
 
   describe('DELETE /customers/:id', function() {
@@ -358,7 +410,7 @@ describe('HTTP: customers', function() {
         .expect(404, done);
     });
 
-    it('should respond success', function(done) {
+    it('should respond "ok" success', function(done) {
       supertest(app).del('/customers/' + model.id)
         .accept('json')
         .expect(200, done);
