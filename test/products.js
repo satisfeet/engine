@@ -83,13 +83,73 @@ describe('GET /products', function() {
 
 describe('GET /products/:id', function() {
 
+  before(setup);
+
+  it('should respond "OK"', function(done) {
+    supertest(app).get('/products/' + this.product.id)
+      .accept('json')
+      .expect(200, this.product, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(app).get('/products/123456')
+      .accept('json')
+      .expect(404, done);
+  });
+
+  after(cleanup);
+
 });
 
 describe('PUT /products/:id', function() {
 
+  before(setup);
+
+  it('should respond "OK"', function(done) {
+    this.product.price += 1.00;
+
+    supertest(app).put('/products/' + this.product.id)
+      .send(this.product)
+      .accept('json')
+      .expect(200, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(app).put('/products/' + this.product.id)
+      .send({
+        name: '???'
+      })
+      .accept('json')
+      .expect(400, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(app).put('/products/1234')
+      .accept('json')
+      .expect(404, done);
+  });
+
+  after(cleanup);
+
 });
 
 describe('DELETE /products/:id', function() {
+
+  before(setup);
+
+  it('should respond "OK"', function(done) {
+    supertest(app).del('/products/' + this.product.id)
+      .accept('json')
+      .expect(200, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(app).del('/products/1234')
+      .accept('json')
+      .expect(404, done);
+  });
+
+  after(cleanup);
 
 });
 
