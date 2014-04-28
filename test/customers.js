@@ -1,11 +1,10 @@
 var chai      = require('chai');
+var mongoose  = require('mongoose');
 var supertest = require('supertest');
 
 var app = require('../lib').listen();
 
 describe('HTTP: customers', function() {
-
-  var model = {};
 
   describe('POST /customers', function() {
 
@@ -19,10 +18,10 @@ describe('HTTP: customers', function() {
     });
 
     it('should respond "validation" error', function(done) {
-      model.name = 'Walter??';
-
       supertest(app).post('/customers')
-        .send(model)
+        .send({
+          name: 'Walter??'
+        })
         .accept('json')
         .expect({
           error: 'Validation failed'
@@ -31,11 +30,11 @@ describe('HTTP: customers', function() {
     });
 
     it('should respond "validation" error', function(done) {
-      model.name = 'Bodo Kaiser';
-      model.email = 'bodokaiser@';
-
       supertest(app).post('/customers')
-        .send(model)
+        .send({
+          name: 'Bodo Kaiser',
+          email: 'bodokaiser@'
+        })
         .accept('json')
         .expect({
           error: 'Validation failed'
@@ -44,11 +43,12 @@ describe('HTTP: customers', function() {
     });
 
     it('should respond "validation" error', function(done) {
-      model.email = 'i@bodokaiser.io';
-      model.company = 'Satisfeet_';
-
       supertest(app).post('/customers')
-        .send(model)
+        .send({
+          name: 'Bodo Kaiser',
+          email: 'i@bodokaiser.io',
+          company: 'Satisfeet_1'
+        })
         .accept('json')
         .expect({
           error: 'Validation failed'
@@ -57,13 +57,15 @@ describe('HTTP: customers', function() {
     });
 
     it('should respond "validation" error', function(done) {
-      model.company = 'Satisfeet';
-      model.address = {
-        street: 'Stre'
-      };
-
       supertest(app).post('/customers')
-        .send(model)
+        .send({
+          name: 'Bodo Kaiser',
+          email: 'i@bodokaiser.io',
+          company: 'Satisfeet',
+          address: {
+            street: 'Stre'
+          }
+        })
         .accept('json')
         .expect({
           error: 'Validation failed'
@@ -72,11 +74,16 @@ describe('HTTP: customers', function() {
     });
 
     it('should respond "validation" error', function(done) {
-      model.address.street = 'Geiserichstr. 3';
-      model.address.city = 'ab';
-
       supertest(app).post('/customers')
-        .send(model)
+        .send({
+          name: 'Bodo Kaiser',
+          email: 'i@bodokaiser.io',
+          company: 'Satisfeet',
+          address: {
+            street: 'Geiserichstr. 3',
+            city: 'Bo'
+          }
+        })
         .accept('json')
         .expect({
           error: 'Validation failed'
@@ -85,11 +92,17 @@ describe('HTTP: customers', function() {
     });
 
     it('should respond "validation" error', function(done) {
-      model.address.city = 'Berlin';
-      model.address.zip = 12;
-
       supertest(app).post('/customers')
-        .send(model)
+        .send({
+          name: 'Bodo Kaiser',
+          email: 'i@bodokaiser.io',
+          company: 'Satisfeet',
+          address: {
+            street: 'Geiserichstr. 3',
+            city: 'Berlin',
+            zip: 12
+          }
+        })
         .accept('json')
         .expect({
           error: 'Validation failed'
@@ -98,11 +111,17 @@ describe('HTTP: customers', function() {
     });
 
     it('should respond "validation" error', function(done) {
-      model.address.city = 'Berlin';
-      model.address.zip = 100000;
-
       supertest(app).post('/customers')
-        .send(model)
+        .send({
+          name: 'Bodo Kaiser',
+          email: 'i@bodokaiser.io',
+          company: 'Satisfeet',
+          address: {
+            street: 'Geiserichstr. 3',
+            city: 'Berlin',
+            zip: 100000
+          }
+        })
         .accept('json')
         .expect({
           error: 'Validation failed'
@@ -111,38 +130,68 @@ describe('HTTP: customers', function() {
     });
 
     it('should respond "model"', function(done) {
-      model.address.zip = 12105;
-
       supertest(app).post('/customers')
-        .send(model)
+        .send({
+          name: 'Bodo Kaiser',
+          email: 'i@bodokaiser.io',
+          company: 'Satisfeet',
+          address: {
+            street: 'Geiserichstr. 3',
+            city: 'Berlin',
+            zip: 12105
+          }
+        })
         .accept('json')
-        .expect(200, function(err, res) {
-          if (err) throw err;
+        .expect(201, done);
+    });
 
-          model = res.body;
-          chai.expect(model).to.not.have.property('error');
-          chai.expect(model).to.have.property('id');
-          chai.expect(model).to.have.property('name', 'Bodo Kaiser');
-          chai.expect(model).to.have.property('email', 'i@bodokaiser.io');
-          chai.expect(model.address).to.have.property('street', 'Geiserichstr. 3');
-          chai.expect(model.address).to.have.property('city', 'Berlin');
-          chai.expect(model.address).to.have.property('zip', 12105);
-
-          done();
-        });
+    afterEach(function(done) {
+      mongoose.models.Customer.remove({}, done);
     });
 
   });
 
   describe('GET /customers', function() {
 
+    var models;
+
+    before(function(done) {
+      mongoose.models.Customer.create([
+        {
+          name: 'Bood Kaiser',
+          email: 'i@bodokaiser.io',
+          address: {
+            street: 'Geiserichstr. 3',
+            city: 'Berlin',
+            zip: 12105
+          }
+        },
+        {
+          name: 'Carl Johnson',
+          email: 'cj@rockstar.com'
+        }
+      ], function(err, result) {
+        if (err) throw err;
+
+        models = [].slice.call(arguments, 1).map(function(model) {
+          return model.toJSON();
+        });
+
+        done();
+      });
+    });
+
     it('should respond "models"', function(done) {
       supertest(app).get('/customers')
         .accept('json')
-        .expect(200, [model], done);
+        .expect(200, models, done);
     });
 
     it('should respond "models" filtered by name', function(done) {
+      var result = models.filter(function(model) {
+        return /Bodo/.test(model.name);
+      });
+
       supertest(app).get('/customers')
         .query({
           filter: {
@@ -150,10 +199,14 @@ describe('HTTP: customers', function() {
           }
         })
         .accept('json')
-        .expect(200, [model], done);
+        .expect(200, result, done);
     });
 
     it('should respond "models" filtered by name', function(done) {
+      var result = models.filter(function(model) {
+        return /Joe Kaiser/.test(model.name);
+      });
+
       supertest(app).get('/customers')
         .query({
           filter: {
@@ -161,10 +214,14 @@ describe('HTTP: customers', function() {
           }
         })
         .accept('json')
-        .expect(200, [], done);
+        .expect(200, result, done);
     });
 
     it('should respond "models" filtered by email', function(done) {
+      var result = models.filter(function(model) {
+        return /bodokaiser.io/.test(model.email);
+      });
+
       supertest(app).get('/customers')
         .query({
           filter: {
@@ -172,21 +229,31 @@ describe('HTTP: customers', function() {
           }
         })
         .accept('json')
-        .expect(200, [model], done);
+        .expect(200, result, done);
     });
 
     it('should respond "models" filtered by email', function(done) {
+      var result = models.filter(function(model) {
+        return /rockstar/.test(model.email);
+      });
+
       supertest(app).get('/customers')
         .query({
           filter: {
-            email: '@gmail'
+            email: '@rockstar'
           }
         })
         .accept('json')
-        .expect(200, [], done);
+        .expect(200, result, done);
     });
 
     xit('should respond "models" filtered by city', function(done) {
+      var result = models.filter(function(model) {
+        if (!model.address) return false;
+
+        return /Berlin/.test(model.address.city);
+      });
+
       supertest(app).get('/customers')
         .query({
           filter: {
@@ -196,16 +263,20 @@ describe('HTTP: customers', function() {
           }
         })
         .accept('json')
-        .expect(200, [model], done);
+        .expect(200, result, done);
     });
 
     it('should respond "models" filtered by search', function(done) {
+      var result = models.filter(function(model) {
+        return /Bo/.test(model.name);
+      });
+
       supertest(app).get('/customers')
         .query({
           search: 'Bo'
         })
         .accept('json')
-        .expect(200, [model], done);
+        .expect(200, result, done);
     });
 
     it('should respond "models" filtered by search', function(done) {
@@ -217,9 +288,28 @@ describe('HTTP: customers', function() {
         .expect(200, [], done);
     });
 
+    after(function(done) {
+      mongoose.models.Customer.remove(models, done);
+    });
+
   });
 
   describe('GET /customers/:id', function() {
+
+    var model;
+
+    before(function(done) {
+      mongoose.models.Customer.create({
+        name: 'Edison Trent',
+        email: 'edison@freelancer.gov'
+      }, function(err, result) {
+        if (err) throw err;
+
+        model = result.toJSON();
+
+        done();
+      });
+    });
 
     it('should respond "not found" error', function(done) {
       supertest(app).get('/customers/123')
@@ -233,6 +323,12 @@ describe('HTTP: customers', function() {
         .expect(200, model, done);
     });
 
+    after(function(done) {
+      mongoose.models.Customer.remove({
+        _id: model.id
+      }, done);
+    });
+
   });
 
   describe('PUT /customers/:id', function() {
@@ -241,10 +337,37 @@ describe('HTTP: customers', function() {
 
   describe('DELETE /customers/:id', function() {
 
-    it('should respond "success"', function(done) {
+    var model;
+
+    before(function(done) {
+      mongoose.models.Customer.create({
+        name: 'Edison Trent',
+        email: 'edison@freelancer.gov'
+      }, function(err, result) {
+        if (err) throw err;
+
+        model = result.toJSON();
+
+        done();
+      });
+    });
+
+    it('should respond "not found" error', function(done) {
+      supertest(app).del('/customers/1234')
+        .accept('json')
+        .expect(404, done);
+    });
+
+    it('should respond success', function(done) {
       supertest(app).del('/customers/' + model.id)
         .accept('json')
         .expect(200, done);
+    });
+
+    after(function(done) {
+      mongoose.models.Customer.remove({
+        _id: model.id
+      }, done);
     });
 
   });
