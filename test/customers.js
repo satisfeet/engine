@@ -247,7 +247,7 @@ describe('HTTP: customers', function() {
         .expect(200, result, done);
     });
 
-    xit('should respond "models" filtered by city', function(done) {
+    it('should respond "models" filtered by city', function(done) {
       var result = models.filter(function(model) {
         if (!model.address) return false;
 
