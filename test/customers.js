@@ -263,7 +263,7 @@ describe('GET /customers', function() {
   });
 
   after(function(done) {
-    mongoose.models.Customer.remove(models, done);
+    mongoose.models.Customer.remove({}, done);
   });
 
 });
@@ -351,9 +351,7 @@ describe('PUT /customers/:id', function() {
   });
 
   after(function(done) {
-    mongoose.models.Customer.remove({
-      _id: model.id
-    }, done);
+    mongoose.models.Customer.remove({}, done);
   });
 
 });
@@ -388,9 +386,7 @@ describe('DELETE /customers/:id', function() {
   });
 
   after(function(done) {
-    mongoose.models.Customer.remove({
-      _id: model.id
-    }, done);
+    mongoose.models.Customer.remove({}, done);
   });
 
 });
