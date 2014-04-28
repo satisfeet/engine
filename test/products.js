@@ -68,6 +68,29 @@ describe('POST /products', function() {
 
 describe('GET /products', function() {
 
+  var models;
+
+  before(function(done) {
+    mongoose.models.Product.create([
+      { name: 'Casual Socks', price: 2.99 },
+      { name: 'Working Socks', price: 5.99 }
+    ], function(err) {
+      if (err) throw err;
+
+      models = [].slice.call(arguments, 1).map(function(model) {
+        return model.toJSON();
+      });
+
+      done();
+    });
+  });
+
+  it('should respond "OK"', function(done) {
+    supertest(app).get('/products')
+      .accept('json')
+      .expect(200, models, done);
+  });
+
 });
 
 describe('GET /products/:id', function() {
