@@ -119,53 +119,24 @@ describe('POST /customers', function() {
       .expect(400, done);
   });
 
-  afterEach(function(done) {
-    mongoose.models.Customer.remove({}, done);
-  });
+  afterEach(cleanup);
 
 });
 
 describe('GET /customers', function() {
 
-  var models;
-
-  before(function(done) {
-    mongoose.models.Customer.create([
-      {
-        name: 'Bood Kaiser',
-        email: 'i@bodokaiser.io',
-        address: {
-          street: 'Geiserichstr. 3',
-          city: 'Berlin',
-          zip: 12105
-        }
-      },
-      {
-        name: 'Carl Johnson',
-        email: 'cj@rockstar.com'
-      }
-    ], function(err, result) {
-      if (err) throw err;
-
-      models = [].slice.call(arguments, 1).map(function(model) {
-        return model.toJSON();
-      });
-
-      done();
-    });
-  });
+  before(setup);
 
   it('should respond "OK"', function(done) {
     supertest(app).get('/customers')
       .accept('json')
-      .expect(200, models, done);
+      .expect([
+        this.customer
+      ])
+      .expect(200, done);
   });
 
   it('should respond "OK"', function(done) {
-    var result = models.filter(function(model) {
-      return /Bodo/.test(model.name);
-    });
-
     supertest(app).get('/customers')
       .query({
         filter: {
@@ -173,14 +144,13 @@ describe('GET /customers', function() {
         }
       })
       .accept('json')
-      .expect(200, result, done);
+      .expect([
+        this.customer
+      ])
+      .expect(200, done);
   });
 
   it('should respond "OK"', function(done) {
-    var result = models.filter(function(model) {
-      return /Joe Kaiser/.test(model.name);
-    });
-
     supertest(app).get('/customers')
       .query({
         filter: {
@@ -188,14 +158,10 @@ describe('GET /customers', function() {
         }
       })
       .accept('json')
-      .expect(200, result, done);
+      .expect(200, [], done);
   });
 
   it('should respond "OK"', function(done) {
-    var result = models.filter(function(model) {
-      return /bodokaiser.io/.test(model.email);
-    });
-
     supertest(app).get('/customers')
       .query({
         filter: {
@@ -203,14 +169,13 @@ describe('GET /customers', function() {
         }
       })
       .accept('json')
-      .expect(200, result, done);
+      .expect([
+        this.customer
+      ])
+      .expect(200, done);
   });
 
   it('should respond "OK"', function(done) {
-    var result = models.filter(function(model) {
-      return /rockstar/.test(model.email);
-    });
-
     supertest(app).get('/customers')
       .query({
         filter: {
@@ -218,16 +183,10 @@ describe('GET /customers', function() {
         }
       })
       .accept('json')
-      .expect(200, result, done);
+      .expect(200, [], done);
   });
 
   it('should respond "OK"', function(done) {
-    var result = models.filter(function(model) {
-      if (!model.address) return false;
-
-      return /Berlin/.test(model.address.city);
-    });
-
     supertest(app).get('/customers')
       .query({
         filter: {
@@ -237,20 +196,22 @@ describe('GET /customers', function() {
         }
       })
       .accept('json')
-      .expect(200, result, done);
+      .expect([
+        this.customer
+      ])
+      .expect(200, done);
   });
 
   it('should respond "OK"', function(done) {
-    var result = models.filter(function(model) {
-      return /Bo/.test(model.name);
-    });
-
     supertest(app).get('/customers')
       .query({
         search: 'Bo'
       })
       .accept('json')
-      .expect(200, result, done);
+      .expect([
+        this.customer
+      ])
+      .expect(200, done);
   });
 
   it('should respond "OK"', function(done) {
@@ -262,33 +223,18 @@ describe('GET /customers', function() {
       .expect(200, [], done);
   });
 
-  after(function(done) {
-    mongoose.models.Customer.remove({}, done);
-  });
+  after(cleanup);
 
 });
 
 describe('GET /customers/:id', function() {
 
-  var model;
-
-  before(function(done) {
-    mongoose.models.Customer.create({
-      name: 'Edison Trent',
-      email: 'edison@freelancer.gov'
-    }, function(err, result) {
-      if (err) throw err;
-
-      model = result.toJSON();
-
-      done();
-    });
-  });
+  before(setup);
 
   it('should respond "OK"', function(done) {
-    supertest(app).get('/customers/' + model.id)
+    supertest(app).get('/customers/' + this.customer.id)
       .accept('json')
-      .expect(200, model, done);
+      .expect(200, this.customer, done);
   });
 
   it('should respond "Not Found"', function(done) {
@@ -297,46 +243,26 @@ describe('GET /customers/:id', function() {
       .expect(404, done);
   });
 
-  after(function(done) {
-    mongoose.models.Customer.remove({
-      _id: model.id
-    }, done);
-  });
+  after(cleanup);
 
 });
 
 describe('PUT /customers/:id', function() {
 
-  var model;
-
-  before(function(done) {
-    mongoose.models.Customer.create({
-      name: 'Pizza Joe',
-      email: 'info@pizza-joe.de'
-    }, function(err, result) {
-      if (err) throw err;
-
-      model = result.toJSON();
-
-      done();
-    });
-  });
+  before(setup);
 
   it('should respond "OK"', function(done) {
-    model.address = {
-      street: 'Potsdamer Platz 1',
-      city: 'Berlin',
-      zip: 12002
-    };
+    this.customer.address.street = 'Potsdamer Platz 1';
+    this.customer.address.zip = 12100;
 
-    supertest(app).put('/customers/' + model.id)
-      .send(model)
+    supertest(app).put('/customers/' + this.customer.id)
+      .send(this.customer)
       .accept('json')
       .expect(200, done);
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(app).put('/customers/' + model.id)
+    supertest(app).put('/customers/' + this.customer.id)
       .send({
         name: '!Chuba'
       })
@@ -350,28 +276,13 @@ describe('PUT /customers/:id', function() {
       .expect(404, done);
   });
 
-  after(function(done) {
-    mongoose.models.Customer.remove({}, done);
-  });
+  after(cleanup);
 
 });
 
 describe('DELETE /customers/:id', function() {
 
-  var model;
-
-  before(function(done) {
-    mongoose.models.Customer.create({
-      name: 'Edison Trent',
-      email: 'edison@freelancer.gov'
-    }, function(err, result) {
-      if (err) throw err;
-
-      model = result.toJSON();
-
-      done();
-    });
-  });
+  before(setup);
 
   it('should respond "Not Found"', function(done) {
     supertest(app).del('/customers/1234')
@@ -380,13 +291,29 @@ describe('DELETE /customers/:id', function() {
   });
 
   it('should respond "OK"', function(done) {
-    supertest(app).del('/customers/' + model.id)
+    supertest(app).del('/customers/' + this.customer.id)
       .accept('json')
       .expect(200, done);
   });
 
-  after(function(done) {
-    mongoose.models.Customer.remove({}, done);
-  });
+  after(cleanup);
 
 });
+
+function setup(done) {
+  this.customer = new mongoose.models.Customer({
+    name: 'Bodo Kaiser',
+    email: 'i@bodokaiser.io',
+    address: {
+      street: 'Geiserichstr. 3',
+      city: 'Berlin',
+      zip: 12105
+    }
+  });
+  this.customer.save(done);
+  this.customer = this.customer.toJSON();
+}
+
+function cleanup(done) {
+  mongoose.models.Customer.remove({}, done);
+}
