@@ -13,7 +13,7 @@ describe('POST /products', function() {
         price: 2.99
       })
       .accept('json')
-      .expect(201, {}, done);
+      .expect(201, done);
   });
 
   it('should respond "Bad Request"', function(done) {
@@ -60,36 +60,24 @@ describe('POST /products', function() {
       .expect(400, done);
   });
 
-  after(function(done) {
-    mongoose.models.Product.remove({}, done);
-  });
+  after(cleanup);
 
 });
 
 describe('GET /products', function() {
 
-  var models;
-
-  before(function(done) {
-    mongoose.models.Product.create([
-      { name: 'Casual Socks', price: 2.99 },
-      { name: 'Working Socks', price: 5.99 }
-    ], function(err) {
-      if (err) throw err;
-
-      models = [].slice.call(arguments, 1).map(function(model) {
-        return model.toJSON();
-      });
-
-      done();
-    });
-  });
+  before(setup);
 
   it('should respond "OK"', function(done) {
     supertest(app).get('/products')
       .accept('json')
-      .expect(200, models, done);
+      .expect([
+        this.product
+      ])
+      .expect(200, done);
   });
+
+  after(cleanup);
 
 });
 
@@ -104,3 +92,16 @@ describe('PUT /products/:id', function() {
 describe('DELETE /products/:id', function() {
 
 });
+
+function setup(done) {
+  this.product = new mongoose.models.Product({
+    name: 'Casual Socks',
+    price: 2.99
+  });
+  this.product.save(done);
+  this.product = this.product.toJSON();
+}
+
+function cleanup(done) {
+  mongoose.models.Product.remove({}, done);
+}
