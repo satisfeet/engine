@@ -1,18 +1,20 @@
 var mongoose  = require('mongoose');
 var supertest = require('supertest');
 
-var app = require('../lib').listen();
+var hooks = require('./hooks');
+
+before(hooks.setup);
 
 describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
-    supertest(app).post('/orders')
+    supertest(this.app).post('/orders')
       .accept('json')
       .expect(400, done);
   });
 
-  xit('should respond with "Bad Request"', function(done) {
-    supertest(app).post('/orders')
+  it('should respond with "Bad Request"', function(done) {
+    supertest(this.app).post('/orders')
       .send({
         customer: '123'
       })
@@ -20,10 +22,74 @@ describe('POST /orders', function() {
       .expect(400, done);
   });
 
-  afterEach(clear);
+  it('should respond with "Bad Request"', function(done) {
+    supertest(this.app).post('/orders')
+      .send({
+        customer: mongoose.mongo.ObjectID()
+      })
+      .accept('json')
+      .expect(400, done);
+  });
+
+  it('should respond with "Bad Request"', function(done) {
+    supertest(this.app).post('/orders')
+      .send({
+        customer: mongoose.mongo.ObjectID(),
+        products: [
+          {
+            product: '123'
+          }
+        ]
+      })
+      .accept('json')
+      .expect(400, done);
+  });
+
+  it('should respond with "Bad Request"', function(done) {
+    supertest(this.app).post('/orders')
+      .send({
+        customer: mongoose.mongo.ObjectID(),
+        products: [
+          {
+            product: mongoose.mongo.ObjectID()
+          }
+        ]
+      })
+      .accept('json')
+      .expect(400, done);
+  });
+
+  it('should respond with "Bad Request"', function(done) {
+    supertest(this.app).post('/orders')
+      .send({
+        customer: mongoose.mongo.ObjectID(),
+        products: [
+          {
+            product: mongoose.mongo.ObjectID(),
+            quantity: 3
+          }
+        ]
+      })
+      .accept('json')
+      .expect(400, done);
+  });
+
+  it('should respond with "Bad Request"', function(done) {
+    supertest(this.app).post('/orders')
+      .send({
+        customer: mongoose.mongo.ObjectID(),
+        products: [
+          {
+            product: mongoose.mongo.ObjectID(),
+            quantity: 3,
+            price: 0.00
+          }
+        ]
+      })
+      .accept('json')
+      .expect(400, done);
+  });
+
+  after(hooks.orders.remove);
 
 });
-
-function clear(done) {
-  mongoose.models.Order.remove({}, done);
-}

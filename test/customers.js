@@ -1,12 +1,14 @@
 var mongoose  = require('mongoose');
 var supertest = require('supertest');
 
-var app = require('../lib').listen();
+var hooks = require('./hooks');
+
+before(hooks.setup);
 
 describe('POST /customers', function() {
 
   it('should respond "Created"', function(done) {
-    supertest(app).post('/customers')
+    supertest(this.app).post('/customers')
       .send({
         name: 'Bodo Kaiser',
         email: 'i@bodokaiser.io',
@@ -22,13 +24,13 @@ describe('POST /customers', function() {
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(app).post('/customers')
+    supertest(this.app).post('/customers')
       .accept('json')
       .expect(400, done);
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(app).post('/customers')
+    supertest(this.app).post('/customers')
       .send({
         name: 'Walter??'
       })
@@ -37,7 +39,7 @@ describe('POST /customers', function() {
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(app).post('/customers')
+    supertest(this.app).post('/customers')
       .send({
         name: 'Bodo Kaiser',
         email: 'bodokaiser@'
@@ -47,7 +49,7 @@ describe('POST /customers', function() {
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(app).post('/customers')
+    supertest(this.app).post('/customers')
       .send({
         name: 'Bodo Kaiser',
         email: 'i@bodokaiser.io',
@@ -58,7 +60,7 @@ describe('POST /customers', function() {
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(app).post('/customers')
+    supertest(this.app).post('/customers')
       .send({
         name: 'Bodo Kaiser',
         email: 'i@bodokaiser.io',
@@ -72,7 +74,7 @@ describe('POST /customers', function() {
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(app).post('/customers')
+    supertest(this.app).post('/customers')
       .send({
         name: 'Bodo Kaiser',
         email: 'i@bodokaiser.io',
@@ -87,7 +89,7 @@ describe('POST /customers', function() {
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(app).post('/customers')
+    supertest(this.app).post('/customers')
       .send({
         name: 'Bodo Kaiser',
         email: 'i@bodokaiser.io',
@@ -103,7 +105,7 @@ describe('POST /customers', function() {
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(app).post('/customers')
+    supertest(this.app).post('/customers')
       .send({
         name: 'Bodo Kaiser',
         email: 'i@bodokaiser.io',
@@ -118,16 +120,16 @@ describe('POST /customers', function() {
       .expect(400, done);
   });
 
-  afterEach(cleanup);
+  afterEach(hooks.customers.remove);
 
 });
 
 describe('GET /customers', function() {
 
-  before(setup);
+  before(hooks.customers.create);
 
   it('should respond "OK"', function(done) {
-    supertest(app).get('/customers')
+    supertest(this.app).get('/customers')
       .accept('json')
       .expect([
         this.customer
@@ -136,7 +138,7 @@ describe('GET /customers', function() {
   });
 
   it('should respond "OK"', function(done) {
-    supertest(app).get('/customers')
+    supertest(this.app).get('/customers')
       .query({
         filter: {
           name: 'Bodo'
@@ -150,7 +152,7 @@ describe('GET /customers', function() {
   });
 
   it('should respond "OK"', function(done) {
-    supertest(app).get('/customers')
+    supertest(this.app).get('/customers')
       .query({
         filter: {
           name: 'Joe Kaiser'
@@ -161,7 +163,7 @@ describe('GET /customers', function() {
   });
 
   it('should respond "OK"', function(done) {
-    supertest(app).get('/customers')
+    supertest(this.app).get('/customers')
       .query({
         filter: {
           email: 'bodokaiser.io'
@@ -175,7 +177,7 @@ describe('GET /customers', function() {
   });
 
   it('should respond "OK"', function(done) {
-    supertest(app).get('/customers')
+    supertest(this.app).get('/customers')
       .query({
         filter: {
           email: '@rockstar'
@@ -186,7 +188,7 @@ describe('GET /customers', function() {
   });
 
   it('should respond "OK"', function(done) {
-    supertest(app).get('/customers')
+    supertest(this.app).get('/customers')
       .query({
         filter: {
           address: {
@@ -202,7 +204,7 @@ describe('GET /customers', function() {
   });
 
   it('should respond "OK"', function(done) {
-    supertest(app).get('/customers')
+    supertest(this.app).get('/customers')
       .query({
         search: 'Bo'
       })
@@ -214,7 +216,7 @@ describe('GET /customers', function() {
   });
 
   it('should respond "OK"', function(done) {
-    supertest(app).get('/customers')
+    supertest(this.app).get('/customers')
       .query({
         search: 'jQuery'
       })
@@ -222,52 +224,52 @@ describe('GET /customers', function() {
       .expect(200, [], done);
   });
 
-  after(cleanup);
+  after(hooks.customers.remove);
 
 });
 
 describe('GET /customers/:id', function() {
 
-  before(setup);
+  before(hooks.customers.create);
 
   it('should respond "OK"', function(done) {
-    supertest(app).get('/customers/' + this.customer.id)
+    supertest(this.app).get('/customers/' + this.customer.id)
       .accept('json')
       .expect(200, this.customer, done);
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(app).get('/customers/123')
+    supertest(this.app).get('/customers/123')
       .accept('json')
       .expect(400, done);
   });
 
   it('should respond "Not Found"', function(done) {
-    supertest(app).get('/customers/' + mongoose.mongo.ObjectID())
+    supertest(this.app).get('/customers/' + mongoose.mongo.ObjectID())
       .accept('json')
       .expect(404, done);
   });
 
-  after(cleanup);
+  after(hooks.customers.remove);
 
 });
 
 describe('PUT /customers/:id', function() {
 
-  before(setup);
+  before(hooks.customers.create);
 
   it('should respond "OK"', function(done) {
     this.customer.address.street = 'Potsdamer Platz 1';
     this.customer.address.zip = 12100;
 
-    supertest(app).put('/customers/' + this.customer.id)
+    supertest(this.app).put('/customers/' + this.customer.id)
       .send(this.customer)
       .accept('json')
       .expect(200, done);
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(app).put('/customers/' + this.customer.id)
+    supertest(this.app).put('/customers/' + this.customer.id)
       .send({
         name: '!Chuba'
       })
@@ -276,62 +278,41 @@ describe('PUT /customers/:id', function() {
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(app).put('/customers/123')
+    supertest(this.app).put('/customers/123')
       .accept('json')
       .expect(400, done);
   });
 
   it('should respond "Not Found"', function(done) {
-    supertest(app).put('/customers/' + mongoose.mongo.ObjectID())
+    supertest(this.app).put('/customers/' + mongoose.mongo.ObjectID())
       .accept('json')
       .expect(404, done);
   });
 
-  after(cleanup);
+  after(hooks.customers.remove);
 
 });
 
 describe('DELETE /customers/:id', function() {
 
-  before(setup);
+  before(hooks.customers.create);
 
   it('should respond "OK"', function(done) {
-    supertest(app).del('/customers/' + this.customer.id)
+    supertest(this.app).del('/customers/' + this.customer.id)
       .accept('json')
       .expect(200, done);
   });
-
   it('should respond "Bad Request"', function(done) {
-    supertest(app).del('/customers/123')
+    supertest(this.app).del('/customers/123')
       .accept('json')
       .expect(400, done);
   });
-
   it('should respond "Not Found"', function(done) {
-    supertest(app).del('/customers/' + mongoose.mongo.ObjectID())
+    supertest(this.app).del('/customers/' + mongoose.mongo.ObjectID())
       .accept('json')
       .expect(404, done);
   });
 
-
-  after(cleanup);
+  after(hooks.customers.remove);
 
 });
-
-function setup(done) {
-  this.customer = new mongoose.models.Customer({
-    name: 'Bodo Kaiser',
-    email: 'i@bodokaiser.io',
-    address: {
-      street: 'Geiserichstr. 3',
-      city: 'Berlin',
-      zip: 12105
-    }
-  });
-  this.customer.save(done);
-  this.customer = this.customer.toJSON();
-}
-
-function cleanup(done) {
-  mongoose.models.Customer.remove({}, done);
-}
