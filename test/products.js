@@ -1,4 +1,3 @@
-var chai      = require('chai');
 var mongoose  = require('mongoose');
 var supertest = require('supertest');
 
