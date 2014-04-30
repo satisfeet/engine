@@ -236,8 +236,14 @@ describe('GET /customers/:id', function() {
       .expect(200, this.customer, done);
   });
 
-  it('should respond "Not Found"', function(done) {
+  it('should respond "Bad Request"', function(done) {
     supertest(app).get('/customers/123')
+      .accept('json')
+      .expect(400, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(app).get('/customers/' + mongoose.mongo.ObjectID())
       .accept('json')
       .expect(404, done);
   });
@@ -269,8 +275,14 @@ describe('PUT /customers/:id', function() {
       .expect(400, done);
   });
 
-  it('should respond "Not Found"', function(done) {
+  it('should respond "Bad Request"', function(done) {
     supertest(app).put('/customers/123')
+      .accept('json')
+      .expect(400, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(app).put('/customers/' + mongoose.mongo.ObjectID())
       .accept('json')
       .expect(404, done);
   });
@@ -283,17 +295,24 @@ describe('DELETE /customers/:id', function() {
 
   before(setup);
 
-  it('should respond "Not Found"', function(done) {
-    supertest(app).del('/customers/1234')
-      .accept('json')
-      .expect(404, done);
-  });
-
   it('should respond "OK"', function(done) {
     supertest(app).del('/customers/' + this.customer.id)
       .accept('json')
       .expect(200, done);
   });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(app).del('/customers/123')
+      .accept('json')
+      .expect(400, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(app).del('/customers/' + mongoose.mongo.ObjectID())
+      .accept('json')
+      .expect(404, done);
+  });
+
 
   after(cleanup);
 
