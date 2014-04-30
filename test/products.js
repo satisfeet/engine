@@ -90,8 +90,14 @@ describe('GET /products/:id', function() {
       .expect(200, this.product, done);
   });
 
-  it('should respond "Not Found"', function(done) {
+  it('should respond "Bad Request"', function(done) {
     supertest(app).get('/products/123456')
+      .accept('json')
+      .expect(400, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(app).get('/products/' + mongoose.mongo.ObjectID())
       .accept('json')
       .expect(404, done);
   });
@@ -122,8 +128,14 @@ describe('PUT /products/:id', function() {
       .expect(400, done);
   });
 
-  it('should respond "Not Found"', function(done) {
+  it('should respond "Bad Request"', function(done) {
     supertest(app).put('/products/1234')
+      .accept('json')
+      .expect(400, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(app).put('/products/' + mongoose.mongo.ObjectID())
       .accept('json')
       .expect(404, done);
   });
@@ -142,8 +154,14 @@ describe('DELETE /products/:id', function() {
       .expect(200, done);
   });
 
-  it('should respond "Not Found"', function(done) {
+  it('should respond "Bad Request"', function(done) {
     supertest(app).del('/products/1234')
+      .accept('json')
+      .expect(400, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(app).del('/products/' + mongoose.mongo.ObjectID())
       .accept('json')
       .expect(404, done);
   });
