@@ -13,6 +13,20 @@ exports.setup = function() {
 }
 
 exports.orders = {
+  create: function(done) {
+    this.order = new mongoose.models.Order({
+      customer: this.customer.id,
+      products: [
+        {
+          product: this.product.id,
+          quantity: 2,
+          price: 1.99
+        }
+      ]
+    });
+    this.order.save(done);
+    this.order = this.order.toJSON();
+  },
   remove: function(done) {
     Order.remove({}, done);
   }
