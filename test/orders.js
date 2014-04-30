@@ -182,3 +182,33 @@ describe('POST /orders', function() {
   afterEach(hooks.orders.remove);
 
 });
+
+describe('GET /orders', function() {
+
+  before(hooks.customers.create);
+  before(hooks.products.create);
+  before(hooks.orders.create);
+
+  it('should respond "OK"', function(done) {
+    supertest(this.app).get('/orders')
+      .accept('json')
+      .expect(200, [this.order], done);
+  });
+
+  after(hooks.orders.remove);
+  after(hooks.products.remove);
+  after(hooks.customers.remove);
+
+});
+
+describe('GET /orders/:id', function() {
+
+});
+
+describe('PUT /orders/:id', function() {
+
+});
+
+describe('DELETE /orders/:id', function() {
+
+});
