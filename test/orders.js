@@ -203,12 +203,103 @@ describe('GET /orders', function() {
 
 describe('GET /orders/:id', function() {
 
+  before(hooks.customers.create);
+  before(hooks.products.create);
+  before(hooks.orders.create);
+
+  it('should respond "OK"', function(done) {
+    supertest(this.app).get('/orders/' + this.order.id)
+      .accept('json')
+      .expect(200, this.order, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).get('/orders/123456')
+      .accept('json')
+      .expect(400, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(this.app).get('/orders/' + mongoose.mongo.ObjectID())
+      .accept('json')
+      .expect(404, done);
+  });
+
+  after(hooks.orders.remove);
+  after(hooks.products.remove);
+  after(hooks.customers.remove);
+
 });
 
 describe('PUT /orders/:id', function() {
 
+  before(hooks.customers.create);
+  before(hooks.products.create);
+  before(hooks.orders.create);
+
+  it('should respond "OK"', function(done) {
+    this.order.state.shipped = new Date().toString();
+
+    supertest(this.app).put('/orders/' + this.order.id)
+      .send(this.order)
+      .accept('json')
+      .expect(200, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    this.order.customer = '123456';
+
+    supertest(this.app).put('/orders/' + this.order.id)
+      .send(this.order)
+      .accept('json')
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).put('/orders/123456')
+      .send(this.order)
+      .accept('json')
+      .expect(400, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(this.app).put('/orders/' + mongoose.mongo.ObjectID())
+      .accept('json')
+      .expect(404, done);
+  });
+
+  after(hooks.orders.remove);
+  after(hooks.products.remove);
+  after(hooks.customers.remove);
+
 });
 
 describe('DELETE /orders/:id', function() {
+
+  before(hooks.customers.create);
+  before(hooks.products.create);
+  before(hooks.orders.create);
+
+  it('should respond "OK"', function(done) {
+    supertest(this.app).del('/orders/' + this.order.id)
+      .accept('json')
+      .expect(200, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).del('/orders/123456')
+      .accept('json')
+      .expect(400, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(this.app).del('/orders/' + mongoose.mongo.ObjectID())
+      .accept('json')
+      .expect(404, done);
+  });
+
+  after(hooks.orders.remove);
+  after(hooks.products.remove);
+  after(hooks.customers.remove);
 
 });
