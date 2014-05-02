@@ -7,6 +7,9 @@ var Product = mongoose.models.Product;
 var Customer = mongoose.models.Customer;
 
 exports.setup = function() {
+  this.user = app.account.name;
+  this.pass = app.account.pass;
+
   if (!this.app) {
     this.app = app.listen();
   }

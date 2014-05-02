@@ -12,6 +12,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Created"', function(done) {
     supertest(this.app).post('/orders')
+      .auth(this.user, this.pass)
       .send({
         customer: this.customer.id,
         products: [
@@ -28,12 +29,14 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
+      .auth(this.user, this.pass)
       .accept('json')
       .expect(400, done);
   });
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
+      .auth(this.user, this.pass)
       .send({
         customer: '123'
       })
@@ -43,6 +46,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
+      .auth(this.user, this.pass)
       .send({
         customer: mongoose.mongo.ObjectID()
       })
@@ -52,6 +56,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
+      .auth(this.user, this.pass)
       .send({
         customer: this.customer.id
       })
@@ -61,6 +66,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
+      .auth(this.user, this.pass)
       .send({
         customer: this.customer.id,
         products: [
@@ -75,6 +81,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
+      .auth(this.user, this.pass)
       .send({
         customer: this.customer.id,
         products: [
@@ -89,6 +96,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
+      .auth(this.user, this.pass)
       .send({
         customer: this.customer.id,
         products: [
@@ -103,6 +111,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
+      .auth(this.user, this.pass)
       .send({
         customer: this.customer.id,
         products: [
@@ -118,6 +127,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
+      .auth(this.user, this.pass)
       .send({
         customer: this.customer.id,
         products: [
@@ -133,6 +143,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
+      .auth(this.user, this.pass)
       .send({
         customer: this.customer.id,
         products: [
@@ -148,6 +159,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
+      .auth(this.user, this.pass)
       .send({
         customer: this.customer.id,
         products: [
@@ -163,6 +175,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
+      .auth(this.user, this.pass)
       .send({
         customer: this.customer.id,
         products: [
@@ -175,6 +188,12 @@ describe('POST /orders', function() {
       })
       .accept('json')
       .expect(400, done);
+  });
+
+  it('should respond "Unauthorized"', function(done) {
+    supertest(this.app).post('/orders')
+      .accept('json')
+      .expect(401, done);
   });
 
   after(hooks.products.remove);
@@ -191,8 +210,15 @@ describe('GET /orders', function() {
 
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/orders')
+      .auth(this.user, this.pass)
       .accept('json')
       .expect(200, [this.order], done);
+  });
+
+  it('should respond "Unauthorized"', function(done) {
+    supertest(this.app).get('/orders')
+      .accept('json')
+      .expect(401, done);
   });
 
   after(hooks.orders.remove);
@@ -209,18 +235,27 @@ describe('GET /orders/:id', function() {
 
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/orders/' + this.order.id)
+      .auth(this.user, this.pass)
       .accept('json')
       .expect(200, this.order, done);
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(this.app).get('/orders/123456')
+    supertest(this.app).get('/orders/1234')
+      .auth(this.user, this.pass)
       .accept('json')
       .expect(400, done);
   });
 
+  it('should respond "Unauthorized"', function(done) {
+    supertest(this.app).get('/orders/1234')
+      .accept('json')
+      .expect(401, done);
+  });
+
   it('should respond "Not Found"', function(done) {
     supertest(this.app).get('/orders/' + mongoose.mongo.ObjectID())
+      .auth(this.user, this.pass)
       .accept('json')
       .expect(404, done);
   });
@@ -241,6 +276,7 @@ describe('PUT /orders/:id', function() {
     this.order.state.shipped = new Date().toString();
 
     supertest(this.app).put('/orders/' + this.order.id)
+      .auth(this.user, this.pass)
       .send(this.order)
       .accept('json')
       .expect(200, done);
@@ -250,20 +286,29 @@ describe('PUT /orders/:id', function() {
     this.order.customer = '123456';
 
     supertest(this.app).put('/orders/' + this.order.id)
+      .auth(this.user, this.pass)
       .send(this.order)
       .accept('json')
       .expect(400, done);
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(this.app).put('/orders/123456')
+    supertest(this.app).put('/orders/1234')
+      .auth(this.user, this.pass)
       .send(this.order)
       .accept('json')
       .expect(400, done);
   });
 
+  it('should respond "Unauthorized"', function(done) {
+    supertest(this.app).get('/orders/1234')
+      .accept('json')
+      .expect(401, done);
+  });
+
   it('should respond "Not Found"', function(done) {
     supertest(this.app).put('/orders/' + mongoose.mongo.ObjectID())
+      .auth(this.user, this.pass)
       .accept('json')
       .expect(404, done);
   });
@@ -282,18 +327,27 @@ describe('DELETE /orders/:id', function() {
 
   it('should respond "OK"', function(done) {
     supertest(this.app).del('/orders/' + this.order.id)
+      .auth(this.user, this.pass)
       .accept('json')
       .expect(200, done);
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(this.app).del('/orders/123456')
+    supertest(this.app).del('/orders/1234')
+      .auth(this.user, this.pass)
       .accept('json')
       .expect(400, done);
   });
 
+  it('should respond "Unauthorized"', function(done) {
+    supertest(this.app).del('/orders/1234')
+      .accept('json')
+      .expect(401, done);
+  });
+
   it('should respond "Not Found"', function(done) {
     supertest(this.app).del('/orders/' + mongoose.mongo.ObjectID())
+      .auth(this.user, this.pass)
       .accept('json')
       .expect(404, done);
   });

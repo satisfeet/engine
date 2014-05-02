@@ -6,6 +6,11 @@
 
   "storage": {
     "url": "mongodb://localhost/satisfeet"
+  },
+
+  "account": {
+    "name": "bodo",
+    "pass": "1234"
   }
 
 }
