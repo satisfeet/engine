@@ -6,6 +6,11 @@
 
   "storage": {
     "url": "mongodb://localhost/test"
+  },
+
+  "account": {
+    "name": "admin",
+    "pass": "1234"
   }
 
 }
