@@ -1,0 +1,16 @@
+{
+
+  "server": {
+    "port": 1000
+  },
+
+  "storage": {
+    "url": "mongodb://satisfeet:animus@oceanic.mongohq.com:10054/satisfeet"
+  },
+
+  "account": {
+    "name": "bodokaiser",
+    "pass": "erdbeere71"
+  }
+
+}
