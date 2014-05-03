@@ -2,8 +2,7 @@
 *.log
 
 # builds
-!srv/javascripts
-!srv/stylesheets
+build*
 srv/javascripts/build.js
 srv/stylesheets/build.css
 
@@ -21,7 +20,7 @@ Thumbs.db
 *~
 
 # configs
-production.*
+#production.*
 
 # packages
 node_modules
