@@ -20,14 +20,12 @@ describe('POST /customers', function() {
           zip: 12105
         }
       })
-      .accept('json')
       .expect(201, done);
   });
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).post('/customers')
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(400, done);
   });
 
@@ -37,7 +35,6 @@ describe('POST /customers', function() {
       .send({
         name: 'Walter??'
       })
-      .accept('json')
       .expect(400, done);
   });
 
@@ -48,7 +45,6 @@ describe('POST /customers', function() {
         name: 'Bodo Kaiser',
         email: 'bodokaiser@'
       })
-      .accept('json')
       .expect(400, done);
   });
 
@@ -60,7 +56,6 @@ describe('POST /customers', function() {
         email: 'i@bodokaiser.io',
         company: 'Satisfeet_1'
       })
-      .accept('json')
       .expect(400, done);
   });
 
@@ -75,7 +70,6 @@ describe('POST /customers', function() {
           street: 'Stre'
         }
       })
-      .accept('json')
       .expect(400, done);
   });
 
@@ -91,7 +85,6 @@ describe('POST /customers', function() {
           city: 'Bo'
         }
       })
-      .accept('json')
       .expect(400, done);
   });
 
@@ -108,7 +101,6 @@ describe('POST /customers', function() {
           zip: 12
         }
       })
-      .accept('json')
       .expect(400, done);
   });
 
@@ -125,14 +117,19 @@ describe('POST /customers', function() {
           zip: 100000
         }
       })
-      .accept('json')
       .expect(400, done);
   });
 
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).post('/customers')
-      .accept('json')
       .expect(401, done);
+  });
+
+  it('should respond "Not Acceptable"', function(done) {
+    supertest(this.app).post('/customers')
+      .auth(this.user, this.pass)
+      .accept('xml')
+      .expect(406, done);
   });
 
   afterEach(hooks.customers.remove);
@@ -146,7 +143,6 @@ describe('GET /customers', function() {
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/customers')
       .auth(this.user, this.pass)
-      .accept('json')
       .expect([
         this.customer
       ])
@@ -161,7 +157,6 @@ describe('GET /customers', function() {
           name: 'Bodo'
         }
       })
-      .accept('json')
       .expect([
         this.customer
       ])
@@ -176,7 +171,6 @@ describe('GET /customers', function() {
           name: 'Joe Kaiser'
         }
       })
-      .accept('json')
       .expect(200, [], done);
   });
 
@@ -188,7 +182,6 @@ describe('GET /customers', function() {
           email: 'bodokaiser.io'
         }
       })
-      .accept('json')
       .expect([
         this.customer
       ])
@@ -203,7 +196,6 @@ describe('GET /customers', function() {
           email: '@rockstar'
         }
       })
-      .accept('json')
       .expect(200, [], done);
   });
 
@@ -217,7 +209,6 @@ describe('GET /customers', function() {
           }
         }
       })
-      .accept('json')
       .expect([
         this.customer
       ])
@@ -230,7 +221,6 @@ describe('GET /customers', function() {
       .query({
         search: 'Bo'
       })
-      .accept('json')
       .expect([
         this.customer
       ])
@@ -243,14 +233,19 @@ describe('GET /customers', function() {
       .query({
         search: 'jQuery'
       })
-      .accept('json')
       .expect(200, [], done);
   });
 
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).get('/customers')
-      .accept('json')
       .expect(401, done);
+  });
+
+  it('should respond "Not Acceptable"', function(done) {
+    supertest(this.app).get('/customers')
+      .auth(this.user, this.pass)
+      .accept('xml')
+      .expect(406, done);
   });
 
   after(hooks.customers.remove);
@@ -264,28 +259,31 @@ describe('GET /customers/:id', function() {
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/customers/' + this.customer.id)
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(200, this.customer, done);
   });
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).get('/customers/1234')
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(400, done);
   });
 
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).get('/customers/1234')
-      .accept('json')
       .expect(401, done);
   });
 
   it('should respond "Not Found"', function(done) {
     supertest(this.app).get('/customers/' + mongoose.mongo.ObjectID())
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(404, done);
+  });
+
+  it('should respond "Not Acceptable"', function(done) {
+    supertest(this.app).get('/customers/' + mongoose.mongo.ObjectID())
+      .auth(this.user, this.pass)
+      .accept('xml')
+      .expect(406, done);
   });
 
   after(hooks.customers.remove);
@@ -303,7 +301,6 @@ describe('PUT /customers/:id', function() {
     supertest(this.app).put('/customers/' + this.customer.id)
       .auth(this.user, this.pass)
       .send(this.customer)
-      .accept('json')
       .expect(200, done);
   });
 
@@ -313,28 +310,31 @@ describe('PUT /customers/:id', function() {
       .send({
         name: '!Chuba'
       })
-      .accept('json')
       .expect(400, done);
   });
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).put('/customers/1234')
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(400, done);
   });
 
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).get('/customers/1234')
-      .accept('json')
       .expect(401, done);
   });
 
   it('should respond "Not Found"', function(done) {
     supertest(this.app).put('/customers/' + mongoose.mongo.ObjectID())
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(404, done);
+  });
+
+  it('should respond "Not Acceptable"', function(done) {
+    supertest(this.app).put('/customers/' + mongoose.mongo.ObjectID())
+      .auth(this.user, this.pass)
+      .accept('xml')
+      .expect(406, done);
   });
 
   after(hooks.customers.remove);
@@ -348,28 +348,31 @@ describe('DELETE /customers/:id', function() {
   it('should respond "OK"', function(done) {
     supertest(this.app).del('/customers/' + this.customer.id)
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(200, done);
   });
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).del('/customers/123')
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(400, done);
   });
 
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).get('/customers/1234')
-      .accept('json')
       .expect(401, done);
   });
 
   it('should respond "Not Found"', function(done) {
     supertest(this.app).del('/customers/' + mongoose.mongo.ObjectID())
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(404, done);
+  });
+
+  it('should respond "Not Acceptable"', function(done) {
+    supertest(this.app).del('/customers/' + mongoose.mongo.ObjectID())
+      .auth(this.user, this.pass)
+      .accept('xml')
+      .expect(406, done);
   });
 
   after(hooks.customers.remove);
