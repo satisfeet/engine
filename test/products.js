@@ -14,14 +14,12 @@ describe('POST /products', function() {
         name: 'Casual Socks',
         price: 2.99
       })
-      .accept('json')
       .expect(201, done);
   });
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).post('/products')
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(400, done);
   });
 
@@ -31,7 +29,6 @@ describe('POST /products', function() {
       .send({
         name: '?'
       })
-      .accept('json')
       .expect(400, done);
   });
 
@@ -41,7 +38,6 @@ describe('POST /products', function() {
       .send({
         name: 'Casual Socks'
       })
-      .accept('json')
       .expect(400, done);
   });
 
@@ -52,7 +48,6 @@ describe('POST /products', function() {
         name: 'Casual Socks',
         price: 100000
       })
-      .accept('json')
       .expect(400, done);
   });
 
@@ -63,14 +58,19 @@ describe('POST /products', function() {
         name: 'Casual Socks',
         price: -0.01
       })
-      .accept('json')
       .expect(400, done);
   });
 
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).post('/products')
-      .accept('json')
       .expect(401, done);
+  });
+
+  it('should respond "Not Acceptable"', function(done) {
+    supertest(this.app).post('/products')
+      .auth(this.user, this.pass)
+      .accept('xml')
+      .expect(406, done);
   });
 
   after(hooks.products.remove);
@@ -84,7 +84,6 @@ describe('GET /products', function() {
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/products')
       .auth(this.user, this.pass)
-      .accept('json')
       .expect([
         this.product
       ])
@@ -93,8 +92,14 @@ describe('GET /products', function() {
 
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).get('/products')
-      .accept('json')
       .expect(401, done);
+  });
+
+  it('should respond "Not Acceptable"', function(done) {
+    supertest(this.app).get('/products')
+      .auth(this.user, this.pass)
+      .accept('xml')
+      .expect(406, done);
   });
 
   after(hooks.products.remove);
@@ -108,28 +113,31 @@ describe('GET /products/:id', function() {
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/products/' + this.product.id)
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(200, this.product, done);
   });
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).get('/products/1234')
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(400, done);
   });
 
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).get('/products/1234')
-      .accept('json')
       .expect(401, done);
   });
 
   it('should respond "Not Found"', function(done) {
     supertest(this.app).get('/products/' + mongoose.mongo.ObjectID())
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(404, done);
+  });
+
+  it('should respond "Not Acceptable"', function(done) {
+    supertest(this.app).get('/products/' + mongoose.mongo.ObjectID())
+      .auth(this.user, this.pass)
+      .accept('xml')
+      .expect(406, done);
   });
 
   after(hooks.products.remove);
@@ -146,7 +154,6 @@ describe('PUT /products/:id', function() {
     supertest(this.app).put('/products/' + this.product.id)
       .auth(this.user, this.pass)
       .send(this.product)
-      .accept('json')
       .expect(200, done);
   });
 
@@ -156,28 +163,31 @@ describe('PUT /products/:id', function() {
       .send({
         name: '???'
       })
-      .accept('json')
       .expect(400, done);
   });
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).put('/products/1234')
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(400, done);
   });
 
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).put('/products/1234')
-      .accept('json')
       .expect(401, done);
   });
 
   it('should respond "Not Found"', function(done) {
     supertest(this.app).put('/products/' + mongoose.mongo.ObjectID())
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(404, done);
+  });
+
+  it('should respond "Not Acceptable"', function(done) {
+    supertest(this.app).put('/products/' + mongoose.mongo.ObjectID())
+      .auth(this.user, this.pass)
+      .accept('xml')
+      .expect(406, done);
   });
 
   after(hooks.products.remove);
@@ -191,28 +201,31 @@ describe('DELETE /products/:id', function() {
   it('should respond "OK"', function(done) {
     supertest(this.app).del('/products/' + this.product.id)
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(200, done);
   });
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).del('/products/1234')
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(400, done);
   });
 
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).del('/products/1234')
-      .accept('json')
       .expect(401, done);
   });
 
   it('should respond "Not Found"', function(done) {
     supertest(this.app).del('/products/' + mongoose.mongo.ObjectID())
       .auth(this.user, this.pass)
-      .accept('json')
       .expect(404, done);
+  });
+
+  it('should respond "Not Acceptable"', function(done) {
+    supertest(this.app).del('/products/' + mongoose.mongo.ObjectID())
+      .auth(this.user, this.pass)
+      .accept('xml')
+      .expect(406, done);
   });
 
   after(hooks.products.remove);
