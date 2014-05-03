@@ -148,13 +148,13 @@ describe('PUT /products/:id', function() {
 
   before(hooks.products.create);
 
-  it('should respond "OK"', function(done) {
+  it('should respond "No Content"', function(done) {
     this.product.price += 1.00;
 
     supertest(this.app).put('/products/' + this.product.id)
       .auth(this.user, this.pass)
       .send(this.product)
-      .expect(200, done);
+      .expect(204, done);
   });
 
   it('should respond "Bad Request"', function(done) {
@@ -198,10 +198,10 @@ describe('DELETE /products/:id', function() {
 
   before(hooks.products.create);
 
-  it('should respond "OK"', function(done) {
+  it('should respond "No Content"', function(done) {
     supertest(this.app).del('/products/' + this.product.id)
       .auth(this.user, this.pass)
-      .expect(200, done);
+      .expect(204, done);
   });
 
   it('should respond "Bad Request"', function(done) {

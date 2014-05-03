@@ -294,14 +294,14 @@ describe('PUT /customers/:id', function() {
 
   before(hooks.customers.create);
 
-  it('should respond "OK"', function(done) {
+  it('should respond "No Content"', function(done) {
     this.customer.address.street = 'Potsdamer Platz 1';
     this.customer.address.zip = 12100;
 
     supertest(this.app).put('/customers/' + this.customer.id)
       .auth(this.user, this.pass)
       .send(this.customer)
-      .expect(200, done);
+      .expect(204, done);
   });
 
   it('should respond "Bad Request"', function(done) {
@@ -345,10 +345,10 @@ describe('DELETE /customers/:id', function() {
 
   before(hooks.customers.create);
 
-  it('should respond "OK"', function(done) {
+  it('should respond "No Content"', function(done) {
     supertest(this.app).del('/customers/' + this.customer.id)
       .auth(this.user, this.pass)
-      .expect(200, done);
+      .expect(204, done);
   });
 
   it('should respond "Bad Request"', function(done) {
