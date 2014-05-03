@@ -273,13 +273,13 @@ describe('PUT /orders/:id', function() {
   before(hooks.products.create);
   before(hooks.orders.create);
 
-  it('should respond "OK"', function(done) {
+  it('should respond "No Content"', function(done) {
     this.order.state.shipped = new Date().toString();
 
     supertest(this.app).put('/orders/' + this.order.id)
       .auth(this.user, this.pass)
       .send(this.order)
-      .expect(200, done);
+      .expect(204, done);
   });
 
   it('should respond "Bad Request"', function(done) {
@@ -328,10 +328,10 @@ describe('DELETE /orders/:id', function() {
   before(hooks.products.create);
   before(hooks.orders.create);
 
-  it('should respond "OK"', function(done) {
+  it('should respond "No Content"', function(done) {
     supertest(this.app).del('/orders/' + this.order.id)
       .auth(this.user, this.pass)
-      .expect(200, done);
+      .expect(204, done);
   });
 
   it('should respond "Bad Request"', function(done) {
