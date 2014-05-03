@@ -1,9 +1,5 @@
 {
 
-  "name": "engine",
-
-  "security": {
-    "origin": true
-  }
+  "name": "engine"
 
 }
