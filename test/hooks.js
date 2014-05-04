@@ -1,4 +1,5 @@
 var mongoose  = require('mongoose');
+var supertest = require('supertest');
 
 var app = require('../lib');
 
@@ -6,12 +7,18 @@ var Order = mongoose.models.Order;
 var Product = mongoose.models.Product;
 var Customer = mongoose.models.Customer;
 
-exports.setup = function() {
+exports.setup = function(done) {
   this.username = app.account.username;
   this.password = app.account.password;
 
   if (!this.app) {
     this.app = app.listen();
+  }
+
+  if (!this.token) {
+    this.token = requestToken(this, done);
+  } else {
+    done();
   }
 }
 
@@ -67,3 +74,18 @@ exports.customers = {
     Customer.remove({}, done);
   }
 };
+
+function requestToken(context, done) {
+  supertest(context.app).post('/session')
+    .send({
+      username: context.username,
+      password: context.password
+    })
+    .expect(200, function(err, res) {
+      if (err) return done;
+
+      context.token = 'Bearer ' + res.body.token;
+
+      done();
+    });
+}
