@@ -9,8 +9,9 @@
   },
 
   "account": {
-    "name": "bodo",
-    "pass": "1234"
+    "username": "bodo",
+    "password": "1234",
+    "secret": "abcd"
   }
 
 }
