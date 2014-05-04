@@ -92,7 +92,7 @@ describe('DELETE /session', function() {
       .expect(401, done);
   });
 
-  xit('sshould respond "Method Not Allowed"', function(done) {
+  it('sshould respond "Method Not Allowed"', function(done) {
     supertest(this.app).del('/session')
       .set('Authorization', this.token)
       .expect(405, done);
