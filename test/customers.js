@@ -120,7 +120,7 @@ describe('POST /customers', function() {
       .expect(400, done);
   });
 
-  it('should respond "Unauthorized"', function(done) {
+  xit('should respond "Unauthorized"', function(done) {
     supertest(this.app).post('/customers')
       .expect(401, done);
   });
@@ -236,7 +236,7 @@ describe('GET /customers', function() {
       .expect(200, [], done);
   });
 
-  it('should respond "Unauthorized"', function(done) {
+  xit('should respond "Unauthorized"', function(done) {
     supertest(this.app).get('/customers')
       .expect(401, done);
   });
@@ -268,7 +268,7 @@ describe('GET /customers/:id', function() {
       .expect(400, done);
   });
 
-  it('should respond "Unauthorized"', function(done) {
+  xit('should respond "Unauthorized"', function(done) {
     supertest(this.app).get('/customers/1234')
       .expect(401, done);
   });
@@ -319,7 +319,7 @@ describe('PUT /customers/:id', function() {
       .expect(400, done);
   });
 
-  it('should respond "Unauthorized"', function(done) {
+  xit('should respond "Unauthorized"', function(done) {
     supertest(this.app).get('/customers/1234')
       .expect(401, done);
   });
@@ -357,7 +357,7 @@ describe('DELETE /customers/:id', function() {
       .expect(400, done);
   });
 
-  it('should respond "Unauthorized"', function(done) {
+  xit('should respond "Unauthorized"', function(done) {
     supertest(this.app).get('/customers/1234')
       .expect(401, done);
   });
