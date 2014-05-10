@@ -5,6 +5,21 @@ var hooks = require('./hooks');
 
 before(hooks.setup);
 
+describe('GET /session', function() {
+
+  it('should respond "No Content"', function(done) {
+    supertest(this.app).get('/session')
+      .set('Authorization', this.token)
+      .expect(204, done);
+  });
+
+  it('should respond "Unauthorized"', function(done) {
+    supertest(this.app).get('/session')
+      .expect(401, done);
+  });
+
+});
+
 describe('POST /session', function() {
 
   it('should respond "OK"', function(done) {
