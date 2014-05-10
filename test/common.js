@@ -10,13 +10,22 @@ before(hooks.setup);
 
 describe('GET /', function() {
 
-  it('should respond "No Content"', function(done) {
+  before(hooks.customers.create);
+  before(hooks.products.create);
+  before(hooks.orders.create);
+
+  it('should respond "OK"', function(done) {
     supertest(this.app).get('/')
       .set('Authorization', this.token)
       .expect('Access-Control-Allow-Origin', ORIGIN)
       .expect('Access-Control-Allow-Headers', HEADERS)
       .expect('Access-Control-Allow-Methods', METHODS)
-      .expect(204, done);
+      .expect({
+        orders: 1,
+        products: 1,
+        customers: 1
+      })
+      .expect(200, done);
   });
 
   it('should respond "Unauthorized"', function(done) {
@@ -36,6 +45,10 @@ describe('GET /', function() {
       .expect('Access-Control-Allow-Methods', METHODS)
       .expect(406, done);
   });
+
+  after(hooks.orders.remove);
+  after(hooks.products.remove);
+  after(hooks.customers.remove);
 
 });
 
