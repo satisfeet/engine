@@ -231,3 +231,12 @@ describe('DELETE /products/:id', function() {
   after(hooks.products.remove);
 
 });
+
+describe('OPTIONS /products', function() {
+
+  it('should respond "No Content"', function(done) {
+    supertest(this.app).options('/products')
+      .expect(204, done);
+  });
+
+});

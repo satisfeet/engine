@@ -38,3 +38,12 @@ describe('GET /', function() {
   });
 
 });
+
+describe('OPTIONS /', function() {
+
+  it('should respond "No Content"', function(done) {
+    supertest(this.app).options('/')
+      .expect(204, done);
+  });
+
+});
