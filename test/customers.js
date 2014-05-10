@@ -378,3 +378,12 @@ describe('DELETE /customers/:id', function() {
   after(hooks.customers.remove);
 
 });
+
+describe('OPTIONS /customers', function() {
+
+  it('should respond "No Content"', function(done) {
+    supertest(this.app).options('/customers')
+      .expect(204, done);
+  });
+
+});

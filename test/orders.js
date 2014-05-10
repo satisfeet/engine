@@ -363,3 +363,12 @@ describe('DELETE /orders/:id', function() {
   after(hooks.customers.remove);
 
 });
+
+describe('OPTIONS /orders', function() {
+
+  it('should respond "No Content"', function(done) {
+    supertest(this.app).options('/orders')
+      .expect(204, done);
+  });
+
+});
