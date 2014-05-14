@@ -1,14 +1,14 @@
-MOCHA  			= ./node_modules/.bin/mocha
+MOCHA 		= ./node_modules/.bin/mocha
 SUPERVISOR	= ./node_modules/.bin/supervisor
 
 MOCHA_FLAGS = \
-	--harmony							\
+	--harmony			\
 	--reporter spec
 
 SUPERVISOR_FLAGS = 			\
 	--harmony         		\
-	--watch etc,lib				\
-	--extensions js,json	\
+	--watch etc,lib			\
+	--extensions js,json		\
 	--no-restart-on error
 
 boot:
