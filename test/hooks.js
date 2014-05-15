@@ -8,8 +8,8 @@ var Product = mongoose.models.Product;
 var Customer = mongoose.models.Customer;
 
 exports.setup = function(done) {
-  this.username = app.account.username;
-  this.password = app.account.password;
+  this.username = app.security.username;
+  this.password = app.security.password;
 
   if (!this.app) {
     this.app = app.listen();

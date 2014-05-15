@@ -8,7 +8,7 @@
     "url": "mongodb://satisfeet:animus@oceanic.mongohq.com:10054/satisfeet"
   },
 
-  "account": {
+  "security": {
     "username": "bodokaiser",
     "password": "erdbeere71"
   }

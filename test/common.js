@@ -2,9 +2,9 @@ var supertest = require('supertest');
 
 var hooks = require('./hooks');
 
-const ORIGIN      = 'http://manager.satisfeet.me';
-const HEADERS     = 'Accept, Authorization, Content-Type';
-const METHODS     = 'GET, HEAD, PUT, POST, DELETE, OPTIONS';
+const ORIGIN  = 'http://manager.satisfeet.me';
+const HEADERS = 'Accept, Authorization, Content-Type';
+const METHODS = 'GET, HEAD, PUT, POST, DELETE, OPTIONS';
 
 before(hooks.setup);
 
