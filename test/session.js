@@ -11,22 +11,13 @@ before(hooks.setup);
 
 describe('GET /', function() {
 
-  before(hooks.customers.create);
-  before(hooks.articles.create);
-  before(hooks.orders.create);
-
-  it('should respond "OK"', function(done) {
+  it('should respond "Created"', function(done) {
     supertest(this.app).get('/')
       .set('Authorization', this.token)
       .expect('Access-Control-Allow-Origin', ORIGIN)
       .expect('Access-Control-Allow-Headers', HEADERS)
       .expect('Access-Control-Allow-Methods', METHODS)
-      .expect({
-        orders: 1,
-        articles: 1,
-        customers: 1
-      })
-      .expect(200, done);
+      .expect(204, done);
   });
 
   it('should respond "Unauthorized"', function(done) {
@@ -46,10 +37,6 @@ describe('GET /', function() {
       .expect('Access-Control-Allow-Methods', METHODS)
       .expect(406, done);
   });
-
-  after(hooks.orders.remove);
-  after(hooks.articles.remove);
-  after(hooks.customers.remove);
 
 });
 
