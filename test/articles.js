@@ -7,23 +7,29 @@ before(hooks.setup);
 
 describe('POST /articles', function() {
 
-  it('should respond "Created"', function(done) {
+  it('should respond "No Content"', function(done) {
     supertest(this.app).post('/articles')
       .set('Authorization', this.token)
       .send({
         title: 'Casual Socks',
+        iamge: {
+          url: 'http://example.org/image.jpg'
+        },
+        types: [
+          'clothing'
+        ],
         details: {
-          color: 'red',
-          size: 42
+          material: {
+            cotton: 0.78,
+            plastic: 0.22
+          }
         },
         pricing: {
           retail: 2.99
         },
-        types: [
-          'clothing'
-        ]
+        description: 'These are the lovely socks for casual use.'
       })
-      .expect(201, done);
+      .expect(204, done);
   });
 
   it('should respond "Bad Request"', function(done) {
@@ -37,15 +43,31 @@ describe('POST /articles', function() {
       .set('Authorization', this.token)
       .send({
         title: '?',
-        details: {
-          color: 'red'
-        },
+        types: [
+          'clothing'
+        ],
         pricing: {
           retail: 2.99
+        }
+      })
+      .expect(400, done);
+  });
+
+  // TODO: mongoose currently does not support validation of the parent obj
+  xit('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/articles')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        image: {
+          src: 'http://www.google.com'
         },
         types: [
           'clothing'
-        ]
+        ],
+        pricing: {
+          retail: 2.99
+        }
       })
       .expect(400, done);
   });
@@ -55,13 +77,57 @@ describe('POST /articles', function() {
       .set('Authorization', this.token)
       .send({
         title: 'Casual Socks',
+        image: {
+          url: 'htp://google.com'
+        },
+        types: [
+          'clothing'
+        ],
+        pricing: {
+          retail: 2.99
+        }
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/articles')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        types: [],
+        pricing: {
+          retail: 2.99
+        }
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/articles')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        types: [2.99],
+        pricing: {
+          retail: 2.99
+        }
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/articles')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        types: [
+          'clothing'
+        ],
         details: {},
         pricing: {
           retail: 2.99
-        },
-        types: [
-          'clothing'
-        ]
+        }
       })
       .expect(400, done);
   });
@@ -71,30 +137,12 @@ describe('POST /articles', function() {
       .set('Authorization', this.token)
       .send({
         title: 'Casual Socks',
-        pricing: {
-          retail: 2.99
-        },
         types: [
           'clothing'
-        ]
-      })
-      .expect(400, done);
-  });
-
-  it('should respond "Bad Request"', function(done) {
-    supertest(this.app).post('/articles')
-      .set('Authorization', this.token)
-      .send({
-        title: 'Casual Socks',
-        details: {
-          color: 'red'
-        },
+        ],
         pricing: {
           retail: -2.99
-        },
-        types: [
-          'clothing'
-        ]
+        }
       })
       .expect(400, done);
   });
@@ -104,14 +152,42 @@ describe('POST /articles', function() {
       .set('Authorization', this.token)
       .send({
         title: 'Casual Socks',
-        details: {
-          color: 'red'
-        },
+        types: [
+          'clothing'
+        ],
+        pricing: {
+          price: -2.99
+        }
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/articles')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        types: [
+          'clothing'
+        ],
+        pricing: {}
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/articles')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        types: [
+          'clothing'
+        ],
         pricing: {
           price: 2.99
         },
-        types: [
-          'clothing'
+        variations: [
+          'foobar'
         ]
       })
       .expect(400, done);
@@ -122,11 +198,14 @@ describe('POST /articles', function() {
       .set('Authorization', this.token)
       .send({
         title: 'Casual Socks',
-        details: {
-          color: 'red'
-        },
         types: [
           'clothing'
+        ],
+        pricing: {
+          price: 2.99
+        },
+        variations: [
+          { id: 'foobar' }
         ]
       })
       .expect(400, done);
@@ -137,13 +216,13 @@ describe('POST /articles', function() {
       .set('Authorization', this.token)
       .send({
         title: 'Casual Socks',
-        details: {
-          color: 'red'
-        },
+        types: [
+          'clothing'
+        ],
         pricing: {
-          retail: 2.99
+          price: 2.99
         },
-        types: []
+        description: ''
       })
       .expect(400, done);
   });
@@ -153,12 +232,13 @@ describe('POST /articles', function() {
       .set('Authorization', this.token)
       .send({
         title: 'Casual Socks',
-        details: {
-          color: 'red'
-        },
+        types: [
+          'clothing'
+        ],
         pricing: {
-          retail: 2.99
-        }
+          price: 2.99
+        },
+        description: '?????Ö'
       })
       .expect(400, done);
   });
@@ -168,49 +248,13 @@ describe('POST /articles', function() {
       .set('Authorization', this.token)
       .send({
         title: 'Casual Socks',
-        image: {},
-        details: {
-          color: 'red'
-        },
+        types: [
+          'clothing'
+        ],
         pricing: {
-          retail: 2.99
-        }
-      })
-      .expect(400, done);
-  });
-
-  it('should respond "Bad Request"', function(done) {
-    supertest(this.app).post('/articles')
-      .set('Authorization', this.token)
-      .send({
-        title: 'Casual Socks',
-        image: {
-          src: 'bla'
+          price: 2.99
         },
-        details: {
-          color: 'red'
-        },
-        pricing: {
-          retail: 2.99
-        }
-      })
-      .expect(400, done);
-  });
-
-  it('should respond "Bad Request"', function(done) {
-    supertest(this.app).post('/articles')
-      .set('Authorization', this.token)
-      .send({
-        title: 'Casual Socks',
-        image: {
-          url: 'hst://.com/bla'
-        },
-        details: {
-          color: 'red'
-        },
-        pricing: {
-          retail: 2.99
-        }
+        description: 'Hello these are great socks!'
       })
       .expect(400, done);
   });

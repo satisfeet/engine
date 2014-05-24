@@ -10,10 +10,10 @@ boot:
 	  	lib
 
 test:
-	NODE_ENV=test mocha 		\
+	NODE_ENV=test mocha		\
 	  --harmony 			\
 	  --reporter spec		\
-		test
+		test/articles
 
 clean:
 	@rm -rf node_modules
