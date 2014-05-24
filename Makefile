@@ -13,7 +13,7 @@ test:
 	NODE_ENV=test mocha		\
 	  --harmony 			\
 	  --reporter spec		\
-		test/articles
+		test
 
 clean:
 	@rm -rf node_modules
