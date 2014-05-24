@@ -1,7 +1,7 @@
 var mongoose  = require('mongoose');
 var supertest = require('supertest');
 
-var app = require('../lib');
+var app = require('../../lib');
 
 var Order = mongoose.models.Order;
 var Product = mongoose.models.Product;
