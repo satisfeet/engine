@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
-var Article          = mongoose.models.Article;
-var ArticleVariation = mongoose.models.ArticleVariation;
+var Article = mongoose.models.Article;
+var Variety = mongoose.models.Variety;
 
 exports.create = function(done) {
   this.article = new Article({
@@ -17,13 +17,13 @@ exports.create = function(done) {
       retail: 2.99
     },
     variations: [
-      new ArticleVariation({
+      new Variety({
         details: {
           size: '42-44',
           color: 'blue'
         }
       }),
-      new ArticleVariation({
+      new Variety({
         details: {
           size: '42-44',
           color: 'black'
