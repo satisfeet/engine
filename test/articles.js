@@ -1,3 +1,4 @@
+var lodash    = require('lodash');
 var mongoose  = require('mongoose');
 var supertest = require('supertest');
 
@@ -278,6 +279,7 @@ describe('POST /articles', function() {
 describe('GET /articles', function() {
 
   before(hooks.articles.create);
+  before(hooks.varieties.create);
 
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/articles')
@@ -300,6 +302,7 @@ describe('GET /articles', function() {
       .expect(406, done);
   });
 
+  after(hooks.varieties.remove);
   after(hooks.articles.remove);
 
 });
@@ -307,6 +310,7 @@ describe('GET /articles', function() {
 describe('GET /articles/:id', function() {
 
   before(hooks.articles.create);
+  before(hooks.varieties.create);
 
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/articles/' + this.article.id)
@@ -338,6 +342,7 @@ describe('GET /articles/:id', function() {
       .expect(406, done);
   });
 
+  after(hooks.varieties.remove);
   after(hooks.articles.remove);
 
 });

@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 
 var Article = mongoose.models.Article;
-var Variety = mongoose.models.Variety;
 
 exports.create = function(done) {
   this.article = new Article({
@@ -10,26 +9,13 @@ exports.create = function(done) {
       'clothing'
     ],
     details: {
-      size: 42,
-      color: 'red'
+      material: {
+        cotton: 0.87
+      }
     },
     pricing: {
       retail: 2.99
-    },
-    variations: [
-      new Variety({
-        details: {
-          size: '42-44',
-          color: 'blue'
-        }
-      }),
-      new Variety({
-        details: {
-          size: '42-44',
-          color: 'black'
-        }
-      })
-    ]
+    }
   });
 
   this.article.save(done);

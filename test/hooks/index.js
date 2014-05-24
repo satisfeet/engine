@@ -19,6 +19,8 @@ exports.orders = require('./orders');
 
 exports.articles = require('./articles');
 
+exports.varieties = require('./varieties');
+
 exports.customers = require('./customers');
 
 function requestToken(context, done) {
