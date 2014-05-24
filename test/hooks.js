@@ -45,8 +45,17 @@ exports.orders = {
 exports.products = {
   create: function(done) {
     this.product = new mongoose.models.Product({
-      name: 'Casual Socks',
-      price: 2.99
+      title: 'Casual Socks',
+      details: {
+        size: 42,
+        color: 'red'
+      },
+      pricing: {
+        retail: 2.99
+      },
+      types: [
+        'clothing'
+      ]
     });
     this.product.save(done);
     this.product = this.product.toJSON();

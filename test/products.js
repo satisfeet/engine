@@ -11,8 +11,17 @@ describe('POST /products', function() {
     supertest(this.app).post('/products')
       .set('Authorization', this.token)
       .send({
-        name: 'Casual Socks',
-        price: 2.99
+        title: 'Casual Socks',
+        details: {
+          color: 'red',
+          size: 42
+        },
+        pricing: {
+          retail: 2.99
+        },
+        types: [
+          'clothing'
+        ]
       })
       .expect(201, done);
   });
@@ -27,7 +36,16 @@ describe('POST /products', function() {
     supertest(this.app).post('/products')
       .set('Authorization', this.token)
       .send({
-        name: '?'
+        title: '?',
+        details: {
+          color: 'red'
+        },
+        pricing: {
+          retail: 2.99
+        },
+        types: [
+          'clothing'
+        ]
       })
       .expect(400, done);
   });
@@ -36,7 +54,14 @@ describe('POST /products', function() {
     supertest(this.app).post('/products')
       .set('Authorization', this.token)
       .send({
-        name: 'Casual Socks'
+        title: 'Casual Socks',
+        details: {},
+        pricing: {
+          retail: 2.99
+        },
+        types: [
+          'clothing'
+        ]
       })
       .expect(400, done);
   });
@@ -45,8 +70,13 @@ describe('POST /products', function() {
     supertest(this.app).post('/products')
       .set('Authorization', this.token)
       .send({
-        name: 'Casual Socks',
-        price: 100000
+        title: 'Casual Socks',
+        pricing: {
+          retail: 2.99
+        },
+        types: [
+          'clothing'
+        ]
       })
       .expect(400, done);
   });
@@ -55,8 +85,80 @@ describe('POST /products', function() {
     supertest(this.app).post('/products')
       .set('Authorization', this.token)
       .send({
-        name: 'Casual Socks',
-        price: -0.01
+        title: 'Casual Socks',
+        details: {
+          color: 'red'
+        },
+        pricing: {
+          retail: -2.99
+        },
+        types: [
+          'clothing'
+        ]
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/products')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        details: {
+          color: 'red'
+        },
+        pricing: {
+          price: 2.99
+        },
+        types: [
+          'clothing'
+        ]
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/products')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        details: {
+          color: 'red'
+        },
+        types: [
+          'clothing'
+        ]
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/products')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        details: {
+          color: 'red'
+        },
+        pricing: {
+          retail: 2.99
+        },
+        types: []
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/products')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        details: {
+          color: 'red'
+        },
+        pricing: {
+          retail: 2.99
+        }
       })
       .expect(400, done);
   });
@@ -158,17 +260,17 @@ describe('PUT /products/:id', function() {
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(this.app).put('/products/' + this.product.id)
+    supertest(this.app).put('/products/1234')
       .set('Authorization', this.token)
-      .send({
-        name: '???'
-      })
       .expect(400, done);
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(this.app).put('/products/1234')
+    supertest(this.app).put('/products/' + this.product.id)
       .set('Authorization', this.token)
+      .send({
+        title: '???'
+      })
       .expect(400, done);
   });
 
