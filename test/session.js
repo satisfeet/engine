@@ -12,7 +12,7 @@ before(hooks.setup);
 describe('GET /', function() {
 
   before(hooks.customers.create);
-  before(hooks.products.create);
+  before(hooks.articles.create);
   before(hooks.orders.create);
 
   it('should respond "OK"', function(done) {
@@ -23,7 +23,7 @@ describe('GET /', function() {
       .expect('Access-Control-Allow-Methods', METHODS)
       .expect({
         orders: 1,
-        products: 1,
+        articles: 1,
         customers: 1
       })
       .expect(200, done);
@@ -48,7 +48,7 @@ describe('GET /', function() {
   });
 
   after(hooks.orders.remove);
-  after(hooks.products.remove);
+  after(hooks.articles.remove);
   after(hooks.customers.remove);
 
 });
