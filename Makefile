@@ -1,6 +1,7 @@
 SHELL := /bin/bash
 PATH  := node_modules/.bin:$(PATH)
 
+boot: export NODE_ENV=development
 boot:
 	@supervisor			\
 	  --harmony			\
@@ -9,8 +10,9 @@ boot:
 	  --no-restart-on error		\
 	  	lib
 
+test: export NODE_ENV=test
 test:
-	NODE_ENV=test mocha		\
+	@mocha				\
 	  --harmony 			\
 	  --reporter spec		\
 		test
