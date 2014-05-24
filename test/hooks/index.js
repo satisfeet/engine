@@ -4,7 +4,7 @@ var supertest = require('supertest');
 var app = require('../../lib');
 
 var Order = mongoose.models.Order;
-var Product = mongoose.models.Product;
+var Article = mongoose.models.Article;
 var Customer = mongoose.models.Customer;
 
 exports.setup = function(done) {
@@ -26,9 +26,9 @@ exports.orders = {
   create: function(done) {
     this.order = new mongoose.models.Order({
       customer: this.customer.id,
-      products: [
+      articles: [
         {
-          product: this.product.id,
+          article: this.article.id,
           quantity: 2,
           price: 1.99
         }
@@ -42,9 +42,9 @@ exports.orders = {
   }
 };
 
-exports.products = {
+exports.articles = {
   create: function(done) {
-    this.product = new mongoose.models.Product({
+    this.article = new mongoose.models.Article({
       title: 'Casual Socks',
       details: {
         size: 42,
@@ -57,11 +57,11 @@ exports.products = {
         'clothing'
       ]
     });
-    this.product.save(done);
-    this.product = this.product.toJSON();
+    this.article.save(done);
+    this.article = this.article.toJSON();
   },
   remove: function(done) {
-    Product.remove({}, done);
+    Article.remove({}, done);
   }
 };
 
