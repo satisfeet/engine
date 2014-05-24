@@ -163,6 +163,58 @@ describe('POST /products', function() {
       .expect(400, done);
   });
 
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/products')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        image: {},
+        details: {
+          color: 'red'
+        },
+        pricing: {
+          retail: 2.99
+        }
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/products')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        image: {
+          src: 'bla'
+        },
+        details: {
+          color: 'red'
+        },
+        pricing: {
+          retail: 2.99
+        }
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/products')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        image: {
+          url: 'hst://.com/bla'
+        },
+        details: {
+          color: 'red'
+        },
+        pricing: {
+          retail: 2.99
+        }
+      })
+      .expect(400, done);
+  });
+
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).post('/products')
       .expect(401, done);
