@@ -132,13 +132,13 @@ describe('POST /customers', function() {
       .expect(406, done);
   });
 
-  afterEach(hooks.customers.remove);
+  afterEach(hooks.customer.remove);
 
 });
 
 describe('GET /customers', function() {
 
-  before(hooks.customers.create);
+  before(hooks.customer.create);
 
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/customers')
@@ -248,13 +248,13 @@ describe('GET /customers', function() {
       .expect(406, done);
   });
 
-  after(hooks.customers.remove);
+  after(hooks.customer.remove);
 
 });
 
 describe('GET /customers/:id', function() {
 
-  before(hooks.customers.create);
+  before(hooks.customer.create);
 
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/customers/' + this.customer.id)
@@ -286,13 +286,13 @@ describe('GET /customers/:id', function() {
       .expect(406, done);
   });
 
-  after(hooks.customers.remove);
+  after(hooks.customer.remove);
 
 });
 
 describe('PUT /customers/:id', function() {
 
-  before(hooks.customers.create);
+  before(hooks.customer.create);
 
   it('should respond "No Content"', function(done) {
     this.customer.address.street = 'Potsdamer Platz 1';
@@ -337,13 +337,13 @@ describe('PUT /customers/:id', function() {
       .expect(406, done);
   });
 
-  after(hooks.customers.remove);
+  after(hooks.customer.remove);
 
 });
 
 describe('DELETE /customers/:id', function() {
 
-  before(hooks.customers.create);
+  before(hooks.customer.create);
 
   it('should respond "No Content"', function(done) {
     supertest(this.app).del('/customers/' + this.customer.id)
@@ -375,7 +375,7 @@ describe('DELETE /customers/:id', function() {
       .expect(406, done);
   });
 
-  after(hooks.customers.remove);
+  after(hooks.customer.remove);
 
 });
 

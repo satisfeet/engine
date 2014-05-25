@@ -15,13 +15,13 @@ exports.setup = function(done) {
   }
 }
 
-exports.orders = require('./orders');
+exports.order = require('./order');
 
-exports.articles = require('./articles');
+exports.article = require('./article');
 
-exports.varieties = require('./varieties');
+exports.product = require('./product');
 
-exports.customers = require('./customers');
+exports.customer = require('./customer');
 
 function requestToken(context, done) {
   supertest(context.app).post('/session')
