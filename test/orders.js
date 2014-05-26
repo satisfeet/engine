@@ -7,6 +7,7 @@ before(hooks.setup);
 
 describe('POST /orders', function() {
 
+  before(hooks.product.create);
   before(hooks.article.create);
   before(hooks.customer.create);
 
@@ -189,6 +190,7 @@ describe('POST /orders', function() {
       .expect(406, done);
   });
 
+  after(hooks.product.remove);
   after(hooks.article.remove);
   after(hooks.customer.remove);
   afterEach(hooks.order.remove);
@@ -198,6 +200,7 @@ describe('POST /orders', function() {
 describe('GET /orders', function() {
 
   before(hooks.customer.create);
+  before(hooks.product.create);
   before(hooks.article.create);
   before(hooks.order.create);
 
@@ -221,6 +224,7 @@ describe('GET /orders', function() {
 
   after(hooks.order.remove);
   after(hooks.article.remove);
+  after(hooks.product.remove);
   after(hooks.customer.remove);
 
 });
@@ -228,6 +232,7 @@ describe('GET /orders', function() {
 describe('GET /orders/:id', function() {
 
   before(hooks.customer.create);
+  before(hooks.product.create);
   before(hooks.article.create);
   before(hooks.order.create);
 
@@ -263,6 +268,7 @@ describe('GET /orders/:id', function() {
 
   after(hooks.order.remove);
   after(hooks.article.remove);
+  after(hooks.product.remove);
   after(hooks.customer.remove);
 
 });
@@ -270,6 +276,7 @@ describe('GET /orders/:id', function() {
 describe('PUT /orders/:id', function() {
 
   before(hooks.customer.create);
+  before(hooks.product.create);
   before(hooks.article.create);
   before(hooks.order.create);
 
@@ -318,6 +325,7 @@ describe('PUT /orders/:id', function() {
 
   after(hooks.order.remove);
   after(hooks.article.remove);
+  after(hooks.product.remove);
   after(hooks.customer.remove);
 
 });
@@ -325,6 +333,7 @@ describe('PUT /orders/:id', function() {
 describe('DELETE /orders/:id', function() {
 
   before(hooks.customer.create);
+  before(hooks.product.create);
   before(hooks.article.create);
   before(hooks.order.create);
 
@@ -360,6 +369,7 @@ describe('DELETE /orders/:id', function() {
 
   after(hooks.order.remove);
   after(hooks.article.remove);
+  after(hooks.product.remove);
   after(hooks.customer.remove);
 
 });
