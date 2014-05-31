@@ -7,17 +7,18 @@ before(hooks.setup);
 
 describe('POST /orders', function() {
 
-  before(hooks.products.create);
-  before(hooks.customers.create);
+  before(hooks.product.create);
+  before(hooks.article.create);
+  before(hooks.customer.create);
 
   it('should respond with "Created"', function(done) {
     supertest(this.app).post('/orders')
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        products: [
+        articles: [
           {
-            product: this.product.id,
+            article: this.article.id,
             quantity: 2,
             price: 0.01
           }
@@ -64,9 +65,9 @@ describe('POST /orders', function() {
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        products: [
+        articles: [
           {
-            product: '123'
+            article: '123'
           }
         ]
       })
@@ -78,9 +79,9 @@ describe('POST /orders', function() {
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        products: [
+        articles: [
           {
-            product: mongoose.mongo.ObjectID()
+            article: mongoose.mongo.ObjectID()
           }
         ]
       })
@@ -92,9 +93,9 @@ describe('POST /orders', function() {
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        products: [
+        articles: [
           {
-            product: this.product.id
+            article: this.article.id
           }
         ]
       })
@@ -106,9 +107,9 @@ describe('POST /orders', function() {
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        products: [
+        articles: [
           {
-            product: this.product.id,
+            article: this.article.id,
             quantity: 0
           }
         ]
@@ -121,9 +122,9 @@ describe('POST /orders', function() {
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        products: [
+        articles: [
           {
-            product: this.product.id,
+            article: this.article.id,
             quantity: -1
           }
         ]
@@ -136,9 +137,9 @@ describe('POST /orders', function() {
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        products: [
+        articles: [
           {
-            product: this.product.id,
+            article: this.article.id,
             quantity: 1.1
           }
         ]
@@ -151,9 +152,9 @@ describe('POST /orders', function() {
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        products: [
+        articles: [
           {
-            product: this.product.id,
+            article: this.article.id,
             quantity: 2
           }
         ]
@@ -166,9 +167,9 @@ describe('POST /orders', function() {
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        products: [
+        articles: [
           {
-            product: this.product.id,
+            article: this.article.id,
             quantity: 2,
             price: -0.01
           }
@@ -189,17 +190,19 @@ describe('POST /orders', function() {
       .expect(406, done);
   });
 
-  after(hooks.products.remove);
-  after(hooks.customers.remove);
-  afterEach(hooks.orders.remove);
+  after(hooks.product.remove);
+  after(hooks.article.remove);
+  after(hooks.customer.remove);
+  afterEach(hooks.order.remove);
 
 });
 
 describe('GET /orders', function() {
 
-  before(hooks.customers.create);
-  before(hooks.products.create);
-  before(hooks.orders.create);
+  before(hooks.customer.create);
+  before(hooks.product.create);
+  before(hooks.article.create);
+  before(hooks.order.create);
 
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/orders')
@@ -219,17 +222,19 @@ describe('GET /orders', function() {
       .expect(406, done);
   });
 
-  after(hooks.orders.remove);
-  after(hooks.products.remove);
-  after(hooks.customers.remove);
+  after(hooks.order.remove);
+  after(hooks.article.remove);
+  after(hooks.product.remove);
+  after(hooks.customer.remove);
 
 });
 
 describe('GET /orders/:id', function() {
 
-  before(hooks.customers.create);
-  before(hooks.products.create);
-  before(hooks.orders.create);
+  before(hooks.customer.create);
+  before(hooks.product.create);
+  before(hooks.article.create);
+  before(hooks.order.create);
 
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/orders/' + this.order.id)
@@ -261,17 +266,19 @@ describe('GET /orders/:id', function() {
       .expect(406, done);
   });
 
-  after(hooks.orders.remove);
-  after(hooks.products.remove);
-  after(hooks.customers.remove);
+  after(hooks.order.remove);
+  after(hooks.article.remove);
+  after(hooks.product.remove);
+  after(hooks.customer.remove);
 
 });
 
 describe('PUT /orders/:id', function() {
 
-  before(hooks.customers.create);
-  before(hooks.products.create);
-  before(hooks.orders.create);
+  before(hooks.customer.create);
+  before(hooks.product.create);
+  before(hooks.article.create);
+  before(hooks.order.create);
 
   it('should respond "No Content"', function(done) {
     this.order.state.shipped = new Date().toString();
@@ -316,17 +323,19 @@ describe('PUT /orders/:id', function() {
       .expect(406, done);
   });
 
-  after(hooks.orders.remove);
-  after(hooks.products.remove);
-  after(hooks.customers.remove);
+  after(hooks.order.remove);
+  after(hooks.article.remove);
+  after(hooks.product.remove);
+  after(hooks.customer.remove);
 
 });
 
 describe('DELETE /orders/:id', function() {
 
-  before(hooks.customers.create);
-  before(hooks.products.create);
-  before(hooks.orders.create);
+  before(hooks.customer.create);
+  before(hooks.product.create);
+  before(hooks.article.create);
+  before(hooks.order.create);
 
   it('should respond "No Content"', function(done) {
     supertest(this.app).del('/orders/' + this.order.id)
@@ -358,9 +367,10 @@ describe('DELETE /orders/:id', function() {
       .expect(406, done);
   });
 
-  after(hooks.orders.remove);
-  after(hooks.products.remove);
-  after(hooks.customers.remove);
+  after(hooks.order.remove);
+  after(hooks.article.remove);
+  after(hooks.product.remove);
+  after(hooks.customer.remove);
 
 });
 
