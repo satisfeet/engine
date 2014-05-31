@@ -1,3 +1,4 @@
+var lodash    = require('lodash');
 var mongoose  = require('mongoose');
 var supertest = require('supertest');
 
@@ -7,14 +8,29 @@ before(hooks.setup);
 
 describe('POST /products', function() {
 
-  it('should respond "Created"', function(done) {
+  it('should respond "No Content"', function(done) {
     supertest(this.app).post('/products')
       .set('Authorization', this.token)
       .send({
-        name: 'Casual Socks',
-        price: 2.99
+        title: 'Casual Socks',
+        iamge: {
+          url: 'http://example.org/image.jpg'
+        },
+        types: [
+          'clothing'
+        ],
+        details: {
+          material: {
+            cotton: 0.78,
+            plastic: 0.22
+          }
+        },
+        pricing: {
+          retail: 2.99
+        },
+        description: 'These are the lovely socks for casual use.'
       })
-      .expect(201, done);
+      .expect(204, done);
   });
 
   it('should respond "Bad Request"', function(done) {
@@ -27,7 +43,13 @@ describe('POST /products', function() {
     supertest(this.app).post('/products')
       .set('Authorization', this.token)
       .send({
-        name: '?'
+        title: '?',
+        types: [
+          'clothing'
+        ],
+        pricing: {
+          retail: 2.99
+        }
       })
       .expect(400, done);
   });
@@ -36,7 +58,13 @@ describe('POST /products', function() {
     supertest(this.app).post('/products')
       .set('Authorization', this.token)
       .send({
-        name: 'Casual Socks'
+        title: 'Casual Socks',
+        types: [
+          'clothing'
+        ],
+        pricing: {
+          retail: -2.99
+        }
       })
       .expect(400, done);
   });
@@ -45,8 +73,13 @@ describe('POST /products', function() {
     supertest(this.app).post('/products')
       .set('Authorization', this.token)
       .send({
-        name: 'Casual Socks',
-        price: 100000
+        title: 'Casual Socks',
+        types: [
+          'clothing'
+        ],
+        pricing: {
+          price: -2.99
+        }
       })
       .expect(400, done);
   });
@@ -55,8 +88,95 @@ describe('POST /products', function() {
     supertest(this.app).post('/products')
       .set('Authorization', this.token)
       .send({
-        name: 'Casual Socks',
-        price: -0.01
+        title: 'Casual Socks',
+        types: [
+          'clothing'
+        ],
+        pricing: {}
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/products')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        types: [
+          'clothing'
+        ],
+        pricing: {
+          price: 2.99
+        },
+        variations: [
+          'foobar'
+        ]
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/products')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        types: [
+          'clothing'
+        ],
+        pricing: {
+          price: 2.99
+        },
+        variations: [
+          { id: 'foobar' }
+        ]
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/products')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        types: [
+          'clothing'
+        ],
+        pricing: {
+          price: 2.99
+        },
+        description: ''
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/products')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        types: [
+          'clothing'
+        ],
+        pricing: {
+          price: 2.99
+        },
+        description: '?????Ö'
+      })
+      .expect(400, done);
+  });
+
+  it('should respond "Bad Request"', function(done) {
+    supertest(this.app).post('/products')
+      .set('Authorization', this.token)
+      .send({
+        title: 'Casual Socks',
+        types: [
+          'clothing'
+        ],
+        pricing: {
+          price: 2.99
+        },
+        description: 'Hello these are great socks!'
       })
       .expect(400, done);
   });
@@ -73,13 +193,13 @@ describe('POST /products', function() {
       .expect(406, done);
   });
 
-  after(hooks.products.remove);
+  after(hooks.product.remove);
 
 });
 
 describe('GET /products', function() {
 
-  before(hooks.products.create);
+  before(hooks.product.create);
 
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/products')
@@ -102,13 +222,13 @@ describe('GET /products', function() {
       .expect(406, done);
   });
 
-  after(hooks.products.remove);
+  after(hooks.product.remove);
 
 });
 
 describe('GET /products/:id', function() {
 
-  before(hooks.products.create);
+  before(hooks.product.create);
 
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/products/' + this.product.id)
@@ -140,13 +260,13 @@ describe('GET /products/:id', function() {
       .expect(406, done);
   });
 
-  after(hooks.products.remove);
+  after(hooks.product.remove);
 
 });
 
 describe('PUT /products/:id', function() {
 
-  before(hooks.products.create);
+  before(hooks.product.create);
 
   it('should respond "No Content"', function(done) {
     this.product.price += 1.00;
@@ -158,17 +278,17 @@ describe('PUT /products/:id', function() {
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(this.app).put('/products/' + this.product.id)
+    supertest(this.app).put('/products/1234')
       .set('Authorization', this.token)
-      .send({
-        name: '???'
-      })
       .expect(400, done);
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(this.app).put('/products/1234')
+    supertest(this.app).put('/products/' + this.product.id)
       .set('Authorization', this.token)
+      .send({
+        title: '???'
+      })
       .expect(400, done);
   });
 
@@ -190,13 +310,13 @@ describe('PUT /products/:id', function() {
       .expect(406, done);
   });
 
-  after(hooks.products.remove);
+  after(hooks.product.remove);
 
 });
 
 describe('DELETE /products/:id', function() {
 
-  before(hooks.products.create);
+  before(hooks.product.create);
 
   it('should respond "No Content"', function(done) {
     supertest(this.app).del('/products/' + this.product.id)
@@ -228,7 +348,7 @@ describe('DELETE /products/:id', function() {
       .expect(406, done);
   });
 
-  after(hooks.products.remove);
+  after(hooks.product.remove);
 
 });
 

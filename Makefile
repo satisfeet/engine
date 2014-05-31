@@ -1,20 +1,23 @@
-MOCHA 		= ./node_modules/.bin/mocha
-SUPERVISOR	= ./node_modules/.bin/supervisor
+SHELL := /bin/bash
+PATH  := node_modules/.bin:$(PATH)
 
-MOCHA_FLAGS = \
-	--harmony			\
-	--reporter spec
-
-SUPERVISOR_FLAGS = 			\
-	--harmony         		\
-	--watch etc,lib			\
-	--extensions js,json		\
-	--no-restart-on error
-
+boot: export NODE_ENV=development
 boot:
-	$(SUPERVISOR) $(SUPERVISOR_FLAGS) lib
+	@supervisor			\
+	  --harmony			\
+	  --watch etc,lib		\
+	  --extensions js,json		\
+	  --no-restart-on error		\
+	  	lib
 
+test: export NODE_ENV=test
 test:
-	NODE_ENV=test $(MOCHA) $(MOCHA_FLAGS) test
+	@mocha				\
+	  --harmony 			\
+	  --reporter spec		\
+		test
 
-.PHONY: test
+clean:
+	@rm -rf node_modules
+
+.PHONY: test clean
