@@ -15,7 +15,7 @@ test:
 	@mocha				\
 	  --harmony 			\
 	  --reporter spec		\
-		test
+		test/customers
 
 clean:
 	@rm -rf node_modules

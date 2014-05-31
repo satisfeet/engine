@@ -7,7 +7,7 @@ before(hooks.setup);
 
 describe('POST /customers', function() {
 
-  it('should respond "Created"', function(done) {
+  it.only('should respond "Created"', function(done) {
     supertest(this.app).post('/customers')
       .set('Authorization', this.token)
       .send({
