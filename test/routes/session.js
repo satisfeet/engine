@@ -5,14 +5,14 @@ const ORIGIN  = 'http://manager.satisfeet.me';
 const HEADERS = 'Accept, Authorization, Content-Type';
 const METHODS = 'GET, HEAD, PUT, POST, DELETE, OPTIONS';
 
-var hooks = require('./hooks');
+var hooks = require('../hooks');
 
 before(hooks.setup);
 
 describe('GET /', function() {
 
   it('should respond "Created"', function(done) {
-    supertest(this.app).get('/')
+    supertest(this.server).get('/')
       .set('Authorization', this.token)
       .expect('Access-Control-Allow-Origin', ORIGIN)
       .expect('Access-Control-Allow-Headers', HEADERS)
@@ -21,7 +21,7 @@ describe('GET /', function() {
   });
 
   it('should respond "Unauthorized"', function(done) {
-    supertest(this.app).get('/')
+    supertest(this.server).get('/')
       .expect('Access-Control-Allow-Origin', ORIGIN)
       .expect('Access-Control-Allow-Headers', HEADERS)
       .expect('Access-Control-Allow-Methods', METHODS)
@@ -29,7 +29,7 @@ describe('GET /', function() {
   });
 
   it('sshould respond "Not Acceptable"', function(done) {
-    supertest(this.app).get('/')
+    supertest(this.server).get('/')
       .set('Authorization', this.token)
       .accept('xml')
       .expect('Access-Control-Allow-Origin', ORIGIN)
@@ -43,7 +43,7 @@ describe('GET /', function() {
 describe('OPTIONS /', function() {
 
   it('should respond "No Content"', function(done) {
-    supertest(this.app).options('/')
+    supertest(this.server).options('/')
       .expect(204, done);
   });
 
@@ -52,13 +52,13 @@ describe('OPTIONS /', function() {
 describe('GET /session', function() {
 
   it('should respond "No Content"', function(done) {
-    supertest(this.app).get('/session')
+    supertest(this.server).get('/session')
       .set('Authorization', this.token)
       .expect(204, done);
   });
 
   it('should respond "Unauthorized"', function(done) {
-    supertest(this.app).get('/session')
+    supertest(this.server).get('/session')
       .expect(401, done);
   });
 
@@ -67,7 +67,7 @@ describe('GET /session', function() {
 describe('POST /session', function() {
 
   it('should respond "OK"', function(done) {
-    supertest(this.app).post('/session')
+    supertest(this.server).post('/session')
       .send({
         username: this.username,
         password: this.password
@@ -83,12 +83,12 @@ describe('POST /session', function() {
   });
 
   it('should respond "Unauthorized"', function(done) {
-    supertest(this.app).post('/session')
+    supertest(this.server).post('/session')
       .expect(401, done);
   });
 
   it('should respond "Unauthorized"', function(done) {
-    supertest(this.app).post('/session')
+    supertest(this.server).post('/session')
       .send({
         username: this.username
       })
@@ -96,7 +96,7 @@ describe('POST /session', function() {
   });
 
   it('should respond "Unauthorized"', function(done) {
-    supertest(this.app).post('/session')
+    supertest(this.server).post('/session')
       .send({
         password: this.password
       })
@@ -108,12 +108,12 @@ describe('POST /session', function() {
 describe('DELETE /session', function() {
 
   it('should respond "Unauthorized"', function(done) {
-    supertest(this.app).del('/session')
+    supertest(this.server).del('/session')
       .expect(401, done);
   });
 
   it('sshould respond "Method Not Allowed"', function(done) {
-    supertest(this.app).del('/session')
+    supertest(this.server).del('/session')
       .set('Authorization', this.token)
       .expect(405, done);
   });
@@ -123,7 +123,7 @@ describe('DELETE /session', function() {
 describe('OPTIONS /session', function() {
 
   it('should respond "No Content"', function(done) {
-    supertest(this.app).options('/session')
+    supertest(this.server).options('/session')
       .expect(204, done);
   });
 

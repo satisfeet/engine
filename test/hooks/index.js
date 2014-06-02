@@ -3,10 +3,16 @@ var supertest = require('supertest');
 var app = require('../../lib');
 
 exports.setup = function(done) {
+  this.app = app;
+
   this.username = app.security.username;
   this.password = app.security.password;
 
-  if (!this.app) this.app = app.listen();
+  this.db = app.context.db;
+
+  this.Customer = app.context.Customer;
+
+  if (!this.server) this.server = app.listen();
 
   if (!this.token) {
     this.token = requestToken(this, done);
@@ -21,10 +27,10 @@ exports.article = require('./article');
 
 exports.product = require('./product');
 
-exports.customer = require('./customer');
+exports.customers = require('./customer');
 
 function requestToken(context, done) {
-  supertest(context.app).post('/session')
+  supertest(context.server).post('/session')
     .send({
       username: context.username,
       password: context.password
