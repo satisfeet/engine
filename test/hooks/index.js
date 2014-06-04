@@ -10,6 +10,7 @@ exports.setup = function(done) {
 
   this.db = app.context.db;
 
+  this.Product  = app.context.Product;
   this.Customer = app.context.Customer;
 
   if (!this.server) this.server = app.listen();
@@ -26,6 +27,8 @@ exports.order = require('./order');
 exports.article = require('./article');
 
 exports.product = require('./product');
+
+exports.products = require('./product2');
 
 exports.customers = require('./customer');
 
