@@ -1,21 +1,20 @@
-var mongoose = require('mongoose');
+var co = require('co');
 
-var Customer = mongoose.models.Customer;
-
-exports.create = function(done) {
-  this.customer = new Customer({
-    name: 'Bodo Kaiser',
-    email: 'i@bodokaiser.io',
-    address: {
-      street: 'Geiserichstr. 3',
-      city: 'Berlin',
-      zip: 12105
-    }
-  });
-  this.customer.save(done);
-  this.customer = this.customer.toJSON();
+var customer = {
+  name: 'Bodo Kaiser',
+  email: 'i@bodokaiser.io',
+  company: 'Satisfeet',
+  address: {
+    street: 'Geiserichstr. 3',
+    city: 'Berlin',
+    zip: 12105
+  }
 };
 
-exports.remove = function(done) {
-  Customer.remove({}, done);
-};
+exports.create = co(function*() {
+  this.customer = yield this.db.get('customers').insert(customer);
+});
+
+exports.remove = co(function*() {
+  this.customer = yield this.db.get('customers').remove();
+});
