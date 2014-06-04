@@ -11,7 +11,7 @@ describe('Customer', function() {
 
   beforeEach(hooks.customers.create);
 
-  describe('#find', function() {
+  describe('#find([params])', function() {
 
     it('should return array of Customer', co(function*() {
       var result = yield this.Customer.find();
@@ -64,7 +64,7 @@ describe('Customer', function() {
 
   });
 
-  describe('#findOne', function() {
+  describe('#findOne(params)', function() {
 
     it('should return null', co(function*() {
       var result = yield this.Customer.findOne({ id: '1234' });
@@ -85,7 +85,7 @@ describe('Customer', function() {
 
   });
 
-  describe('#insert', function() {
+  describe('#insert(object)', function() {
 
     it('should return Customer', co(function*() {
       var result = yield this.Customer.insert({
@@ -103,7 +103,7 @@ describe('Customer', function() {
 
   });
 
-  describe('#update', function() {
+  describe('#update(model)', function() {
 
     it('should update Customer', co(function*() {
       var customer = new this.Customer(this.customer);
@@ -121,7 +121,7 @@ describe('Customer', function() {
 
   });
 
-  describe('#remove', function() {
+  describe('#remove(model)', function() {
 
     it('should remove customer', co(function*() {
       var customer = new this.Customer(this.customer);
@@ -137,7 +137,7 @@ describe('Customer', function() {
 
   });
 
-  describe('#validate', function() {
+  describe('#validate(model)', function() {
 
     it('should throw ValidationError', function() {
       var self = this;
@@ -175,133 +175,137 @@ describe('Customer', function() {
 
   });
 
-  describe('Class: Customer', function() {
+  afterEach(hooks.customers.remove);
 
-    describe('#id', function() {
+});
 
-      it('should get "_id" as string', function() {
-        var customer = new this.Customer(this.customer);
+describe('Customer.prototype', function() {
 
-	chai.expect(customer)
-          .to.have.property('id')
-          .to.equal(this.customer._id.toString());
-      });
+  before(hooks.customers.create);
 
-    });
+  describe('#id', function() {
 
-    describe('#name', function() {
+    it('should get "_id" as string', function() {
+      var customer = new this.Customer(this.customer);
 
-      it('should get "name"', function() {
-        var customer = new this.Customer(this.customer);
-
-	chai.expect(customer)
-          .to.have.property('name')
-          .to.equal(this.customer.name);
-      });
-
-      it('should set "name"', function() {
-        var customer = new this.Customer(this.customer);
-
-	customer.name = 'Bo Kaiser';
-
-	chai.expect(customer)
-          .to.have.property('attributes')
-          .to.have.property('name')
-          .to.equal('Bo Kaiser');
-      });
-
-    });
-
-    describe('#image', function() {
-
-      it('should get "image"', function() {
-        var customer = new this.Customer(this.customer);
-
-	var url = gravatar.url(customer.email, {
-	  default: 'mm',
-	  size: '500'
-	});
-
-	chai.expect(customer)
-          .to.have.property('image')
-          .to.eql({ url: url });
-      });
-
-    });
-
-    describe('#company', function() {
-
-      it('should get "company"', function() {
-        var customer = new this.Customer(this.customer);
-
-	chai.expect(customer)
-          .to.have.property('company')
-          .to.equal(this.customer.company);
-      });
-
-      it('should set "company"', function() {
-        var customer = new this.Customer(this.customer);
-
-	customer.company = 'Satisfeet UG';
-
-	chai.expect(customer)
-          .to.have.property('attributes')
-	  .to.have.property('company')
-          .to.equal('Satisfeet UG');
-      });
-
-    });
-
-    describe('#address', function() {
-
-      it('should get "address"', function() {
-        var customer = new this.Customer(this.customer);
-
-	chai.expect(customer)
-	  .to.have.property('address')
-          .to.equal(this.customer.address);
-      });
-
-      it('should set "address"', function() {
-        var customer = new this.Customer(this.customer);
-
-	customer.address.street = 'Mehringdamm 12';
-
-	chai.expect(customer)
-          .to.have.property('attributes')
-          .to.have.property('address')
-          .to.have.property('street')
-          .to.equal('Mehringdamm 12');
-      });
-
-    });
-
-    describe('#toObject()', function() {
-
-      it('should return object "attributes"', function() {
-        var customer = new this.Customer(this.customer);
-
-        chai.expect(customer.toObject())
-          .to.have.keys('_id', 'name', 'email', 'company', 'address');
-      });
-
-    });
-
-    describe('#toJSON()', function() {
-
-      it('should return json "attributes"', function() {
-        var customer = new this.Customer(this.customer);
-
-        chai.expect(customer.toJSON())
-          .to.have.keys('id', 'image', 'name', 'email', 'company', 'address')
-          .to.have.property('id')
-          .to.equal(this.customer._id.toString());
-      });
-
+      chai.expect(customer)
+        .to.have.property('id')
+        .to.equal(this.customer._id.toString());
     });
 
   });
 
-  afterEach(hooks.customers.remove);
+  describe('#name', function() {
+
+    it('should get "name"', function() {
+      var customer = new this.Customer(this.customer);
+
+      chai.expect(customer)
+        .to.have.property('name')
+        .to.equal(this.customer.name);
+    });
+
+    it('should set "name"', function() {
+      var customer = new this.Customer(this.customer);
+
+      customer.name = 'Bo Kaiser';
+
+      chai.expect(customer)
+        .to.have.property('attributes')
+        .to.have.property('name')
+        .to.equal('Bo Kaiser');
+    });
+
+  });
+
+  describe('#image', function() {
+
+    it('should get "image"', function() {
+      var customer = new this.Customer(this.customer);
+
+      var url = gravatar.url(customer.email, {
+        default: 'mm',
+        size: '500'
+      });
+
+      chai.expect(customer)
+        .to.have.property('image')
+        .to.eql({ url: url });
+    });
+
+  });
+
+  describe('#company', function() {
+
+    it('should get "company"', function() {
+      var customer = new this.Customer(this.customer);
+
+      chai.expect(customer)
+        .to.have.property('company')
+        .to.equal(this.customer.company);
+    });
+
+    it('should set "company"', function() {
+      var customer = new this.Customer(this.customer);
+
+      customer.company = 'Satisfeet UG';
+
+      chai.expect(customer)
+        .to.have.property('attributes')
+        .to.have.property('company')
+        .to.equal('Satisfeet UG');
+    });
+
+  });
+
+  describe('#address', function() {
+
+    it('should get "address"', function() {
+      var customer = new this.Customer(this.customer);
+
+      chai.expect(customer)
+        .to.have.property('address')
+        .to.equal(this.customer.address);
+    });
+
+    it('should set "address"', function() {
+      var customer = new this.Customer(this.customer);
+
+      customer.address.street = 'Mehringdamm 12';
+
+      chai.expect(customer)
+        .to.have.property('attributes')
+        .to.have.property('address')
+        .to.have.property('street')
+        .to.equal('Mehringdamm 12');
+    });
+
+  });
+
+  describe('#toObject()', function() {
+
+    it('should return object "attributes"', function() {
+      var customer = new this.Customer(this.customer);
+
+      chai.expect(customer.toObject())
+        .to.have.keys('_id', 'name', 'email', 'company', 'address');
+    });
+
+  });
+
+  describe('#toJSON()', function() {
+
+    it('should return json "attributes"', function() {
+      var customer = new this.Customer(this.customer);
+
+      chai.expect(customer.toJSON())
+        .to.have.keys('id', 'image', 'name', 'email', 'company', 'address')
+        .to.have.property('id')
+        .to.equal(this.customer._id.toString());
+    });
+
+  });
+
+  after(hooks.customers.remove);
 
 });
