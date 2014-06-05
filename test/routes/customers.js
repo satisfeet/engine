@@ -1,13 +1,13 @@
 var mongoose  = require('mongoose');
 var supertest = require('supertest');
 
-var hooks = require('./hooks');
+var hooks = require('../hooks');
 
 before(hooks.setup);
 
 describe('POST /customers', function() {
 
-  it('should respond "Created"', function(done) {
+  it('ssshould respond "Created"', function(done) {
     supertest(this.app).post('/customers')
       .set('Authorization', this.token)
       .send({
@@ -262,15 +262,15 @@ describe('GET /customers/:id', function() {
       .expect(200, this.customer, done);
   });
 
-  it('should respond "Bad Request"', function(done) {
-    supertest(this.app).get('/customers/1234')
-      .set('Authorization', this.token)
-      .expect(400, done);
-  });
-
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).get('/customers/1234')
       .expect(401, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(this.app).get('/customers/1234')
+      .set('Authorization', this.token)
+      .expect(404, done);
   });
 
   it('should respond "Not Found"', function(done) {
@@ -313,15 +313,15 @@ describe('PUT /customers/:id', function() {
       .expect(400, done);
   });
 
-  it('should respond "Bad Request"', function(done) {
-    supertest(this.app).put('/customers/1234')
-      .set('Authorization', this.token)
-      .expect(400, done);
-  });
-
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).get('/customers/1234')
       .expect(401, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(this.app).put('/customers/1234')
+      .set('Authorization', this.token)
+      .expect(404, done);
   });
 
   it('should respond "Not Found"', function(done) {
@@ -351,15 +351,15 @@ describe('DELETE /customers/:id', function() {
       .expect(204, done);
   });
 
-  it('should respond "Bad Request"', function(done) {
-    supertest(this.app).del('/customers/123')
-      .set('Authorization', this.token)
-      .expect(400, done);
-  });
-
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).get('/customers/1234')
       .expect(401, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(this.app).del('/customers/1234')
+      .set('Authorization', this.token)
+      .expect(404, done);
   });
 
   it('should respond "Not Found"', function(done) {

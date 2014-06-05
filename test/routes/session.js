@@ -5,7 +5,7 @@ const ORIGIN  = 'http://manager.satisfeet.me';
 const HEADERS = 'Accept, Authorization, Content-Type';
 const METHODS = 'GET, HEAD, PUT, POST, DELETE, OPTIONS';
 
-var hooks = require('./hooks');
+var hooks = require('../hooks');
 
 before(hooks.setup);
 

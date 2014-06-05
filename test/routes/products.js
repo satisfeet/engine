@@ -2,7 +2,7 @@ var lodash    = require('lodash');
 var mongoose  = require('mongoose');
 var supertest = require('supertest');
 
-var hooks = require('./hooks');
+var hooks = require('../hooks');
 
 before(hooks.setup);
 
