@@ -13,12 +13,6 @@ describe('POST /products', function() {
       .set('Authorization', this.token)
       .send({
         title: 'Casual Socks',
-        iamge: {
-          url: 'http://example.org/image.jpg'
-        },
-        types: [
-          'clothing'
-        ],
         details: {
           material: {
             cotton: 0.78,
@@ -27,8 +21,7 @@ describe('POST /products', function() {
         },
         pricing: {
           retail: 2.99
-        },
-        description: 'These are the lovely socks for casual use.'
+        }
       })
       .expect(204, done);
   });
@@ -236,15 +229,15 @@ describe('GET /products/:id', function() {
       .expect(200, this.product, done);
   });
 
-  it('should respond "Bad Request"', function(done) {
-    supertest(this.app).get('/products/1234')
-      .set('Authorization', this.token)
-      .expect(400, done);
-  });
-
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).get('/products/1234')
       .expect(401, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(this.app).get('/products/1234')
+      .set('Authorization', this.token)
+      .expect(404, done);
   });
 
   it('should respond "Not Found"', function(done) {
@@ -278,12 +271,6 @@ describe('PUT /products/:id', function() {
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(this.app).put('/products/1234')
-      .set('Authorization', this.token)
-      .expect(400, done);
-  });
-
-  it('should respond "Bad Request"', function(done) {
     supertest(this.app).put('/products/' + this.product.id)
       .set('Authorization', this.token)
       .send({
@@ -295,6 +282,12 @@ describe('PUT /products/:id', function() {
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).put('/products/1234')
       .expect(401, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(this.app).put('/products/1234')
+      .set('Authorization', this.token)
+      .expect(404, done);
   });
 
   it('should respond "Not Found"', function(done) {
@@ -324,15 +317,15 @@ describe('DELETE /products/:id', function() {
       .expect(204, done);
   });
 
-  it('should respond "Bad Request"', function(done) {
-    supertest(this.app).del('/products/1234')
-      .set('Authorization', this.token)
-      .expect(400, done);
-  });
-
   it('should respond "Unauthorized"', function(done) {
     supertest(this.app).del('/products/1234')
       .expect(401, done);
+  });
+
+  it('should respond "Not Found"', function(done) {
+    supertest(this.app).del('/products/1234')
+      .set('Authorization', this.token)
+      .expect(404, done);
   });
 
   it('should respond "Not Found"', function(done) {
