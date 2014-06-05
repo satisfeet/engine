@@ -1,3 +1,4 @@
+var mongoose  = require('mongoose');
 var supertest = require('supertest');
 
 var app = require('../../lib');
@@ -7,6 +8,8 @@ exports.setup = function(done) {
   this.password = app.security.password;
 
   if (!this.app) this.app = app.listen();
+
+  this.Customer = mongoose.models.Customer;
 
   if (!this.token) {
     this.token = requestToken(this, done);
