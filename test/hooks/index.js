@@ -9,6 +9,7 @@ exports.setup = function(done) {
 
   if (!this.app) this.app = app.listen();
 
+  this.Article  = mongoose.models.Article;
   this.Product  = mongoose.models.Product;
   this.Customer = mongoose.models.Customer;
 

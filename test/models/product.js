@@ -9,8 +9,25 @@ describe('Product', function() {
 
   describe('#get', function() {
 
-    it('should return details', function() {
-      var product = new this.Product();
+    xit('should return variations', function() {
+      var product = new this.Product({
+        articles: [
+          { variation: { color: 'red', size: 42 } },
+          { variation: { color: 'blue', size: 42 } }
+        ]
+      });
+
+      chai.expect(product)
+        .to.have.property('variations')
+        .to.have.property('color')
+        .to.be.an('array')
+        .to.contain('red')
+        .to.contain('blue');
+      chai.expect(product)
+        .to.have.property('variations')
+        .to.have.property('color')
+        .to.be.an('array')
+        .to.contain(42);
     });
 
   });
