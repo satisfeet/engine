@@ -9,9 +9,10 @@ exports.setup = function(done) {
 
   if (!this.app) this.app = app.listen();
 
+  this.Customer = mongoose.models.Customer;
   this.Article  = mongoose.models.Article;
   this.Product  = mongoose.models.Product;
-  this.Customer = mongoose.models.Customer;
+  this.Process  = mongoose.models.Process;
 
   if (!this.token) {
     this.token = requestToken(this, done);
@@ -20,7 +21,7 @@ exports.setup = function(done) {
   }
 }
 
-exports.order = require('./order');
+exports.process = require('./process');
 
 exports.article = require('./article');
 
