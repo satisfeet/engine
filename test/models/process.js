@@ -100,7 +100,7 @@ describe('Process', function() {
         chai.expect(err)
           .to.be.an.instanceOf(Error)
           .to.have.property('errors')
-          .to.have.property('items.0.article')
+          .to.have.property('items.0.product')
           .to.have.property('type')
           .to.equal('required');
 

@@ -7,7 +7,11 @@ exports.create = function(done) {
     title: 'Casual Socks',
     pricing: {
       retail: 2.99
-    }
+    },
+    derivates: [
+      { color: 'red', size: 42 },
+      { color: 'blue', size: 42 }
+    ]
   });
 
   this.product.save(done);

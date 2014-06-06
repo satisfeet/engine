@@ -7,7 +7,7 @@ exports.create = function(done) {
     customer: this.customer.id,
     items: [
       {
-        article: this.article.id,
+        product: this.product.id,
         quantity: 2,
         price: 1.99
       }
