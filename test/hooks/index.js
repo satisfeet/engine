@@ -10,7 +10,6 @@ exports.setup = function(done) {
   if (!this.app) this.app = app.listen();
 
   this.Customer = mongoose.models.Customer;
-  this.Article  = mongoose.models.Article;
   this.Product  = mongoose.models.Product;
   this.Process  = mongoose.models.Process;
 
@@ -22,8 +21,6 @@ exports.setup = function(done) {
 }
 
 exports.process = require('./process');
-
-exports.article = require('./article');
 
 exports.product = require('./product');
 

@@ -8,7 +8,6 @@ before(hooks.setup);
 describe('POST /processes', function() {
 
   before(hooks.product.create);
-  before(hooks.article.create);
   before(hooks.customer.create);
 
   it('should respond with "Created"', function(done) {
@@ -18,7 +17,7 @@ describe('POST /processes', function() {
         customer: this.customer.id,
         items: [
           {
-            article: this.article.id,
+            product: this.product.id,
             quantity: 2,
             price: 0.01
           }
@@ -67,7 +66,7 @@ describe('POST /processes', function() {
         customer: this.customer.id,
         items: [
           {
-            article: '123'
+            product: '123'
           }
         ]
       })
@@ -81,7 +80,7 @@ describe('POST /processes', function() {
         customer: this.customer.id,
         items: [
           {
-            article: mongoose.mongo.ObjectID()
+            product: mongoose.mongo.ObjectID()
           }
         ]
       })
@@ -95,7 +94,7 @@ describe('POST /processes', function() {
         customer: this.customer.id,
         items: [
           {
-            article: this.article.id
+            product: this.product.id,
           }
         ]
       })
@@ -109,7 +108,7 @@ describe('POST /processes', function() {
         customer: this.customer.id,
         items: [
           {
-            article: this.article.id,
+            product: this.product.id,
             quantity: 0
           }
         ]
@@ -124,7 +123,7 @@ describe('POST /processes', function() {
         customer: this.customer.id,
         items: [
           {
-            article: this.article.id,
+            product: this.product.id,
             quantity: -1
           }
         ]
@@ -139,7 +138,7 @@ describe('POST /processes', function() {
         customer: this.customer.id,
         items: [
           {
-            article: this.article.id,
+            product: this.product.id,
             quantity: 1.1
           }
         ]
@@ -154,7 +153,7 @@ describe('POST /processes', function() {
         customer: this.customer.id,
         items: [
           {
-            article: this.article.id,
+            product: this.product.id,
             quantity: 2
           }
         ]
@@ -169,7 +168,7 @@ describe('POST /processes', function() {
         customer: this.customer.id,
         items: [
           {
-            article: this.article.id,
+            product: this.product.id,
             quantity: 2,
             price: -0.01
           }
@@ -191,7 +190,6 @@ describe('POST /processes', function() {
   });
 
   after(hooks.product.remove);
-  after(hooks.article.remove);
   after(hooks.customer.remove);
   afterEach(hooks.process.remove);
 
@@ -201,7 +199,6 @@ describe('GET /processes', function() {
 
   before(hooks.customer.create);
   before(hooks.product.create);
-  before(hooks.article.create);
   before(hooks.process.create);
 
   it('should respond "OK"', function(done) {
@@ -223,7 +220,6 @@ describe('GET /processes', function() {
   });
 
   after(hooks.process.remove);
-  after(hooks.article.remove);
   after(hooks.product.remove);
   after(hooks.customer.remove);
 
@@ -233,7 +229,6 @@ describe('GET /processes/:id', function() {
 
   before(hooks.customer.create);
   before(hooks.product.create);
-  before(hooks.article.create);
   before(hooks.process.create);
 
   it('should respond "OK"', function(done) {
@@ -267,7 +262,6 @@ describe('GET /processes/:id', function() {
   });
 
   after(hooks.process.remove);
-  after(hooks.article.remove);
   after(hooks.product.remove);
   after(hooks.customer.remove);
 
@@ -277,7 +271,6 @@ describe('PUT /processes/:id', function() {
 
   before(hooks.customer.create);
   before(hooks.product.create);
-  before(hooks.article.create);
   before(hooks.process.create);
 
   it('should respond "No Content"', function(done) {
@@ -324,7 +317,6 @@ describe('PUT /processes/:id', function() {
   });
 
   after(hooks.process.remove);
-  after(hooks.article.remove);
   after(hooks.product.remove);
   after(hooks.customer.remove);
 
@@ -334,7 +326,6 @@ describe('DELETE /processes/:id', function() {
 
   before(hooks.customer.create);
   before(hooks.product.create);
-  before(hooks.article.create);
   before(hooks.process.create);
 
   it('should respond "No Content"', function(done) {
@@ -368,7 +359,6 @@ describe('DELETE /processes/:id', function() {
   });
 
   after(hooks.process.remove);
-  after(hooks.article.remove);
   after(hooks.product.remove);
   after(hooks.customer.remove);
 
