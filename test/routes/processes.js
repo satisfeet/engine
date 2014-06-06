@@ -23,7 +23,7 @@ describe('POST /processes', function() {
           }
         ]
       })
-      .expect(201, {}, done);
+      .expect(201, done);
   });
 
   it('should respond with "Bad Request"', function(done) {
