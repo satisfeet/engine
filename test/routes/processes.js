@@ -5,18 +5,18 @@ var hooks = require('../hooks');
 
 before(hooks.setup);
 
-describe('POST /orders', function() {
+describe('POST /processes', function() {
 
   before(hooks.product.create);
   before(hooks.article.create);
   before(hooks.customer.create);
 
   it('should respond with "Created"', function(done) {
-    supertest(this.app).post('/orders')
+    supertest(this.app).post('/processes')
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        articles: [
+        items: [
           {
             article: this.article.id,
             quantity: 2,
@@ -24,17 +24,17 @@ describe('POST /orders', function() {
           }
         ]
       })
-      .expect(201, done);
+      .expect(201, {}, done);
   });
 
   it('should respond with "Bad Request"', function(done) {
-    supertest(this.app).post('/orders')
+    supertest(this.app).post('/processes')
       .set('Authorization', this.token)
       .expect(400, done);
   });
 
   it('should respond with "Bad Request"', function(done) {
-    supertest(this.app).post('/orders')
+    supertest(this.app).post('/processes')
       .set('Authorization', this.token)
       .send({
         customer: '123'
@@ -43,7 +43,7 @@ describe('POST /orders', function() {
   });
 
   it('should respond with "Bad Request"', function(done) {
-    supertest(this.app).post('/orders')
+    supertest(this.app).post('/processes')
       .set('Authorization', this.token)
       .send({
         customer: mongoose.mongo.ObjectID()
@@ -52,7 +52,7 @@ describe('POST /orders', function() {
   });
 
   it('should respond with "Bad Request"', function(done) {
-    supertest(this.app).post('/orders')
+    supertest(this.app).post('/processes')
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id
@@ -61,11 +61,11 @@ describe('POST /orders', function() {
   });
 
   it('should respond with "Bad Request"', function(done) {
-    supertest(this.app).post('/orders')
+    supertest(this.app).post('/processes')
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        articles: [
+        items: [
           {
             article: '123'
           }
@@ -75,11 +75,11 @@ describe('POST /orders', function() {
   });
 
   it('should respond with "Bad Request"', function(done) {
-    supertest(this.app).post('/orders')
+    supertest(this.app).post('/processes')
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        articles: [
+        items: [
           {
             article: mongoose.mongo.ObjectID()
           }
@@ -89,11 +89,11 @@ describe('POST /orders', function() {
   });
 
   it('should respond with "Bad Request"', function(done) {
-    supertest(this.app).post('/orders')
+    supertest(this.app).post('/processes')
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        articles: [
+        items: [
           {
             article: this.article.id
           }
@@ -103,11 +103,11 @@ describe('POST /orders', function() {
   });
 
   it('should respond with "Bad Request"', function(done) {
-    supertest(this.app).post('/orders')
+    supertest(this.app).post('/processes')
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        articles: [
+        items: [
           {
             article: this.article.id,
             quantity: 0
@@ -118,11 +118,11 @@ describe('POST /orders', function() {
   });
 
   it('should respond with "Bad Request"', function(done) {
-    supertest(this.app).post('/orders')
+    supertest(this.app).post('/processes')
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        articles: [
+        items: [
           {
             article: this.article.id,
             quantity: -1
@@ -133,11 +133,11 @@ describe('POST /orders', function() {
   });
 
   it('should respond with "Bad Request"', function(done) {
-    supertest(this.app).post('/orders')
+    supertest(this.app).post('/processes')
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        articles: [
+        items: [
           {
             article: this.article.id,
             quantity: 1.1
@@ -148,11 +148,11 @@ describe('POST /orders', function() {
   });
 
   it('should respond with "Bad Request"', function(done) {
-    supertest(this.app).post('/orders')
+    supertest(this.app).post('/processes')
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        articles: [
+        items: [
           {
             article: this.article.id,
             quantity: 2
@@ -163,11 +163,11 @@ describe('POST /orders', function() {
   });
 
   it('should respond with "Bad Request"', function(done) {
-    supertest(this.app).post('/orders')
+    supertest(this.app).post('/processes')
       .set('Authorization', this.token)
       .send({
         customer: this.customer.id,
-        articles: [
+        items: [
           {
             article: this.article.id,
             quantity: 2,
@@ -179,12 +179,12 @@ describe('POST /orders', function() {
   });
 
   it('should respond "Unauthorized"', function(done) {
-    supertest(this.app).post('/orders')
+    supertest(this.app).post('/processes')
       .expect(401, done);
   });
 
   it('should respond "Not Acceptable"', function(done) {
-    supertest(this.app).post('/orders')
+    supertest(this.app).post('/processes')
       .set('Authorization', this.token)
       .accept('xml')
       .expect(406, done);
@@ -193,191 +193,191 @@ describe('POST /orders', function() {
   after(hooks.product.remove);
   after(hooks.article.remove);
   after(hooks.customer.remove);
-  afterEach(hooks.order.remove);
+  afterEach(hooks.process.remove);
 
 });
 
-describe('GET /orders', function() {
+describe('GET /processes', function() {
 
   before(hooks.customer.create);
   before(hooks.product.create);
   before(hooks.article.create);
-  before(hooks.order.create);
+  before(hooks.process.create);
 
   it('should respond "OK"', function(done) {
-    supertest(this.app).get('/orders')
+    supertest(this.app).get('/processes')
       .set('Authorization', this.token)
-      .expect(200, [this.order], done);
+      .expect(200, [this.process], done);
   });
 
   it('should respond "Unauthorized"', function(done) {
-    supertest(this.app).get('/orders')
+    supertest(this.app).get('/processes')
       .expect(401, done);
   });
 
   it('should respond "Not Acceptable"', function(done) {
-    supertest(this.app).get('/orders')
+    supertest(this.app).get('/processes')
       .set('Authorization', this.token)
       .accept('xml')
       .expect(406, done);
   });
 
-  after(hooks.order.remove);
+  after(hooks.process.remove);
   after(hooks.article.remove);
   after(hooks.product.remove);
   after(hooks.customer.remove);
 
 });
 
-describe('GET /orders/:id', function() {
+describe('GET /processes/:id', function() {
 
   before(hooks.customer.create);
   before(hooks.product.create);
   before(hooks.article.create);
-  before(hooks.order.create);
+  before(hooks.process.create);
 
   it('should respond "OK"', function(done) {
-    supertest(this.app).get('/orders/' + this.order.id)
+    supertest(this.app).get('/processes/' + this.process.id)
       .set('Authorization', this.token)
-      .expect(200, this.order, done);
+      .expect(200, this.process, done);
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(this.app).get('/orders/1234')
+    supertest(this.app).get('/processes/1234')
       .set('Authorization', this.token)
       .expect(400, done);
   });
 
   it('should respond "Unauthorized"', function(done) {
-    supertest(this.app).get('/orders/1234')
+    supertest(this.app).get('/processes/1234')
       .expect(401, done);
   });
 
   it('should respond "Not Found"', function(done) {
-    supertest(this.app).get('/orders/' + mongoose.mongo.ObjectID())
+    supertest(this.app).get('/processes/' + mongoose.mongo.ObjectID())
       .set('Authorization', this.token)
       .expect(404, done);
   });
 
   it('should respond "Not Acceptable"', function(done) {
-    supertest(this.app).get('/orders/' + mongoose.mongo.ObjectID())
+    supertest(this.app).get('/processes/' + mongoose.mongo.ObjectID())
       .set('Authorization', this.token)
       .accept('xml')
       .expect(406, done);
   });
 
-  after(hooks.order.remove);
+  after(hooks.process.remove);
   after(hooks.article.remove);
   after(hooks.product.remove);
   after(hooks.customer.remove);
 
 });
 
-describe('PUT /orders/:id', function() {
+describe('PUT /processes/:id', function() {
 
   before(hooks.customer.create);
   before(hooks.product.create);
   before(hooks.article.create);
-  before(hooks.order.create);
+  before(hooks.process.create);
 
   it('should respond "No Content"', function(done) {
-    this.order.state.shipped = new Date().toString();
+    this.process.state.shipped = new Date().toString();
 
-    supertest(this.app).put('/orders/' + this.order.id)
+    supertest(this.app).put('/processes/' + this.process.id)
       .set('Authorization', this.token)
-      .send(this.order)
+      .send(this.process)
       .expect(204, done);
   });
 
   it('should respond "Bad Request"', function(done) {
-    this.order.customer = '123456';
+    this.process.customer = '123456';
 
-    supertest(this.app).put('/orders/' + this.order.id)
+    supertest(this.app).put('/processes/' + this.process.id)
       .set('Authorization', this.token)
-      .send(this.order)
+      .send(this.process)
       .expect(400, done);
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(this.app).put('/orders/1234')
+    supertest(this.app).put('/processes/1234')
       .set('Authorization', this.token)
-      .send(this.order)
+      .send(this.process)
       .expect(400, done);
   });
 
   it('should respond "Unauthorized"', function(done) {
-    supertest(this.app).get('/orders/1234')
+    supertest(this.app).get('/processes/1234')
       .expect(401, done);
   });
 
   it('should respond "Not Found"', function(done) {
-    supertest(this.app).put('/orders/' + mongoose.mongo.ObjectID())
+    supertest(this.app).put('/processes/' + mongoose.mongo.ObjectID())
       .set('Authorization', this.token)
       .expect(404, done);
   });
 
   it('should respond "Not Acceptable"', function(done) {
-    supertest(this.app).put('/orders/' + mongoose.mongo.ObjectID())
+    supertest(this.app).put('/processes/' + mongoose.mongo.ObjectID())
       .set('Authorization', this.token)
       .accept('xml')
       .expect(406, done);
   });
 
-  after(hooks.order.remove);
+  after(hooks.process.remove);
   after(hooks.article.remove);
   after(hooks.product.remove);
   after(hooks.customer.remove);
 
 });
 
-describe('DELETE /orders/:id', function() {
+describe('DELETE /processes/:id', function() {
 
   before(hooks.customer.create);
   before(hooks.product.create);
   before(hooks.article.create);
-  before(hooks.order.create);
+  before(hooks.process.create);
 
   it('should respond "No Content"', function(done) {
-    supertest(this.app).del('/orders/' + this.order.id)
+    supertest(this.app).del('/processes/' + this.process.id)
       .set('Authorization', this.token)
       .expect(204, done);
   });
 
   it('should respond "Bad Request"', function(done) {
-    supertest(this.app).del('/orders/1234')
+    supertest(this.app).del('/processes/1234')
       .set('Authorization', this.token)
       .expect(400, done);
   });
 
   it('should respond "Unauthorized"', function(done) {
-    supertest(this.app).del('/orders/1234')
+    supertest(this.app).del('/processes/1234')
       .expect(401, done);
   });
 
   it('should respond "Not Found"', function(done) {
-    supertest(this.app).del('/orders/' + mongoose.mongo.ObjectID())
+    supertest(this.app).del('/processes/' + mongoose.mongo.ObjectID())
       .set('Authorization', this.token)
       .expect(404, done);
   });
 
   it('should respond "Not Acceptable"', function(done) {
-    supertest(this.app).del('/orders/' + mongoose.mongo.ObjectID())
+    supertest(this.app).del('/processes/' + mongoose.mongo.ObjectID())
       .set('Authorization', this.token)
       .accept('xml')
       .expect(406, done);
   });
 
-  after(hooks.order.remove);
+  after(hooks.process.remove);
   after(hooks.article.remove);
   after(hooks.product.remove);
   after(hooks.customer.remove);
 
 });
 
-describe('OPTIONS /orders', function() {
+describe('OPTIONS /processes', function() {
 
   it('should respond "No Content"', function(done) {
-    supertest(this.app).options('/orders')
+    supertest(this.app).options('/processes')
       .expect(204, done);
   });
 
