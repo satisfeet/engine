@@ -9,9 +9,9 @@ exports.setup = function(done) {
 
   if (!this.app) this.app = app.listen();
 
-  this.Customer = mongoose.models.Customer;
   this.Product  = mongoose.models.Product;
   this.Process  = mongoose.models.Process;
+  this.Customer = mongoose.models.Customer;
 
   if (!this.token) {
     this.token = requestToken(this, done);

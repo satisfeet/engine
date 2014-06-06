@@ -13,6 +13,9 @@ describe('POST /products', function() {
       .set('Authorization', this.token)
       .send({
         title: 'Casual Socks',
+        image: {
+          url: 'http://satisfeet.me/images/casual.jpg'
+        },
         details: {
           material: {
             cotton: 0.78,
@@ -21,7 +24,8 @@ describe('POST /products', function() {
         },
         pricing: {
           retail: 2.99
-        }
+        },
+        description: 'foobar foobar foobar foobar foobar foobar blalbalblabla'
       })
       .expect(204, done);
   });
@@ -37,9 +41,9 @@ describe('POST /products', function() {
       .set('Authorization', this.token)
       .send({
         title: '?',
-        types: [
-          'clothing'
-        ],
+        image: {
+          url: 'http://satisfeet.me/images/casual.jpg'
+        },
         pricing: {
           retail: 2.99
         }
@@ -52,9 +56,9 @@ describe('POST /products', function() {
       .set('Authorization', this.token)
       .send({
         title: 'Casual Socks',
-        types: [
-          'clothing'
-        ],
+        image: {
+          url: 'http://satisfeet.me/images/casual.jpg'
+        },
         pricing: {
           retail: -2.99
         }
@@ -67,9 +71,9 @@ describe('POST /products', function() {
       .set('Authorization', this.token)
       .send({
         title: 'Casual Socks',
-        types: [
-          'clothing'
-        ],
+        image: {
+          url: null
+        },
         pricing: {
           price: -2.99
         }
@@ -82,9 +86,9 @@ describe('POST /products', function() {
       .set('Authorization', this.token)
       .send({
         title: 'Casual Socks',
-        types: [
-          'clothing'
-        ],
+        image: {
+          url: 'http://satisfeet.me/images/casual.jpg'
+        },
         pricing: {}
       })
       .expect(400, done);
@@ -95,14 +99,14 @@ describe('POST /products', function() {
       .set('Authorization', this.token)
       .send({
         title: 'Casual Socks',
-        types: [
-          'clothing'
-        ],
+        image: {
+          url: 'http://satisfeet.me/images/casual.jpg'
+        },
         pricing: {
           price: 2.99
         },
-        variations: [
-          'foobar'
+        derivates: [
+          { foo: 'bar' }
         ]
       })
       .expect(400, done);
@@ -119,8 +123,8 @@ describe('POST /products', function() {
         pricing: {
           price: 2.99
         },
-        variations: [
-          { id: 'foobar' }
+        derivates: [
+          { variations: null }
         ]
       })
       .expect(400, done);
@@ -163,9 +167,9 @@ describe('POST /products', function() {
       .set('Authorization', this.token)
       .send({
         title: 'Casual Socks',
-        types: [
-          'clothing'
-        ],
+        image: {
+          url: '/images/casual.jpg'
+        },
         pricing: {
           price: 2.99
         },

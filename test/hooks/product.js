@@ -5,6 +5,9 @@ var Product = mongoose.models.Product;
 exports.create = function(done) {
   this.product = new Product({
     title: 'Casual Socks',
+    image: {
+      url: 'http://satisfeet.me/images/casual.jpg'
+    },
     pricing: {
       retail: 2.99
     },
