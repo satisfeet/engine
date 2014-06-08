@@ -7,32 +7,7 @@ before(hooks.setup);
 
 describe('Product', function() {
 
-  describe('#get', function() {
-
-    xit('should return variations', function() {
-      var product = new this.Product({
-        articles: [
-          { variation: { color: 'red', size: 42 } },
-          { variation: { color: 'blue', size: 42 } }
-        ]
-      });
-
-      chai.expect(product)
-        .to.have.property('variations')
-        .to.have.property('color')
-        .to.be.an('array')
-        .to.contain('red')
-        .to.contain('blue');
-      chai.expect(product)
-        .to.have.property('variations')
-        .to.have.property('color')
-        .to.be.an('array')
-        .to.contain(42);
-    });
-
-  });
-
-  describe('#set', function() {
+  describe('#title', function() {
 
     it('should sanitize title', function() {
       var product = new this.Product();
@@ -43,6 +18,37 @@ describe('Product', function() {
         .to.have.property('title')
         .to.equal('Casual Socks');
     });
+
+    it('should pass validation error', function(done) {
+      var product = new this.Product();
+
+      product.validate(function(err) {
+        chai.expect(err)
+          .to.exist
+          .to.have.property('errors')
+          .to.have.property('title')
+          .to.have.property('type')
+          .to.equal('required');
+
+        done();
+      });
+    });
+
+    it('should not pass validation error', function(done) {
+      var product = new this.Product({ title: 'Alltags Socken' });
+
+      product.validate(function(err) {
+        chai.expect(err)
+          .to.have.property('errors')
+          .to.not.have.property('title');
+
+        done();
+      });
+    });
+
+  });
+
+  describe('#pricing', function() {
 
     it('should sanitize pricing', function() {
       var product = new this.Product();
@@ -55,21 +61,11 @@ describe('Product', function() {
         .to.equal(2.00);
     });
 
-  });
-
-  describe('#validate', function() {
-
-    it('should return required errors', function(done) {
+    it('should pass validation error', function(done) {
       var product = new this.Product();
 
       product.validate(function(err) {
         chai.expect(err).to.exist;
-
-        chai.expect(err)
-          .to.have.property('errors')
-          .to.have.property('title')
-          .to.have.property('type')
-          .to.equal('required');
 
         chai.expect(err)
           .to.have.property('errors')
@@ -81,19 +77,7 @@ describe('Product', function() {
       });
     });
 
-    it('should not return title error', function(done) {
-      var product = new this.Product({ title: 'Alltags Socken' });
-
-      product.validate(function(err) {
-        chai.expect(err)
-          .to.have.property('errors')
-          .to.not.have.property('title');
-
-        done();
-      });
-    });
-
-    it('should not return pricing error', function(done) {
+    it('should not pass validation error', function(done) {
       var product = new this.Product({ pricing: { retail: 2.99 } });
 
       product.validate(function(err) {
