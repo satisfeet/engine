@@ -5,14 +5,14 @@ var hooks = require('../hooks');
 
 before(hooks.setup);
 
-describe('Process', function() {
+describe('Order', function() {
 
   describe('#customer', function() {
 
     it('should pass "required" error', function(done) {
-      var process = new this.Process();
+      var order = new this.Order();
 
-      process.validate(function(err) {
+      order.validate(function(err) {
         chai.expect(err)
           .to.be.instanceOf(Error)
           .to.have.property('errors')
@@ -25,11 +25,11 @@ describe('Process', function() {
     });
 
     it('should pass "custom" error', function(done) {
-      var process = new this.Process({
+      var order = new this.Order({
         customer: new this.Customer()
       });
 
-      process.validate(function(err) {
+      order.validate(function(err) {
         chai.expect(err)
           .to.be.instanceOf(Error)
           .to.have.property('errors')
@@ -46,9 +46,9 @@ describe('Process', function() {
   describe('#state', function() {
 
     it('should return created', function() {
-      var process = new this.Process();
+      var order = new this.Order();
 
-      chai.expect(process)
+      chai.expect(order)
         .to.have.property('state')
         .to.have.property('created')
         .to.be.a('Date');
@@ -59,14 +59,14 @@ describe('Process', function() {
   describe('#pricing', function() {
 
     it('should return total', function() {
-      var process = new this.Process({
+      var order = new this.Order({
         items: [
           { price: 2.50, quantity: 1 },
           { price: 2.50, quantity: 3 }
         ]
       });
 
-      chai.expect(process)
+      chai.expect(order)
         .to.have.property('pricing')
         .to.have.property('total')
         .to.equal(10.00);
@@ -79,12 +79,12 @@ describe('Process', function() {
     before(hooks.customer.create);
 
     it('should return "required" errors', function(done) {
-      var process = new this.Process({
+      var order = new this.Order({
         customer: this.customer.id,
         items: [{}]
       });
 
-      process.validate(function(err) {
+      order.validate(function(err) {
         chai.expect(err)
           .to.be.an.instanceOf(Error)
           .to.have.property('errors')

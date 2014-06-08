@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 
-var Process = mongoose.models.Process;
+var Order = mongoose.models.Order;
 
 exports.create = function(done) {
-  this.process = new Process({
+  this.order = new Order({
     customer: this.customer.id,
     items: [
       {
@@ -13,10 +13,10 @@ exports.create = function(done) {
       }
     ]
   });
-  this.process.save(done);
-  this.process = this.process.toJSON();
+  this.order.save(done);
+  this.order = this.order.toJSON();
 };
 
 exports.remove = function(done) {
-  Process.remove({}, done);
+  Order.remove({}, done);
 };

@@ -9,8 +9,8 @@ exports.setup = function(done) {
 
   if (!this.app) this.app = app.listen();
 
+  this.Order    = mongoose.models.Order;
   this.Product  = mongoose.models.Product;
-  this.Process  = mongoose.models.Process;
   this.Customer = mongoose.models.Customer;
 
   if (!this.token) {
@@ -20,10 +20,8 @@ exports.setup = function(done) {
   }
 }
 
-exports.process = require('./process');
-
-exports.product = require('./product');
-
+exports.order    = require('./order');
+exports.product  = require('./product');
 exports.customer = require('./customer');
 
 function requestToken(context, done) {
