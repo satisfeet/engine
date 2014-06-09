@@ -108,7 +108,7 @@ describe('Customer', function() {
 
       chai.expect(url.parse(customer.image.url))
         .to.have.property('host')
-        .to.equal('www.gravatar.com');
+        .to.contain('gravatar.com');
     });
 
   });
