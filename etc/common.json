@@ -5,12 +5,6 @@
   "auth": {
     "username": "bodokaiser",
     "password": "erdbeere71"
-  },
-
-  "server": {
-    "cert": {
-      "path": "/etc/cert/cert.pfx"
-    }
   }
 
 }
