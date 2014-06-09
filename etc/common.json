@@ -3,8 +3,8 @@
   "name": "engine",
 
   "auth": {
-    "name": "bodokaiser",
-    "pass": "erdbeere71"
+    "username": "bodokaiser",
+    "password": "erdbeere71"
   },
 
   "server": {

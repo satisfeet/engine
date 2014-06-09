@@ -3,8 +3,8 @@ var mongoose  = require('mongoose');
 var app = require('../../lib');
 
 exports.setup = function() {
-  this.username = app.auth.name;
-  this.password = app.auth.pass;
+  this.username = app.auth.username;
+  this.password = app.auth.password;
 
   if (!this.app) this.app = app.listen();
 
