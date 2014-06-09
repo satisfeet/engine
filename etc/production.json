@@ -1,16 +1,11 @@
 {
 
   "server": {
-    "port": 443
+    "port": 80
   },
 
   "storage": {
     "url": "mongodb://satisfeet:animus@oceanic.mongohq.com:10054/satisfeet"
-  },
-
-  "security": {
-    "username": "bodokaiser",
-    "password": "erdbeere71"
   }
 
 }

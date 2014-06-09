@@ -2,10 +2,9 @@
 
   "name": "engine",
 
-  "server": {
-    "cert": {
-      "path": "/etc/cert/cert.pfx"
-    }
+  "auth": {
+    "username": "bodokaiser",
+    "password": "erdbeere71"
   }
 
 }

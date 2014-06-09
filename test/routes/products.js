@@ -10,7 +10,7 @@ describe('POST /products', function() {
 
   it('should respond "No Content"', function(done) {
     supertest(this.app).post('/products')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         title: 'Casual Socks',
         image: {
@@ -32,13 +32,13 @@ describe('POST /products', function() {
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).post('/products')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(400, done);
   });
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).post('/products')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         title: '?',
         image: {
@@ -53,7 +53,7 @@ describe('POST /products', function() {
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).post('/products')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         title: 'Casual Socks',
         image: {
@@ -68,7 +68,7 @@ describe('POST /products', function() {
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).post('/products')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         title: 'Casual Socks',
         image: {
@@ -83,7 +83,7 @@ describe('POST /products', function() {
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).post('/products')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         title: 'Casual Socks',
         image: {
@@ -96,7 +96,7 @@ describe('POST /products', function() {
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).post('/products')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         title: 'Casual Socks',
         image: {
@@ -114,7 +114,7 @@ describe('POST /products', function() {
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).post('/products')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         title: 'Casual Socks',
         types: [
@@ -132,7 +132,7 @@ describe('POST /products', function() {
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).post('/products')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         title: 'Casual Socks',
         types: [
@@ -148,7 +148,7 @@ describe('POST /products', function() {
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).post('/products')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         title: 'Casual Socks',
         types: [
@@ -164,7 +164,7 @@ describe('POST /products', function() {
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).post('/products')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         title: 'Casual Socks',
         image: {
@@ -185,7 +185,7 @@ describe('POST /products', function() {
 
   it('should respond "Not Acceptable"', function(done) {
     supertest(this.app).post('/products')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .accept('xml')
       .expect(406, done);
   });
@@ -200,7 +200,7 @@ describe('GET /products', function() {
 
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/products')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect([
         this.product
       ])
@@ -214,7 +214,7 @@ describe('GET /products', function() {
 
   it('should respond "Not Acceptable"', function(done) {
     supertest(this.app).get('/products')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .accept('xml')
       .expect(406, done);
   });
@@ -229,7 +229,7 @@ describe('GET /products/:id', function() {
 
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/products/' + this.product.id)
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(200, this.product, done);
   });
 
@@ -240,19 +240,19 @@ describe('GET /products/:id', function() {
 
   it('should respond "Not Found"', function(done) {
     supertest(this.app).get('/products/1234')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(404, done);
   });
 
   it('should respond "Not Found"', function(done) {
     supertest(this.app).get('/products/' + mongoose.mongo.ObjectID())
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(404, done);
   });
 
   it('should respond "Not Acceptable"', function(done) {
     supertest(this.app).get('/products/' + mongoose.mongo.ObjectID())
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .accept('xml')
       .expect(406, done);
   });
@@ -269,14 +269,14 @@ describe('PUT /products/:id', function() {
     this.product.price += 1.00;
 
     supertest(this.app).put('/products/' + this.product.id)
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send(this.product)
       .expect(204, done);
   });
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).put('/products/' + this.product.id)
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         title: '???'
       })
@@ -290,19 +290,19 @@ describe('PUT /products/:id', function() {
 
   it('should respond "Not Found"', function(done) {
     supertest(this.app).put('/products/1234')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(404, done);
   });
 
   it('should respond "Not Found"', function(done) {
     supertest(this.app).put('/products/' + mongoose.mongo.ObjectID())
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(404, done);
   });
 
   it('should respond "Not Acceptable"', function(done) {
     supertest(this.app).put('/products/' + mongoose.mongo.ObjectID())
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .accept('xml')
       .expect(406, done);
   });
@@ -317,7 +317,7 @@ describe('DELETE /products/:id', function() {
 
   it('should respond "No Content"', function(done) {
     supertest(this.app).del('/products/' + this.product.id)
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(204, done);
   });
 
@@ -328,32 +328,23 @@ describe('DELETE /products/:id', function() {
 
   it('should respond "Not Found"', function(done) {
     supertest(this.app).del('/products/1234')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(404, done);
   });
 
   it('should respond "Not Found"', function(done) {
     supertest(this.app).del('/products/' + mongoose.mongo.ObjectID())
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(404, done);
   });
 
   it('should respond "Not Acceptable"', function(done) {
     supertest(this.app).del('/products/' + mongoose.mongo.ObjectID())
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .accept('xml')
       .expect(406, done);
   });
 
   after(hooks.product.remove);
-
-});
-
-describe('OPTIONS /products', function() {
-
-  it('should respond "No Content"', function(done) {
-    supertest(this.app).options('/products')
-      .expect(204, done);
-  });
 
 });
