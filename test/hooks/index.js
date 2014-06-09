@@ -1,40 +1,18 @@
 var mongoose  = require('mongoose');
-var supertest = require('supertest');
 
 var app = require('../../lib');
 
-exports.setup = function(done) {
-  this.username = app.security.username;
-  this.password = app.security.password;
+exports.setup = function() {
+  this.username = app.auth.name;
+  this.password = app.auth.pass;
 
   if (!this.app) this.app = app.listen();
 
   this.Order    = mongoose.models.Order;
   this.Product  = mongoose.models.Product;
   this.Customer = mongoose.models.Customer;
-
-  if (!this.token) {
-    this.token = requestToken(this, done);
-  } else {
-    done();
-  }
 }
 
 exports.order    = require('./order');
 exports.product  = require('./product');
 exports.customer = require('./customer');
-
-function requestToken(context, done) {
-  supertest(context.app).post('/session')
-    .send({
-      username: context.username,
-      password: context.password
-    })
-    .expect(200, function(err, res) {
-      if (err) return done;
-
-      context.token = 'Bearer ' + res.body.token;
-
-      done();
-    });
-}

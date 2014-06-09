@@ -6,11 +6,6 @@
 
   "storage": {
     "url": "mongodb://satisfeet:animus@oceanic.mongohq.com:10054/satisfeet"
-  },
-
-  "security": {
-    "username": "bodokaiser",
-    "password": "erdbeere71"
   }
 
 }
