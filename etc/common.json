@@ -1,11 +1,5 @@
 {
 
-  "name": "engine",
-
-  "server": {
-    "cert": {
-      "path": "/etc/cert/cert.pfx"
-    }
-  }
+  "name": "engine"
 
 }
