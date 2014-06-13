@@ -6,12 +6,6 @@
 
   "storage": {
     "url": "mongodb://localhost/test"
-  },
-
-  "security": {
-    "username": "admin",
-    "password": "1234",
-    "secret": "abcd"
   }
 
 }

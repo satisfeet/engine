@@ -12,7 +12,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Created"', function(done) {
     supertest(this.app).post('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         customer: this.customer.id,
         items: [
@@ -28,13 +28,13 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(400, done);
   });
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         customer: '123'
       })
@@ -43,7 +43,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         customer: mongoose.mongo.ObjectID()
       })
@@ -52,7 +52,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         customer: this.customer.id
       })
@@ -61,7 +61,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         customer: this.customer.id,
         items: [
@@ -75,7 +75,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         customer: this.customer.id,
         items: [
@@ -89,7 +89,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         customer: this.customer.id,
         items: [
@@ -103,7 +103,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         customer: this.customer.id,
         items: [
@@ -118,7 +118,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         customer: this.customer.id,
         items: [
@@ -133,7 +133,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         customer: this.customer.id,
         items: [
@@ -148,7 +148,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         customer: this.customer.id,
         items: [
@@ -163,7 +163,7 @@ describe('POST /orders', function() {
 
   it('should respond with "Bad Request"', function(done) {
     supertest(this.app).post('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send({
         customer: this.customer.id,
         items: [
@@ -184,7 +184,7 @@ describe('POST /orders', function() {
 
   it('should respond "Not Acceptable"', function(done) {
     supertest(this.app).post('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .accept('xml')
       .expect(406, done);
   });
@@ -203,7 +203,7 @@ describe('GET /orders', function() {
 
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(200, [this.order], done);
   });
 
@@ -214,7 +214,7 @@ describe('GET /orders', function() {
 
   it('should respond "Not Acceptable"', function(done) {
     supertest(this.app).get('/orders')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .accept('xml')
       .expect(406, done);
   });
@@ -233,13 +233,13 @@ describe('GET /orders/:id', function() {
 
   it('should respond "OK"', function(done) {
     supertest(this.app).get('/orders/' + this.order.id)
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(200, this.order, done);
   });
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).get('/orders/1234')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(400, done);
   });
 
@@ -250,13 +250,13 @@ describe('GET /orders/:id', function() {
 
   it('should respond "Not Found"', function(done) {
     supertest(this.app).get('/orders/' + mongoose.mongo.ObjectID())
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(404, done);
   });
 
   it('should respond "Not Acceptable"', function(done) {
     supertest(this.app).get('/orders/' + mongoose.mongo.ObjectID())
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .accept('xml')
       .expect(406, done);
   });
@@ -277,7 +277,7 @@ describe('PUT /orders/:id', function() {
     this.order.state.shipped = new Date().toString();
 
     supertest(this.app).put('/orders/' + this.order.id)
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send(this.order)
       .expect(204, done);
   });
@@ -286,14 +286,14 @@ describe('PUT /orders/:id', function() {
     this.order.customer = '123456';
 
     supertest(this.app).put('/orders/' + this.order.id)
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send(this.order)
       .expect(400, done);
   });
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).put('/orders/1234')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .send(this.order)
       .expect(400, done);
   });
@@ -305,13 +305,13 @@ describe('PUT /orders/:id', function() {
 
   it('should respond "Not Found"', function(done) {
     supertest(this.app).put('/orders/' + mongoose.mongo.ObjectID())
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(404, done);
   });
 
   it('should respond "Not Acceptable"', function(done) {
     supertest(this.app).put('/orders/' + mongoose.mongo.ObjectID())
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .accept('xml')
       .expect(406, done);
   });
@@ -330,13 +330,13 @@ describe('DELETE /orders/:id', function() {
 
   it('should respond "No Content"', function(done) {
     supertest(this.app).del('/orders/' + this.order.id)
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(204, done);
   });
 
   it('should respond "Bad Request"', function(done) {
     supertest(this.app).del('/orders/1234')
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(400, done);
   });
 
@@ -347,13 +347,13 @@ describe('DELETE /orders/:id', function() {
 
   it('should respond "Not Found"', function(done) {
     supertest(this.app).del('/orders/' + mongoose.mongo.ObjectID())
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .expect(404, done);
   });
 
   it('should respond "Not Acceptable"', function(done) {
     supertest(this.app).del('/orders/' + mongoose.mongo.ObjectID())
-      .set('Authorization', this.token)
+      .auth(this.username, this.password)
       .accept('xml')
       .expect(406, done);
   });
@@ -361,14 +361,5 @@ describe('DELETE /orders/:id', function() {
   after(hooks.order.remove);
   after(hooks.product.remove);
   after(hooks.customer.remove);
-
-});
-
-describe('OPTIONS /orders', function() {
-
-  it('should respond "No Content"', function(done) {
-    supertest(this.app).options('/orders')
-      .expect(204, done);
-  });
 
 });
