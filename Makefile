@@ -17,11 +17,11 @@ test: test-models test-routes
 
 test-routes: export NODE_ENV=test
 test-routes:
-	@mocha $(TEST_FLAGS) test/routes
+	@mocha $(TEST_FLAGS) opt/test/routes
 
 test-models: export NODE_ENV=test
 test-models:
-	@mocha $(TEST_FLAGS) test/models
+	@mocha $(TEST_FLAGS) opt/test/models
 
 clean:
 	@rm -rf node_modules

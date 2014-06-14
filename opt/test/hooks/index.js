@@ -1,7 +1,7 @@
 var mongoose  = require('mongoose');
 var supertest = require('supertest');
 
-var app = require('../../lib');
+var app = require('../../../lib');
 
 exports.setup = function() {
   this.username = app.auth.username;
