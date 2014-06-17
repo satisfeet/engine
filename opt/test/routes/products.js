@@ -27,7 +27,7 @@ describe('POST /products', function() {
         },
         description: 'foobar foobar foobar foobar foobar foobar blalbalblabla'
       })
-      .expect(204, done);
+      .expect(200, done);
   });
 
   it('should respond "Bad Request"', function(done) {

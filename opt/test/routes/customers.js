@@ -20,7 +20,7 @@ describe('POST /customers', function() {
           zip: 12105
         }
       })
-      .expect(201, done);
+      .expect(200, done);
   });
 
   it('should respond "Bad Request"', function(done) {
