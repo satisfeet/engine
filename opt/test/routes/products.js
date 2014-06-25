@@ -13,17 +13,11 @@ describe('POST /products', function() {
       .auth(this.username, this.password)
       .send({
         title: 'Casual Socks',
-        image: {
-          url: 'http://satisfeet.me/images/casual.jpg'
-        },
-        details: {
-          material: {
-            cotton: 0.78,
-            plastic: 0.22
-          }
-        },
         pricing: {
           retail: 2.99
+        },
+        variations: {
+          colors: ['red']
         },
         description: 'foobar foobar foobar foobar foobar foobar blalbalblabla'
       })
@@ -41,9 +35,6 @@ describe('POST /products', function() {
       .auth(this.username, this.password)
       .send({
         title: '?',
-        image: {
-          url: 'http://satisfeet.me/images/casual.jpg'
-        },
         pricing: {
           retail: 2.99
         }
@@ -56,9 +47,6 @@ describe('POST /products', function() {
       .auth(this.username, this.password)
       .send({
         title: 'Casual Socks',
-        image: {
-          url: 'http://satisfeet.me/images/casual.jpg'
-        },
         pricing: {
           retail: -2.99
         }
@@ -71,9 +59,6 @@ describe('POST /products', function() {
       .auth(this.username, this.password)
       .send({
         title: 'Casual Socks',
-        image: {
-          url: null
-        },
         pricing: {
           price: -2.99
         }
@@ -86,9 +71,6 @@ describe('POST /products', function() {
       .auth(this.username, this.password)
       .send({
         title: 'Casual Socks',
-        image: {
-          url: 'http://satisfeet.me/images/casual.jpg'
-        },
         pricing: {}
       })
       .expect(400, done);
@@ -99,45 +81,6 @@ describe('POST /products', function() {
       .auth(this.username, this.password)
       .send({
         title: 'Casual Socks',
-        image: {
-          url: 'http://satisfeet.me/images/casual.jpg'
-        },
-        pricing: {
-          price: 2.99
-        },
-        derivates: [
-          { foo: 'bar' }
-        ]
-      })
-      .expect(400, done);
-  });
-
-  it('should respond "Bad Request"', function(done) {
-    supertest(this.app).post('/products')
-      .auth(this.username, this.password)
-      .send({
-        title: 'Casual Socks',
-        types: [
-          'clothing'
-        ],
-        pricing: {
-          price: 2.99
-        },
-        derivates: [
-          { variations: null }
-        ]
-      })
-      .expect(400, done);
-  });
-
-  it('should respond "Bad Request"', function(done) {
-    supertest(this.app).post('/products')
-      .auth(this.username, this.password)
-      .send({
-        title: 'Casual Socks',
-        types: [
-          'clothing'
-        ],
         pricing: {
           price: 2.99
         },
@@ -151,29 +94,10 @@ describe('POST /products', function() {
       .auth(this.username, this.password)
       .send({
         title: 'Casual Socks',
-        types: [
-          'clothing'
-        ],
         pricing: {
           price: 2.99
         },
         description: '?????Ö'
-      })
-      .expect(400, done);
-  });
-
-  it('should respond "Bad Request"', function(done) {
-    supertest(this.app).post('/products')
-      .auth(this.username, this.password)
-      .send({
-        title: 'Casual Socks',
-        image: {
-          url: '/images/casual.jpg'
-        },
-        pricing: {
-          price: 2.99
-        },
-        description: 'Hello these are great socks!'
       })
       .expect(400, done);
   });
